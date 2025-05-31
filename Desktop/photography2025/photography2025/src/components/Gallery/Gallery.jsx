@@ -49,7 +49,7 @@ const Gallery = ({ category }) => {
 
   return (
     <div className="gallery-container">
-      <h2>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Photography` : 'Gallery'}</h2>
+      <h1>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Photography` : 'Gallery'}</h1>
       <div className="image-grid">
         {images.map((image) => (
           <div key={image.id} className="image-item">

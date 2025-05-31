@@ -7,7 +7,8 @@ import Gallery from '../../components/Gallery/Gallery'
 
 function HomePage() {
   return (
-    <div>HomePage
+    <div>
+        <h1> Joshua Jey Photography</h1>
         <Nav />
         
         <Footer/>
