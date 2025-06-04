@@ -1,68 +1,51 @@
-// src/components/Gallery.js (or wherever your component lives)
 import React, { useState, useEffect } from 'react';
-import './Gallery.scss'; // Assuming you have some CSS for styling
+import Photo from '../Photo/Photo';
+import './Gallery.scss';
 
-const Gallery = ({ category }) => {
+function Gallery({ category }) {
   const [images, setImages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchImages = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        // Construct the API URL. If no category is provided, it fetches all images.
-        // Your backend /api/gallery already handles the category query parameter.
-        const apiUrl = category
-          ? `http://localhost:3001/api/gallery?category=${encodeURIComponent(category)}`
-          : 'http://localhost:3001/api/gallery';
+    setIsLoading(true);
+    setError(null);
+    // Construct the API URL, optionally with a category
+    const apiUrl = category ? `/api/gallery?category=${category}` : '/api/gallery';
 
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) { // Check if response is not OK
+          // If not OK, consume response as text to see what was returned
+          return response.text().then(text => {
+            console.error("Server responded with non-JSON:", text);
+            throw new Error(`HTTP error! status: ${response.status}, response: ${text.substring(0, 100)}...`);
+          });
         }
-        const data = await response.json();
+        return response.json(); // Attempt to parse as JSON only if response.ok
+      })
+      .then(data => {
         setImages(data);
-      } catch (e) {
-        console.error("Failed to fetch images:", e);
-        setError(e.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+        setIsLoading(false);
+      })
+      .catch(err => {
+        // The error from response.json() or the custom error above will be caught here
+        console.error("Failed to fetch images for gallery:", err);
+        setError(`Could not load images for ${category || 'gallery'}.`);
+        setIsLoading(false);
+      });
+  }, [category]); // Re-fetch if the category changes
 
-    fetchImages();
-  }, [category]); // Re-run the effect if the category prop changes
-
-  if (loading) {
-    return <p>Loading images...</p>;
-  }
-
-  if (error) {
-    return <p>Error loading images: {error}</p>;
-  }
-
-  if (images.length === 0) {
-    return <p>No images found for {category || 'this gallery'}.</p>;
-  }
+  if (isLoading) return <p className="gallery-status">Loading images...</p>;
+  if (error) return <p className="gallery-status error">{error}</p>;
+  if (images.length === 0) return <p className="gallery-status">No images found{category ? ` in ${category}` : ''}.</p>;
 
   return (
-    <div className="gallery-container">
-      <h1>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Photography` : 'Gallery'}</h1>
-      <div className="image-grid">
-        {images.map((image) => (
-          <div key={image.id} className="image-item">
-            <img src={`http://localhost:3001${image.url}`} alt={image.title || 'Gallery image'} />
-            <div className="image-info">
-              <h3>{image.title || 'Untitled'}</h3>
-              {image.description && <p>{image.description}</p>}
-            </div>
-          </div>
-        ))}
-      </div>
+    <div className="gallery-grid">
+      {images.map(image => (
+        <Photo key={image.id} id={image.id} src={image.url} alt={image.description} title={image.title} />
+      ))}
     </div>
   );
-};
-
+}
 export default Gallery;
