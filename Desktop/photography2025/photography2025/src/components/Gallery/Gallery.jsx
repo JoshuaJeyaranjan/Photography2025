@@ -16,13 +16,22 @@ function Gallery({ category }) {
     fetch(apiUrl)
       .then(response => {
         if (!response.ok) { // Check if response is not OK
-          // If not OK, consume response as text to see what was returned
           return response.text().then(text => {
-            console.error("Server responded with non-JSON:", text);
+            console.error(`Server responded with non-OK status ${response.status} for ${apiUrl}. Body:`, text);
             throw new Error(`HTTP error! status: ${response.status}, response: ${text.substring(0, 100)}...`);
           });
         }
-        return response.json(); // Attempt to parse as JSON only if response.ok
+        // If response.ok, check content type before parsing
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.toLowerCase().includes("application/json")) {
+          return response.json();
+        } else {
+          // Response is OK, but not JSON. Log the text and throw.
+          return response.text().then(text => {
+            console.error(`Server responded with OK status for ${apiUrl} but non-JSON content-type ('${contentType}'). Body:`, text);
+            throw new Error(`Expected JSON from ${apiUrl}, but got ${contentType || 'unknown content type'}. Response: ${text.substring(0,100)}...`);
+          });
+        }
       })
       .then(data => {
         setImages(data);
