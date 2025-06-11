@@ -9,6 +9,7 @@ import StreetPage from './pages/StreetPage/StreetPage'
 import PhotoPage from './pages/PhotoPage/PhotoPage'
 import CancelPage from './pages/CancelPage/CancelPage'
 import SuccessPage from './pages/SuccessPage/SuccessPage'
+import AboutPage from './pages/AboutPage/AboutPage'
 
 
 
@@ -27,6 +28,7 @@ function App() {
     <Route path="/photo/:id" element={<PhotoPage />} />
     <Route path='/payment-cancelled' element={ <CancelPage/>} /> 
     <Route path='/payment-success' element={ <SuccessPage/>} />
+    <Route path='/about' element={ <AboutPage/>} /> 
 
     </Routes>
     </BrowserRouter>
