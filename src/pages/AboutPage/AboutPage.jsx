@@ -10,10 +10,7 @@ function AboutPage() {
         <div className="about-header">
           <h1>About Me</h1>
           <div className="profile-image-container">
-            {/* Add your image here */}
-            <div className="profile-image-placeholder">
-              <p>Your Image Here</p>
-            </div>
+            <img className='about-image' src="public/me.jpg" alt="picture of photographer" />
           </div>
         </div>
 

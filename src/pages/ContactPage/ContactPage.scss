@@ -1,0 +1,96 @@
+.contact-page {
+    min-height: 100vh;
+    background-color: #fff;
+    padding: 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80vw;
+    
+  
+    &__title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #111;
+      text-align: center;
+    }
+  
+    &__text {
+      font-size: 1.1rem;
+      color: #444;
+      text-align: center;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+  }
+  
+  .contact-form {
+    background-color: #f9f9f9;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      width: 100%;
+    }
+  
+    label {
+      font-weight: 500;
+      color: #333;
+    }
+  
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+  
+      &:focus {
+        border-color: #0077ff;
+        outline: none;
+      }
+    }
+  
+    button {
+      padding: 0.75rem 1.5rem;
+      background-color: #0077ff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+  
+      &:hover {
+        background-color: #005fcc;
+      }
+  
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  .form-status {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #0077ff;
+  }
+  
