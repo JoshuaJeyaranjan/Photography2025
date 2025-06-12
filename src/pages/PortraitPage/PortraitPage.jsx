@@ -6,7 +6,7 @@ import Nav from '../../components/Nav/Nav'
 
 function PortraitPage() {
   return (
-    <div>PortraitPage
+    <div>
         <Nav/>
         <Gallery category={'portrait'}/>
     </div>

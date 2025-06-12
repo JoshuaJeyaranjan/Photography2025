@@ -83,23 +83,26 @@ function PhotoPage() {
   if (!photo) return <div className="photo-page-status">Photo not found. <button onClick={() => navigate(-1)}>Go Back</button></div>;
 
   return (
+    <>
+    <Nav />
     <div className="photo-page-container">
-      <Nav />
+      
       <div className="photo-detail">
         <img src={photo.url} alt={photo.title || photo.filename} className="photo-detail-image" />
-        <div className="photo-info">
+        {/* <div className="photo-info">
           <h1>{photo.title || 'Untitled'}</h1>
           <p className="photo-description">{photo.description || 'No description available.'}</p>
           <p className="photo-category">Category: {photo.category}</p>
-          {/* Add more details as needed */}
+          
           <button onClick={handlePurchase} className="purchase-button" disabled={purchaseStatus === 'Processing...'}>
             {purchaseStatus === 'Processing...' ? 'Processing...' : `Purchase Print ($${(photo.price || 25.00).toFixed(2)})`}
           </button>
           {purchaseStatus && purchaseStatus !== 'Processing...' && <p className="purchase-status">{purchaseStatus}</p>}
-        </div>
+        </div> */}
       </div>
-      <Footer />
+      
     </div>
+    </>
   );
 }
 
