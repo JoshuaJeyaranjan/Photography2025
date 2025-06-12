@@ -1,0 +1,17 @@
+.photo-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  margin: 8px; // Adjust as needed
+  overflow: hidden;
+  border-radius: 4px; // Optional: if you want rounded corners for the container
+
+  .photo-item {
+    img {
+      display: block;
+      width: 100%;
+      height: auto; // Or a fixed height if you prefer uniform gallery items
+      transition: transform 0.3s ease;
+    }
+  }
+}

@@ -1,0 +1,78 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# System files
+.DS_Store
+.CFUserTextEncoding
+.localized
+
+# macOS folders
+Applications/
+Documents/
+Downloads/
+Library/
+Movies/
+Music/
+Pictures/
+Public/
+Sites/
+
+# Shell & CLI
+.zsh_history
+.zshrc
+.viminfo
+.lesshst
+
+# Adobe and other software
+.adobe/
+.config/
+.cursor/
+.dbclient/
+.local/
+.mysql_history
+.npm/
+.ssh/
+.th-client/
+.vscode/
+.wdc/
+
+# Node.js
+node_modules/
+package-lock.json
+
+# Project-specific folders you don’t want in this repo
+New-Photo-Portfolio/
+OA Content/
+SEPortfolio-Server/
+SEPortfolio/
+Tuner/
+caf/
+code/
+f/
+loyal-server/
+neetcode150/
+photography2025Server/
+portfolio/
+industry-project-app/
