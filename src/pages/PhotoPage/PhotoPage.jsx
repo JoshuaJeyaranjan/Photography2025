@@ -5,103 +5,120 @@ import './PhotoPage.scss';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 
-// Replace with your actual Stripe publishable key (use environment variables for this in a real app)
+// Use environment variables for flexibility between dev/staging/prod
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY';
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 function PhotoPage() {
-  const { id } = useParams(); // Gets the photo ID from the URL
+  const { id } = useParams();
   const navigate = useNavigate();
+
   const [photo, setPhoto] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [purchaseStatus, setPurchaseStatus] = useState('');
 
   useEffect(() => {
-    setIsLoading(true);
-    setError(null);
-    // In a real app, you'd fetch a single photo's details: /api/gallery/${id}
-    // For now, let's assume we fetch all and filter, or you adapt your backend.
-    // This is NOT efficient for many images but works for demonstration.
-    // A better approach is a dedicated backend endpoint: fetch(`/api/images/details/${id}`)
-    fetch(`/api/gallery`) // Fetch all, then find by ID
-      .then(response => {
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return response.json();
-      })
-      .then(data => {
-        const foundPhoto = data.find(p => p.id.toString() === id);
-        if (foundPhoto) {
-          setPhoto(foundPhoto);
-        } else {
+    const fetchPhoto = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/gallery`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const data = await response.json();
+        const matchedPhoto = data.find(p => p.id.toString() === id);
+
+        if (!matchedPhoto) {
           setError('Photo not found.');
+        } else {
+          setPhoto(matchedPhoto);
         }
-        setIsLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch photo details:", err);
+      } catch (err) {
+        console.error("Failed to fetch photo:", err);
         setError('Could not load photo details.');
+      } finally {
         setIsLoading(false);
-      });
+      }
+    };
+
+    fetchPhoto();
   }, [id]);
 
   const handlePurchase = async () => {
     if (!photo) return;
     setPurchaseStatus('Processing...');
 
-    // Example price - you'd likely get this from photo data or define it
-    const itemPrice = photo.price || 25.00; // Default price if not in photo data
-
     try {
-      const response = await fetch('/api/stripe/create-checkout-session', {
+      const response = await fetch(`${API_BASE_URL}/api/stripe/create-checkout-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           itemId: photo.id,
           itemName: photo.title || `Print of ${photo.filename}`,
-          itemPrice: itemPrice, // Send price in dollars/euros etc.
-          // You might want to add image URL for Stripe checkout page:
-          // itemImage: photo.url 
+          itemPrice: photo.price || 25.00,
         }),
       });
-      if (!response.ok) throw new Error('Failed to create Stripe session');
+
+      if (!response.ok) throw new Error('Stripe session creation failed');
+
       const { sessionId } = await response.json();
       const stripe = await stripePromise;
       const { error } = await stripe.redirectToCheckout({ sessionId });
+
       if (error) {
-        console.error("Stripe redirect error:", error);
-        setPurchaseStatus(`Payment error: ${error.message}`);
+        console.error("Stripe error:", error);
+        setPurchaseStatus(`Payment failed: ${error.message}`);
       }
     } catch (err) {
-      console.error("Purchase error:", err);
-      setPurchaseStatus(`Error: ${err.message}. Please try again.`);
+      console.error("Purchase failed:", err);
+      setPurchaseStatus(`Error: ${err.message}`);
     }
   };
 
+  // Status rendering
   if (isLoading) return <div className="photo-page-status">Loading photo...</div>;
-  if (error) return <div className="photo-page-status error">{error} <button onClick={() => navigate(-1)}>Go Back</button></div>;
-  if (!photo) return <div className="photo-page-status">Photo not found. <button onClick={() => navigate(-1)}>Go Back</button></div>;
+  if (error) return (
+    <div className="photo-page-status error">
+      {error}
+      <br />
+      <button onClick={() => navigate(-1)}>Go Back</button>
+    </div>
+  );
+  if (!photo) return (
+    <div className="photo-page-status">
+      Photo not found.
+      <br />
+      <button onClick={() => navigate(-1)}>Go Back</button>
+    </div>
+  );
 
   return (
     <>
-    <Nav />
-    <div className="photo-page-container">
-      
-      <div className="photo-detail">
-        <img src={photo.url} alt={photo.title || photo.filename} className="photo-detail-image" />
-        {/* <div className="photo-info">
-          <h1>{photo.title || 'Untitled'}</h1>
-          <p className="photo-description">{photo.description || 'No description available.'}</p>
-          <p className="photo-category">Category: {photo.category}</p>
-          
-          <button onClick={handlePurchase} className="purchase-button" disabled={purchaseStatus === 'Processing...'}>
-            {purchaseStatus === 'Processing...' ? 'Processing...' : `Purchase Print ($${(photo.price || 25.00).toFixed(2)})`}
-          </button>
-          {purchaseStatus && purchaseStatus !== 'Processing...' && <p className="purchase-status">{purchaseStatus}</p>}
-        </div> */}
+      <Nav />
+      <div className="photo-page-container">
+        <div className="photo-detail">
+          <img
+            src={photo.url}
+            alt={photo.title || photo.filename}
+            className="photo-detail-image"
+          />
+          <div className="photo-metadata">
+            <h2>{photo.title || 'Untitled'}</h2>
+            <p className="photo-description">{photo.description || 'No description provided.'}</p>
+            {/* Uncomment below to enable Stripe purchase */}
+            {/*
+            <button onClick={handlePurchase} className="purchase-button">
+              Buy Print – ${photo.price || 25.00}
+            </button>
+            <p className="purchase-status">{purchaseStatus}</p>
+            */}
+          </div>
+        </div>
       </div>
-      
-    </div>
+      <Footer />
     </>
   );
 }
