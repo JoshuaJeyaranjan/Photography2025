@@ -1,0 +1,19 @@
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Responsive grid
+    gap: 16px; // Space between items
+    padding: 16px;
+}
+
+.gallery-status {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2em;
+
+    &.error {
+        color: red;
+    }
+}
+
+// You might want to add hover effects to .photo-link .photo-item img in Photo.scss
+// e.g., transform: scale(1.05);
