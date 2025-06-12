@@ -41,6 +41,12 @@ function Gallery({ category }) {
       } finally {
         setIsLoading(false);
       }
+      console.log("Fetched image data:", data);
+if (data.length) {
+  console.log("Sample image URL:", data[0].url);
+} else {
+  console.log("No images found.");
+}
     };
 
     fetchImages();
