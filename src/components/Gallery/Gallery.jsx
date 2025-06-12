@@ -7,26 +7,30 @@ function Gallery({ category }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Define your backend base URL here
+  const API_BASE_URL = 'https://photography2025server.onrender.com/api';
+
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    // Construct the API URL, optionally with a category
-    const apiUrl = category ? `/api/gallery?category=${category}` : '/api/gallery';
+
+    // Construct the full API URL with optional category query
+    const apiUrl = category
+      ? `${API_BASE_URL}/gallery?category=${encodeURIComponent(category)}`
+      : `${API_BASE_URL}/gallery`;
 
     fetch(apiUrl)
       .then(response => {
-        if (!response.ok) { // Check if response is not OK
+        if (!response.ok) {
           return response.text().then(text => {
             console.error(`Server responded with non-OK status ${response.status} for ${apiUrl}. Body:`, text);
             throw new Error(`HTTP error! status: ${response.status}, response: ${text.substring(0, 100)}...`);
           });
         }
-        // If response.ok, check content type before parsing
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.toLowerCase().includes("application/json")) {
           return response.json();
         } else {
-          // Response is OK, but not JSON. Log the text and throw.
           return response.text().then(text => {
             console.error(`Server responded with OK status for ${apiUrl} but non-JSON content-type ('${contentType}'). Body:`, text);
             throw new Error(`Expected JSON from ${apiUrl}, but got ${contentType || 'unknown content type'}. Response: ${text.substring(0,100)}...`);
@@ -38,12 +42,11 @@ function Gallery({ category }) {
         setIsLoading(false);
       })
       .catch(err => {
-        // The error from response.json() or the custom error above will be caught here
         console.error("Failed to fetch images for gallery:", err);
         setError(`Could not load images for ${category || 'gallery'}.`);
         setIsLoading(false);
       });
-  }, [category]); // Re-fetch if the category changes
+  }, [category]);
 
   if (isLoading) return <p className="gallery-status">Loading images...</p>;
   if (error) return <p className="gallery-status error">{error}</p>;
@@ -52,9 +55,16 @@ function Gallery({ category }) {
   return (
     <div className="gallery-grid">
       {images.map(image => (
-        <Photo key={image.id} id={image.id} src={image.url} alt={image.description} title={image.title} />
+        <Photo
+          key={image.id}
+          id={image.id}
+          src={image.url}
+          alt={image.description}
+          title={image.title}
+        />
       ))}
     </div>
   );
 }
+
 export default Gallery;

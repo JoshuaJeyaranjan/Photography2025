@@ -19,33 +19,43 @@ function ContactPage() {
     }));
   };
 
+  const API_BASE_URL = 'https://photography2025server.onrender.com/api';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('Sending...');
-
+  
     try {
-      // We'll create this backend endpoint next
-      const response = await fetch('http://localhost:3001/api/contact', { // Adjust if your server/proxy is different
+      // Use the full API URL for the contact endpoint
+      const response = await fetch(`${API_BASE_URL}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         const result = await response.json();
         setStatus(`Message sent successfully! ${result.message || ''}`);
-        setFormData({ name: '', email: '', message: '' }); // Clear form
+        setFormData({ name: '', email: '', message: '' }); // Clear form on success
       } else {
-        const errorResult = await response.json();
-        setStatus(`Failed to send message: ${errorResult.error || response.statusText}`);
+        // Try to parse error response, fallback to status text
+        let errorMsg = response.statusText;
+        try {
+          const errorResult = await response.json();
+          errorMsg = errorResult.error || errorMsg;
+        } catch (_) {
+          // Ignore JSON parse errors here
+        }
+        setStatus(`Failed to send message: ${errorMsg}`);
       }
     } catch (error) {
       console.error('Contact form submission error:', error);
       setStatus('Failed to send message. Please try again later.');
     }
   };
+  
 
   return (
     <>
