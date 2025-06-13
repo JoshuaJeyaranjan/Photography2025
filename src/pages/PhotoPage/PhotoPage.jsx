@@ -6,7 +6,7 @@ import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 
 // Use environment variables for flexibility between dev/staging/prod
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+const API_BASE_URL = 'https://photography2025server.onrender.com'
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY';
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
@@ -25,7 +25,8 @@ function PhotoPage() {
       setError(null);
 
       try {
-        const response = await fetch(`${API_BASE_URL}/api/gallery`);
+        const response = await fetch(`${API_BASE_URL}/api/gallery/${id}`);
+
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
         const data = await response.json();
