@@ -1,6 +1,7 @@
 import React from "react";
 import "./Nav.scss";
 import { NavLink, Link } from "react-router-dom";
+import cameraIcon from '../../../public/cameraIcon2.svg'
 
 function Nav() {
   return (
