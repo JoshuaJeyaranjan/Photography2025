@@ -23,20 +23,14 @@ function PhotoPage() {
     const fetchPhoto = async () => {
       setIsLoading(true);
       setError(null);
-
+  
       try {
         const response = await fetch(`${API_BASE_URL}/api/gallery/${id}`);
-
+  
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
+  
         const data = await response.json();
-        const matchedPhoto = data.find(p => p.id.toString() === id);
-
-        if (!matchedPhoto) {
-          setError('Photo not found.');
-        } else {
-          setPhoto(matchedPhoto);
-        }
+        setPhoto(data); // ✅ Use the single object directly
       } catch (err) {
         console.error("Failed to fetch photo:", err);
         setError('Could not load photo details.');
@@ -44,9 +38,10 @@ function PhotoPage() {
         setIsLoading(false);
       }
     };
-
+  
     fetchPhoto();
   }, [id]);
+  
 
   const handlePurchase = async () => {
     if (!photo) return;
