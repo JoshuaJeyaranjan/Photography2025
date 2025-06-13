@@ -106,8 +106,8 @@ function PhotoPage() {
             className="photo-detail-image"
           />
           <div className="photo-metadata">
-            <h2>{photo.title || 'Untitled'}</h2>
-            <p className="photo-description">{photo.description || 'No description provided.'}</p>
+            {/* <h2>{photo.title || 'Untitled'}</h2> */}
+            {/* <p className="photo-description">{photo.description || 'No description provided.'}</p> */}
             {/* Uncomment below to enable Stripe purchase */}
             {/*
             <button onClick={handlePurchase} className="purchase-button">
