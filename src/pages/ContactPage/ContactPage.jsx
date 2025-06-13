@@ -37,7 +37,7 @@ function ContactPage() {
   
       if (response.ok) {
         const result = await response.json();
-        setStatus(`Message sent successfully! ${result.message || ''}`);
+        setStatus(` ${result.message || ''}`);
         setFormData({ name: '', email: '', message: '' }); // Clear form on success
       } else {
         // Try to parse error response, fallback to status text
