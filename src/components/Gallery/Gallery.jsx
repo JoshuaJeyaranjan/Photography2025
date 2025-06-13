@@ -7,50 +7,50 @@ function Gallery({ category }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = 'https://r2-image-proxy.r2-image-proxy.workers.dev';
+  const API_BASE_URL = 'https://photography2025server.onrender.com/api';
 
   useEffect(() => {
     const fetchImages = async () => {
       setIsLoading(true);
       setError(null);
-  
-      const apiUrl = `${API_BASE_URL}/gallery`; // removed category filtering
-  
+
+      const apiUrl = category
+        ? `${API_BASE_URL}/gallery?category=${encodeURIComponent(category)}`
+        : `${API_BASE_URL}/gallery`;
+
       try {
         const response = await fetch(apiUrl);
-  
+
         if (!response.ok) {
           const errorText = await response.text();
           console.error(`Error fetching from ${apiUrl}:`, errorText);
           throw new Error(`HTTP ${response.status}: ${errorText}`);
         }
-  
+
         const contentType = response.headers.get('content-type') || '';
         if (!contentType.includes('application/json')) {
           const text = await response.text();
           throw new Error(`Expected JSON, got ${contentType}: ${text}`);
         }
-  
+
         const data = await response.json();
         setImages(data);
-  
-        console.log("Fetched image data:", data);
-        if (data.length) {
-          console.log("Sample image URL:", data[0].url);
-        } else {
-          console.log("No images found.");
-        }
       } catch (err) {
         console.error('Failed to fetch gallery images:', err);
         setError(`Could not load images${category ? ` for "${category}"` : ''}.`);
       } finally {
         setIsLoading(false);
       }
+      console.log("Fetched image data:", images);
+if (images.length) {
+  console.log("Sample image URL:", data[0].url);
+} else {
+  console.log("No images found.");
+}
     };
-  
+
     fetchImages();
   }, [category]);
-  
 
   if (isLoading) return <p className="gallery-status">Loading images...</p>;
   if (error) return <p className="gallery-status error">{error}</p>;
