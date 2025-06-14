@@ -96,11 +96,17 @@ function PhotoPage() {
       <Nav />
       <div className="photo-page-container">
         <div className="photo-detail">
-          <img
-            src={photo.url}
-            alt={photo.title || photo.filename}
-            className="photo-detail-image"
-          />
+        <picture>
+  <source srcSet={photo.url} type="image/avif" />
+  <source srcSet={photo.url.replace('.avif', '.jpg')} type="image/jpeg" />
+  <img
+    src={photo.url.replace('.avif', '.jpg')}
+    alt={photo.title || photo.filename || 'Photography image'}
+    className="photo-detail-image"
+    loading="lazy"
+  />
+</picture>
+
           <div className="photo-metadata">
             {/* <h2>{photo.title || 'Untitled'}</h2> */}
             {/* <p className="photo-description">{photo.description || 'No description provided.'}</p> */}
