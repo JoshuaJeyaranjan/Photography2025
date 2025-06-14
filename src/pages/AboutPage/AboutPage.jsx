@@ -10,7 +10,7 @@ function AboutPage() {
         <div className="about-header">
           <h1>About Me</h1>
           <div className="profile-image-container">
-            <img className='about-image' src="https://r2-image-proxy.r2-image-proxy.workers.dev/me/me.jpg" alt="picture of photographer" />
+            <img className='about-image' src="https://r2-image-proxy.r2-image-proxy.workers.dev/me/me.avif" alt="picture of photographer" />
           </div>
         </div>
 
