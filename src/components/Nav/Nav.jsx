@@ -6,7 +6,12 @@ function Nav() {
   return (
     <div className="nav">
 <Link to='/portrait'>
-  <img src="https://r2-image-proxy.r2-image-proxy.workers.dev/logo/cameraIcon2.svg" alt="Camera Icon" className="nav__logo" />
+<img
+  src="https://assets.joshuajeyphotography.com/logo/cameraIcon2.svg"
+  alt="Camera Icon"
+  className="nav__logo"
+/>
+
 </Link>
       <Link to="/portrait" className="nav__text-link">
         <div className="nav__text">
