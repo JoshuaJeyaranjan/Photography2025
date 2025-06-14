@@ -17,7 +17,7 @@ function Photo({ id, src, alt, title }) {
           loading="lazy"
         />
       </picture>
-      {title && <div className="photo-title">{title}</div>}
+      
     </Link>
   );
 }
