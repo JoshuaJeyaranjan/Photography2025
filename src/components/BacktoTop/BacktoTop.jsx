@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./BackToTop.scss"; // We'll create this file next
+import "./BacktoTop.scss"; 
 
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,15 +31,11 @@ const BackToTop = () => {
 
   return (
     // Add 'visible' class to the container based on the state.
-    // The image is always in the DOM; CSS handles visibility and transitions.
+    // The button is always in the DOM; CSS handles visibility and transitions.
     <div className={`back-to-top ${isVisible ? "visible" : ""}`}>
-      <img
-        src="https://r2-image-proxy.r2-image-proxy.workers.dev/assets/up.svg"
-        alt="Back to top"
-        className="up-arrow-icon" // Changed class name for clarity
-        onClick={scrollToTop}
-        title="Go to top"
-      />
+      <button onClick={scrollToTop} title="Go to top">
+        <img src="" alt="back to top arrow" />
+      </button>
     </div>
   );
 };
