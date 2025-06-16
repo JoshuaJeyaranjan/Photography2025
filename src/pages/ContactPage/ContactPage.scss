@@ -7,7 +7,16 @@
     align-items: center;
     width: 80vw;
     align-self: center;
-    justify-self: center;
+    margin-left: 10vw;
+    &__content-wrapper {
+      justify-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;      // Ensures it takes full width up to max-width
+      margin: 0 auto;   // Centers the block horizontally
+      padding: 0 1rem; 
+    }
     
   
     &__title {
@@ -41,7 +50,7 @@
     .form-group {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: center;
       gap: 0.5rem;
       width: 100%;
     }
