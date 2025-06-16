@@ -52,17 +52,26 @@ if (images.length) {
     fetchImages();
   }, [category]);
 
-  if (isLoading) return <p className="gallery-status">Loading images...</p>;
+  if (isLoading) {
+    return (
+      <div className="gallery-loader-container">
+        {/* You can add a spinner or a simple animation here */}
+        <p className="gallery-status">Loading images...</p>
+      </div>
+    );
+  }
+
   if (error) return <p className="gallery-status error">{error}</p>;
   if (images.length === 0) return <p className="gallery-status">No images found{category ? ` in "${category}"` : ''}.</p>;
 
   return (
-    <div className="gallery-grid">
+    // Add a class to control fade-in once loaded
+    <div className={`gallery-grid ${!isLoading ? 'loaded' : ''}`}>
       {images.map(image => (
         <Photo
           key={image.id}
           id={image.id}
-          src={image.url}
+          src={image.url} // Ensure this is the correct property name from your API
           alt={image.description || image.filename || `Photo ${image.id}`}
           title={image.title || ''}
         />

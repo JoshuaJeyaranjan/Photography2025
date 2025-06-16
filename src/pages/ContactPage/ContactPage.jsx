@@ -64,23 +64,23 @@ function ContactPage() {
     <div className="contact-page">
       
     <div className="contact-page__content-wrapper">
-        <h1 className='contact-page__title'>Contact Me</h1>
-        <p className='contact-page__text'>Have a question or want to book a session? Fill out the form below.</p>
+        <h1 className='contact-page__title italiana-regular'>Contact Me</h1>
+        <p className='contact-page__text poppins-light'>Have a question or want to book a session? Fill out the form below.</p>
         
         <form onSubmit={handleSubmit} className="contact-form">
           <div className="form-group">
-            <label  htmlFor="name" className='contact-page__text' >Name:</label>
-            <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
+            <label  htmlFor="name" className='contact-page__text poppins-light' >Name:</label>
+            <input className='poppins-light' type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label htmlFor="email" className='contact-page__text'>Email:</label>
-            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+            <label htmlFor="email" className='contact-page__text poppins-light'>Email:</label>
+            <input className='poppins-light' type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
           </div>
           <div className="form-group">
-            <label htmlFor="message" className='contact-page__text'>Message:</label>
-            <textarea id="message" name="message" value={formData.message} onChange={handleChange} rows="5" required></textarea>
+            <label htmlFor="message" className='contact-page__text poppins-light'>Message:</label>
+            <textarea className='poppins-light' id="message" name="message" value={formData.message} onChange={handleChange} rows="5" required></textarea>
           </div>
-          <button type="submit" disabled={status === 'Sending...'}>Send Message</button>
+          <button className='poppins-light' type="submit" disabled={status === 'Sending...'}>Send Message</button>
         </form>
         {status && <p className="form-status">{status}</p>}
       </div>
