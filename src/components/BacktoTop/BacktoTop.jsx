@@ -33,8 +33,13 @@ const BackToTop = () => {
     // Add 'visible' class to the container based on the state.
     // The button is always in the DOM; CSS handles visibility and transitions.
     <div className={`back-to-top ${isVisible ? "visible" : ""}`}>
-      <button onClick={scrollToTop} title="Go to top">
-        <img src="" alt="back to top arrow" />
+      <button className="button" onClick={scrollToTop} title="Go to top">
+        <img 
+        className="back-to-top__icon" 
+        src="https://r2-image-proxy.r2-image-proxy.workers.dev/assets/up.svg" 
+        alt="back to top arrow"
+        
+         />
       </button>
     </div>
   );

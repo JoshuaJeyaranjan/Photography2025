@@ -2,7 +2,7 @@
 
 .back-to-top {
     position: fixed;
-    bottom: 75px;
+    bottom: 25px;
     right: 15px;
     z-index: 1000;
     cursor: pointer; // Make the whole area clickable if needed, or just the icon
@@ -12,6 +12,21 @@
     transform: translateY(20px); // Start slightly down for slide-in effect
     visibility: hidden; // Completely hide and make non-interactive
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+
+    &__icon {
+        cursor: pointer;
+        width: 2rem; // Or your desired size
+        height: 2rem; // Or your desired size
+        display: block; // Good for sizing images
+        background-color: rgba(240, 248, 255, 0.444);
+        // Add any hover effects, etc.
+        border: white;
+        
+        &:hover {
+          opacity: 1;
+          transform: scale(1.2);
+        }
+      }
     // Delay making it 'hidden' until after fade-out transition
     @include desktop {
         right: 20px;
@@ -36,12 +51,14 @@
       width: 32px;    // Set an explicit size for your SVG
       height: 32px;   // Set an explicit size for your SVG
       // If your SVG is not appearing, try setting a color here:
+      color: black;
       // color: #333; // This will affect the SVG if it uses 'currentColor' for fill
   
       // Optional: if you want a background or border on the icon itself
       // background-color: rgba(0,0,0,0.1);
       // border-radius: 50%;
       // padding: 8px;
+      
   
       &:hover {
         opacity: 0.7; // Example hover effect: slightly fade the icon
@@ -56,6 +73,9 @@
       transform: translateY(0); // Slide into place
       visibility: visible; // Make it visible and interactive
       transition-delay: 0s, 0s, 0s, 0s; // Ensure visibility transition is immediate for appearing
+      color: black;
+      border: red;
+
     }
   }
   // Media Queries
@@ -64,3 +84,12 @@
 // Styles here will apply to smaller screens.
 // Often, the base styles act as mobile-first, so you might not need a specific @media for mobile
 // unless you're overriding something from a larger screen's query.
+.button {
+    background-color: transparent;
+    
+    &__symbol{
+        color: black;
+        border: red;
+    }
+    
+}
