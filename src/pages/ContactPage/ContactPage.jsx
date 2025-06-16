@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ContactPage.scss'
 import Nav from '../../components/Nav/Nav'; // Assuming you want Nav here
 import Footer from '../../components/Footer/Footer'; // Assuming you want Footer here
-
+import BackToTop from '../../components/BacktoTop/BacktoTop';
 function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
@@ -60,7 +60,8 @@ function ContactPage() {
   return (
     <>
     <Nav />
-    <div className="contact-page">
+    
+    <main className="contact-page">
       
       <h1 className='contact-page__title'>Contact Me</h1>
       <p className='contact-page__text'>Have a question or want to book a session? Fill out the form below.</p>
@@ -82,7 +83,9 @@ function ContactPage() {
       </form>
       {status && <p className="form-status">{status}</p>}
       
-    </div>
+    </main>
+    <Footer/>
+    <BackToTop/>  
     </>
   );
 }
