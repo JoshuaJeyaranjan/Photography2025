@@ -18,13 +18,13 @@ function Nav() {
   return (
     <div className="nav">
       <Link className="nav__logo-link" to="/portrait">
-<h1 className="nav__logo">JJ</h1>
+<h1 className="nav__logo italiana-regular">JJ</h1>
 
       </Link>
       <Link to="/portrait" className="nav__main-link">
         <div className="nav__text">
-          <h2 className="nav__text">Joshua Jey</h2>
-          <h1>Photography</h1>
+          <h2 className="nav__text poppins-light">Joshua Jey</h2>
+          <h1 className="italiana-regular">Photography</h1>
         </div>
       </Link>
 
@@ -43,7 +43,7 @@ function Nav() {
         </NavLink>
         {/* <NavLink to='/portrait'>Portrait</NavLink> */}
         {/* <NavLink to='/street'>Street</NavLink> */}
-        <NavLink to="/about" className="nav__link" onClick={closeMobileMenu}>
+        <NavLink to="/about" className="nav__link " onClick={closeMobileMenu}>
           About
         </NavLink>
         {/* Instagram Link - also part of the mobile menu */}

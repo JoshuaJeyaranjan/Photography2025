@@ -31,5 +31,44 @@
     }
 }
 
+// In Gallery.scss
+
+.gallery-loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px; // Give it some space
+  width: 100%;
+  // background-color: rgba(240, 240, 240, 0.5); // Optional: very subtle background
+  .gallery-status {
+    font-size: 1.2rem;
+    color: #555;
+  }
+  // Add styles for a spinner if you include one
+}
+
+.gallery-grid {
+  // ... your existing grid styles (display: grid, gap, etc.)
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+
+  &.loaded {
+    opacity: 1;
+  }
+}
+
+.gallery-status {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #333;
+
+  &.error {
+    color: red;
+    font-weight: bold;
+  }
+}
+
+
 // You might want to add hover effects to .photo-link .photo-item img in Photo.scss
 // e.g., transform: scale(1.05);
