@@ -2,14 +2,23 @@ import React from 'react'
 import './PortraitPage.scss'
 import Gallery from '../../components/Gallery/Gallery'
 import Nav from '../../components/Nav/Nav'
+import Footer from '../../components/Footer/Footer'
+import BackToTop from '../../components/BacktoTop/BacktoTop'
+
 
 
 function PortraitPage() {
   return (
-    <div>
-        <Nav/>
+    <>
+     <Nav/>
+    <main>
+       
         <Gallery category={'portrait'}/>
-    </div>
+        
+        <Footer/>
+        <BackToTop/>
+    </main>
+    </>
   )
 }
 

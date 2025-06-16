@@ -1,0 +1,66 @@
+@use '../../styles/partials/mixins' as *; // Adjust if needed// /Users/joshuajeyaranjan/Desktop/photography2025/photography2025/src/components/BacktoTop/BackToTop.scss
+
+.back-to-top {
+    position: fixed;
+    bottom: 75px;
+    right: 15px;
+    z-index: 1000;
+    cursor: pointer; // Make the whole area clickable if needed, or just the icon
+    
+    // Initial state (hidden)
+    opacity: 0;
+    transform: translateY(20px); // Start slightly down for slide-in effect
+    visibility: hidden; // Completely hide and make non-interactive
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+    // Delay making it 'hidden' until after fade-out transition
+    @include desktop {
+        right: 20px;
+    }
+
+    @include tablet {
+        right: 10px;
+    }
+  
+    @include mobile {
+        right: 8px;
+    }
+    // For screens 1300px and wider
+// @media (min-width: 1300px) {
+//     .back-to-top {
+//         left: 1248px; // Calculated as 1300px (breakpoint) - 20px (original right) - 32px (icon width)
+//         // right: auto;
+//     }
+//     }
+    .up-arrow-icon {
+      display: block; // Good practice for images you want to size
+      width: 32px;    // Set an explicit size for your SVG
+      height: 32px;   // Set an explicit size for your SVG
+      // If your SVG is not appearing, try setting a color here:
+      // color: #333; // This will affect the SVG if it uses 'currentColor' for fill
+  
+      // Optional: if you want a background or border on the icon itself
+      // background-color: rgba(0,0,0,0.1);
+      // border-radius: 50%;
+      // padding: 8px;
+  
+      &:hover {
+        opacity: 0.7; // Example hover effect: slightly fade the icon
+        // Or, if you have a color set:
+        // color: #000; // Darken on hover
+      }
+    }
+  
+    // Styles for when the .back-to-top container has the .visible class
+    &.visible {
+      opacity: 1;
+      transform: translateY(0); // Slide into place
+      visibility: visible; // Make it visible and interactive
+      transition-delay: 0s, 0s, 0s, 0s; // Ensure visibility transition is immediate for appearing
+    }
+  }
+  // Media Queries
+
+// Mobile devices (e.g., up to 767px)
+// Styles here will apply to smaller screens.
+// Often, the base styles act as mobile-first, so you might not need a specific @media for mobile
+// unless you're overriding something from a larger screen's query.

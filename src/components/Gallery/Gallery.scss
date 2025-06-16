@@ -1,9 +1,11 @@
 @use '../../styles/partials/mixins' as *;
 
 .gallery-grid {
+  margin-top: 2rem;
+  padding:  0rem 2rem;
   display: grid;
-  gap: 16px;
-  padding: 16px;
+  gap: 1rem 2rem;
+  
 
   @include tablet {
     grid-template-columns: repeat(3, 1fr);
