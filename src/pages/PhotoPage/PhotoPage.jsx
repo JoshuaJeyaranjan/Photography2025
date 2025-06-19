@@ -120,17 +120,17 @@ function PhotoPage() {
             />
           </picture>
 
-          {/* <div className="photo-metadata"> */}
-          {/* <h2>{photo.title || 'Untitled'}</h2> */}
-          {/* <p className="photo-description">{photo.description || 'No description provided.'}</p> */}
+          <div className="photo-metadata">
+          
+          
           {/* Uncomment below to enable Stripe purchase */}
-          {/*
+          
             <button onClick={handlePurchase} className="purchase-button">
               Buy Print – ${photo.price || 25.00}
             </button>
             <p className="purchase-status">{purchaseStatus}</p>
-            */}
-          {/* </div> */}
+           
+          </div>
         </div>
       </div>
       
