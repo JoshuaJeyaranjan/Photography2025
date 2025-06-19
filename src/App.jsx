@@ -12,7 +12,8 @@ import SuccessPage from './pages/SuccessPage/SuccessPage'
 import AboutPage from './pages/AboutPage/AboutPage'
 import PrintsPage from './pages/PrintsPage/PrintsPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
-
+import CartPage from './pages/CartPage/CartPage'
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage'
 
 function App() {
 
@@ -31,6 +32,8 @@ function App() {
     <Route path='/payment-success' element={ <SuccessPage/>} />
     <Route path='/about' element={ <AboutPage/>} /> 
     <Route path='/prints' element={ <PrintsPage/>} />   
+    <Route path='/cart' element={ <CartPage/>} /> 
+    <Route path='/checkout' element={ <CheckoutPage/>} />   
     <Route path='*' element={ <NotFoundPage/>} />   
     </Routes>
     </BrowserRouter>
