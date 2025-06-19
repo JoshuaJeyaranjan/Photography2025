@@ -66,7 +66,7 @@ function PhotoPage() {
   const handlePurchase = async () => {
     if (!photo) return;
     setPurchaseStatus("Processing...");
-
+  
     try {
       const response = await fetch(
         `${API_BASE_URL}/api/stripe/create-checkout-session`,
@@ -74,19 +74,30 @@ function PhotoPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            itemId: photo.id,
-            itemName: photo.title || `Print of ${photo.filename}`,
-            itemPrice: photo.price || 25.0,
+            customer: {
+              name: "Guest",
+              email: "guest@example.com", // if you want to prompt for email later, replace this
+            },
+            items: [
+              {
+                id: photo.id,
+                name: photo.title || `Print of ${photo.filename}`,
+                price: photo.price || 40.0,
+                url: photo.url,
+                quantity: 1,
+              },
+            ],
           }),
         }
       );
-
-      if (!response.ok) throw new Error("Stripe session creation failed");
-
-      const { sessionId } = await response.json();
+  
+      const data = await response.json();
+  
+      if (!data.sessionId) throw new Error(data.error || "Missing sessionId");
+  
       const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({ sessionId });
-
+      const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+  
       if (error) {
         console.error("Stripe error:", error);
         setPurchaseStatus(`Payment failed: ${error.message}`);
@@ -96,6 +107,7 @@ function PhotoPage() {
       setPurchaseStatus(`Error: ${err.message}`);
     }
   };
+  
 
   // Status rendering
   if (isLoading)
