@@ -46,6 +46,9 @@ function Nav() {
         <NavLink to="/about" className="nav__link" onClick={closeMobileMenu}>
           About
         </NavLink>
+        <NavLink to="/prints" className="nav__link" onClick={closeMobileMenu}>
+          Prints
+        </NavLink>
         {/* Instagram Link - also part of the mobile menu */}
         <Link
           to="https://www.instagram.com/joshuajeyphotography"
