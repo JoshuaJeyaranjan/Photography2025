@@ -76,4 +76,69 @@
       color: red;
     }
   }
+  .cart-message {
+    margin-top: 0.5rem;
+    color: green;
+    font-weight: 500;
+    font-size: 1rem;
+    animation: fadeIn 0.3s ease;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+  }
   
+  // You can add these styles to your existing PhotoPage.scss file.
+// If .photo-page or .photo-metadata selectors already exist,
+// integrate these button styles within that existing structure.
+
+.purchase-button {
+  display: inline-block; // Allows buttons to sit side-by-side if space allows, or stack naturally
+  padding: 12px 24px;   // Comfortable padding inside the button
+  margin: 10px;         // Spacing around each button
+  font-size: 1rem;      // Standard font size
+  font-weight: 600;     // Make text slightly bolder
+  color: #ffffff;       // White text for contrast
+  background-color: #3498db; // A pleasant, modern blue
+  border: none;         // Remove default browser border
+  border-radius: 6px;   // Softly rounded corners
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none; // In case it's ever an <a> tag styled as a button
+  min-width: 160px;     // Ensures buttons have a decent minimum width
+  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease; // Smooth transitions for hover effects
+
+  &:hover {
+    background-color: #2980b9; // Darker shade of blue on hover
+    transform: translateY(-2px); // Subtle lift effect
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3); // Soft shadow, tinted with button color for a subtle glow
+  }
+
+  &:active {
+    background-color: #2471a3; // Even darker blue when button is pressed
+    transform: translateY(0px);  // Reset lift, giving a "pressed down" feel
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2); // Smaller shadow when active
+  }
+
+  // Modern accessibility-friendly focus state for keyboard navigation
+  &:focus-visible {
+    outline: 2px solid #2980b9; // Clear focus outline
+    outline-offset: 2px;       // Offset outline slightly from button edge
+    box-shadow: none;          // Optionally remove other shadows when focused with outline
+  }
+}
+
+// Optional: Consistent styling for status messages
+.purchase-status,
+.cart-message {
+  margin-top: 15px;
+  font-size: 0.9em;
+  text-align: center; // Center status messages if buttons are centered
+  color: #555;       // Default color for status
+}
+
+.cart-message {
+  color: #28a745;     // Green for success messages (e.g., "Added to cart!")
+  font-weight: 500;
+}

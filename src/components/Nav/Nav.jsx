@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Nav.scss";
 import { NavLink, Link } from "react-router-dom";
+import CartIcon from "../CartIcon/CartIcon";
+
 
 function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -46,6 +48,23 @@ function Nav() {
         <NavLink to="/about" className="nav__link " onClick={closeMobileMenu}>
           About
         </NavLink>
+        <NavLink to="/prints" className="nav__link" onClick={closeMobileMenu}>
+          Prints
+        </NavLink>
+        <Link
+          to="/cart"
+          className="nav__link nav__link--ig" // Add nav__link for consistent mobile styling
+          onClick={closeMobileMenu}
+          target="_blank" // Good practice for external links
+          rel="noopener noreferrer" // Security for target="_blank"
+        >
+          <img
+            src="https://r2-image-proxy.r2-image-proxy.workers.dev/assets/cart.svg"
+            alt="Cart"
+            className="nav__ig"
+          />
+        </Link>
+        
         {/* Instagram Link - also part of the mobile menu */}
         <Link
           to="https://www.instagram.com/joshuajeyphotography"
@@ -55,7 +74,7 @@ function Nav() {
           rel="noopener noreferrer" // Security for target="_blank"
         >
           <img
-            src="https://r2-image-proxy.r2-image-proxy.workers.dev/logo/cameraIcon2.svg"
+            src="https://r2-image-proxy.r2-image-proxy.workers.dev/assets/instagram.svg"
             alt="Instagram"
             className="nav__ig"
           />

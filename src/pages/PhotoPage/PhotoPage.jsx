@@ -17,6 +17,9 @@ function PhotoPage() {
   const navigate = useNavigate();
 
   const [photo, setPhoto] = useState(null);
+  const [cartStatus, setCartStatus] = useState("");
+  const [cartMessage, setCartMessage] = useState("");
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [purchaseStatus, setPurchaseStatus] = useState("");
@@ -43,6 +46,22 @@ function PhotoPage() {
 
     fetchPhoto();
   }, [id]);
+
+  function addToCart(item) {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Check if item already exists and update quantity
+    const existingItemIndex = cart.findIndex(
+      (cartItem) => cartItem.id === item.id
+    );
+    if (existingItemIndex !== -1) {
+      cart[existingItemIndex].quantity += item.quantity;
+    } else {
+      cart.push(item);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 
   const handlePurchase = async () => {
     if (!photo) return;
@@ -100,42 +119,56 @@ function PhotoPage() {
 
   return (
     <>
-    <Nav />
-    <div className="nav-buffer"></div>
-    <div className="photo-page">
-      
-      <div className="photo-page-container">
-        <div className="photo-detail">
-          <picture>
-            <source srcSet={photo.url} type="image/avif" />
-            <source
-              srcSet={photo.url.replace(".avif", ".jpg")}
-              type="image/jpeg"
-            />
-            <img
-              src={photo.url.replace(".avif", ".jpg")}
-              alt={photo.title || photo.filename || "Photography image"}
-              className="photo-detail-image"
-              loading="lazy"
-            />
-          </picture>
+      <Nav />
+      <div className="nav-buffer"></div>
+      <div className="photo-page">
+        <div className="photo-page-container">
+          <div className="photo-detail">
+            <picture>
+              <source srcSet={photo.url} type="image/avif" />
+              <source
+                srcSet={photo.url.replace(".avif", ".jpg")}
+                type="image/jpeg"
+              />
+              <img
+                src={photo.url.replace(".avif", ".jpg")}
+                alt={photo.title || photo.filename || "Photography image"}
+                className="photo-detail-image"
+                loading="lazy"
+              />
+            </picture>
 
-          {/* <div className="photo-metadata"> */}
-          {/* <h2>{photo.title || 'Untitled'}</h2> */}
-          {/* <p className="photo-description">{photo.description || 'No description provided.'}</p> */}
-          {/* Uncomment below to enable Stripe purchase */}
-          {/*
-            <button onClick={handlePurchase} className="purchase-button">
-              Buy Print – ${photo.price || 25.00}
-            </button>
-            <p className="purchase-status">{purchaseStatus}</p>
-            */}
-          {/* </div> */}
+            <div className="photo-metadata">
+              <div className="button-container">
+                <button onClick={handlePurchase} className="purchase-button">
+                  Buy Print – ${photo.price || 40.0}
+                </button>
+
+                <button
+                  onClick={() => {
+                    addToCart({
+                      id: photo.id,
+                      name: photo.title || `Print of ${photo.filename}`,
+                      price: photo.price || 25.0,
+                      url: photo.url,
+                      quantity: 1,
+                    });
+                    setCartMessage("Added to cart!");
+                    setTimeout(() => setCartMessage(""), 3000); // Clear message after 3s
+                  }}
+                  className="purchase-button"
+                >
+                  Add to Cart
+                </button>
+
+                <p className="purchase-status">{purchaseStatus}</p>
+                {cartMessage && <p className="cart-message">{cartMessage}</p>}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      
-    </div>
-    <Footer />
+      <Footer />
     </>
   );
 }
