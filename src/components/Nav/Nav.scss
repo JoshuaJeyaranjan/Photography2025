@@ -26,11 +26,21 @@
     text-decoration: none;
     color: black;
 
+
+
   }
 
   &__logo {
     border: none;
     color: black;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease, transform 0.2s ease; // Added transform to transition
+
+
+    &:hover:not(.active) { // Apply hover only if not already active to avoid conflicting styles
+      color: rgb(189, 189, 189); // Slightly darker or different shade on hover    
+      transform: translateY(-2px);
+      
+    }
   }
 
   // Centered nav text (e.g. Joshua Jey Photography)
@@ -42,6 +52,8 @@
     text-decoration: none;
     color: black;
     z-index: 999; // Above nav menu
+    transition: color 0.2s ease, text-decoration-color 0.2s ease, transform 0.2s ease; // Added transform to transition
+
   }
 
   &__text {
@@ -88,6 +100,7 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    
 
     // Mobile menu defaults
     @include mobile {
@@ -121,6 +134,21 @@
     text-decoration: none;
     font-weight: 100;
     font-size: 1rem;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease, transform 0.2s ease; // Added transform to transition
+    
+
+    &:hover:not(.active) { // Apply hover only if not already active to avoid conflicting styles
+      color: rgb(145, 143, 143); // Slightly darker or different shade on hover    
+      transform: translateY(-2px);
+      
+    }
+    
+    &.active {
+      color: #868686; // Example highlight color - choose one that fits your design
+      font-weight: bold; // Make the text bolder
+      text-decoration: underline;
+      text-underline-offset: 4px; // Optional: Adjust space between text and underline
+    }
 
     @include mobile {
       width: 100%;

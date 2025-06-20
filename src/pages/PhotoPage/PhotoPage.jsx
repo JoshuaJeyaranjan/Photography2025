@@ -63,51 +63,51 @@ function PhotoPage() {
     localStorage.setItem("cart", JSON.stringify(cart));
   }
 
-  const handlePurchase = async () => {
-    if (!photo) return;
-    setPurchaseStatus("Processing...");
-  
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/stripe/create-checkout-session`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            customer: {
-              name: "Guest",
-              email: "guest@example.com", // if you want to prompt for email later, replace this
+const handlePurchase = async () => {
+  if (!photo) return;
+  setPurchaseStatus("Processing...");
+
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/api/stripe/create-checkout-session`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: {
+            name: "Guest",
+            email: "guest@example.com", // if you want to prompt for email later, replace this
+          },
+          items: [
+            {
+              id: photo.id,
+              name: photo.title || `Print of ${photo.filename}`,
+              price: photo.price || 40.0,
+              url: photo.url,
+              quantity: 1,
             },
-            items: [
-              {
-                id: photo.id,
-                name: photo.title || `Print of ${photo.filename}`,
-                price: photo.price || 40.0,
-                url: photo.url,
-                quantity: 1,
-              },
-            ],
-          }),
-        }
-      );
-  
-      const data = await response.json();
-  
-      if (!data.sessionId) throw new Error(data.error || "Missing sessionId");
-  
-      const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
-  
-      if (error) {
-        console.error("Stripe error:", error);
-        setPurchaseStatus(`Payment failed: ${error.message}`);
+          ],
+        }),
       }
-    } catch (err) {
-      console.error("Purchase failed:", err);
-      setPurchaseStatus(`Error: ${err.message}`);
+    );
+
+    const data = await response.json();
+
+    if (!data.sessionId) throw new Error(data.error || "Missing sessionId");
+
+    const stripe = await stripePromise;
+    const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+
+    if (error) {
+      console.error("Stripe error:", error);
+      setPurchaseStatus(`Payment failed: ${error.message}`);
     }
-  };
-  
+  } catch (err) {
+    console.error("Purchase failed:", err);
+    setPurchaseStatus(`Error: ${err.message}`);
+  }
+};
+
 
   // Status rendering
   if (isLoading)
