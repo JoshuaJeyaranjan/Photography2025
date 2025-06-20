@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './CartIcon.scss'
 
-const BUCKET_URL = process.meta.env.VITE_BUCKET_URL
+const BUCKET_URL = import.meta.env.VITE_BUCKET_URL
 
 
 const CartIcon = () => {

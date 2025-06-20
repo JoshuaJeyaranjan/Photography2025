@@ -16,7 +16,7 @@ function Nav() {
     setIsMobileMenuOpen(false);
   };
 
-  const BUCKET_URL = process.meta.env.VITE_BUCKET_URL
+  const BUCKET_URL = import.meta.env.VITE_BUCKET_URL
 
 
   return (
