@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./BacktoTop.scss"; 
 
+const BUCKET_URL = process.meta.env.VITE_BUCKET_URL
+
 const BackToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -36,7 +38,7 @@ const BackToTop = () => {
       <button className="button" onClick={scrollToTop} title="Go to top">
         <img 
         className="back-to-top__icon" 
-        src="https://r2-image-proxy.r2-image-proxy.workers.dev/assets/up.svg" 
+        src={`${BUCKET_URL}/assets/up.svg`} 
         alt="back to top arrow"
         
          />
