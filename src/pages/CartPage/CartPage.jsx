@@ -106,7 +106,7 @@ const CartPage = () => {
                   />
 
                   <div className="cart-details">
-                    <h2>{item.name}</h2>
+                    {/* <h2>{item.name}</h2> */}
                     <p>
                       $
                       {typeof item.price === "number"

@@ -55,7 +55,7 @@
 
   .cart-image {
     width: 150px;
-    height: 150px;
+    height: 200px;
     object-fit: cover;
     border-right: 1px solid #ddd;
   }
@@ -210,4 +210,8 @@
   border-radius: 4px;
   margin-bottom: 15px; // Space below the error message
   text-align: center;
+}
+
+.quantity {
+    color: black ;
 }
