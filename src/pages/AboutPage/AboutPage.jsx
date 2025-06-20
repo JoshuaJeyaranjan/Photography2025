@@ -4,6 +4,8 @@ import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 import BackToTop from '../../components/BacktoTop/BacktoTop';
 
+const BUCKET_URL = import.meta.env.VITE_BUCKET_UTL
+
 function AboutPage() {
   return (
     <>
@@ -15,7 +17,7 @@ function AboutPage() {
             <div className="profile-image-container">
               <img
                 className="about-image"
-                src="https://r2-image-proxy.r2-image-proxy.workers.dev/me/me.avif"
+                src={`${BUCKET_URL}/me/me.avif`}
                 alt="picture of photographer"
               />
             </div>

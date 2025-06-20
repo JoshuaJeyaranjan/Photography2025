@@ -16,6 +16,8 @@ function Nav() {
     setIsMobileMenuOpen(false);
   };
 
+  const BUCKET_URL = process.meta.env.VITE_BUCKET_URL
+
 
   return (
     <div className="nav">
@@ -59,7 +61,7 @@ function Nav() {
           rel="noopener noreferrer" // Security for target="_blank"
         >
           <img
-            src="https://r2-image-proxy.r2-image-proxy.workers.dev/assets/cart.svg"
+            src={`${BUCKET_URL}/assets/cart.svg`}
             alt="Cart"
             className="nav__ig"
           />
@@ -74,7 +76,7 @@ function Nav() {
           rel="noopener noreferrer" // Security for target="_blank"
         >
           <img
-            src="https://r2-image-proxy.r2-image-proxy.workers.dev/assets/instagram.svg"
+            src={`${BUCKET_URL}/assets/instagram.svg`}
             alt="Instagram"
             className="nav__ig"
           />
