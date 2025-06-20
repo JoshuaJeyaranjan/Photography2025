@@ -13,7 +13,7 @@ function PortraitPage() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 250); // Loader visible for 250ms
+    }, 350); // Loader visible for 250ms
 
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);

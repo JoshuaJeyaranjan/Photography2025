@@ -57,8 +57,8 @@ function Nav() {
           to="/cart"
           className="nav__link nav__link--ig" // Add nav__link for consistent mobile styling
           onClick={closeMobileMenu}
-          target="_blank" // Good practice for external links
-          rel="noopener noreferrer" // Security for target="_blank"
+          
+          
         >
           <img
             src={`${BUCKET_URL}/assets/cart.svg`}
