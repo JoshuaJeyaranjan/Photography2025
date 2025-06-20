@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom"; // Import Link
 import { loadStripe } from "@stripe/stripe-js";
 import "./PhotoPage.scss";
 import Nav from "../../components/Nav/Nav";
@@ -161,7 +161,7 @@ const handlePurchase = async () => {
                     addToCart({
                       id: photo.id,
                       name: photo.title || `Print of ${photo.filename}`,
-                      price: photo.price || 25.0,
+                      price: photo.price !== undefined ? parseFloat(photo.price) : 40.0, // Only fallback if price is truly undefined
                       url: photo.url,
                       quantity: 1,
                     });
@@ -175,6 +175,11 @@ const handlePurchase = async () => {
 
                 <p className="purchase-status">{purchaseStatus}</p>
                 {cartMessage && <p className="cart-message">{cartMessage}</p>}
+                {cartMessage && ( // Conditionally render Checkout button when cartMessage is active
+                  <Link to="/cart" className="purchase-button checkout-now-button">
+                    Checkout Now
+                  </Link>
+                )}
               </div>
             </div>
           </div>
