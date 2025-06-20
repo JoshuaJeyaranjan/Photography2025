@@ -6,7 +6,9 @@ import { Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 
 const CartPage = () => {
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState([]);
+  const [customer, setCustomer] = useState({ name: "", email: "" });
+  const [checkoutError, setCheckoutError] = useState(""); // State for checkout-specific errors
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -40,32 +42,38 @@ const CartPage = () => {
 
   const handleCheckout = async () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
+
+    if (!customer.name || !customer.email) {
+      setCheckoutError("Please enter your name and email before continuing to payment.");
+      return;
+    }
+    setCheckoutError(""); // Clear any previous error
+
     try {
-      const response = await fetch("https://photography2025server.onrender.com/api/stripe/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customer: { name: "Guest", email: "guest@example.com" },
-          items: cart,
-        }),
-      });
-  
+      const response = await fetch(
+        "https://photography2025server.onrender.com/api/stripe/create-checkout-session",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ customer, items: cart }),
+        }
+      );
+
       const data = await response.json();
       console.log("Stripe session response:", data);
-  
+
       if (!data.sessionId) throw new Error(data.error || "Missing sessionId");
-  
-      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+      const stripe = await loadStripe(
+        import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+      );
       await stripe.redirectToCheckout({ sessionId: data.sessionId });
     } catch (err) {
       console.error("Checkout error:", err);
+      setCheckoutError(err.message || "An unexpected error occurred during checkout.");
     }
-    console.log("Sending to Stripe:", {
-        customer: { name: "Guest", email: "guest@example.com" },
-        items: cart
-      });
-      
+
+    console.log("Sending to Stripe:", { customer, items: cart });
   };
 
   return (
@@ -76,7 +84,12 @@ const CartPage = () => {
         <h1>Your Cart</h1>
 
         {cart.length === 0 ? (
-          <p className="empty-cart">Your cart is empty.</p>
+          <div className="empty-cart-container">
+            <p className="empty-cart">Your cart is empty.</p>
+            <Link to="/home" className="cart-page-button back-to-home-button">
+              Back to Home
+            </Link>
+          </div>
         ) : (
           <>
             <div className="cart-items">
@@ -104,7 +117,7 @@ const CartPage = () => {
                       <button onClick={() => changeQuantity(item.id, -1)}>
                         -
                       </button>
-                      <span className="quantity" >{item.quantity}</span>
+                      <span className="quantity">{item.quantity}</span>
                       <button onClick={() => changeQuantity(item.id, 1)}>
                         +
                       </button>
@@ -121,7 +134,30 @@ const CartPage = () => {
               ))}
             </div>
 
+
             <div className="cart-summary">
+
+            <div className="customer-info">
+              <input
+                type="text"
+                placeholder="Name"
+                value={customer.name}
+                onChange={(e) =>
+                  setCustomer({ ...customer, name: e.target.value })
+                }
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={customer.email}
+                onChange={(e) =>
+                  setCustomer({ ...customer, email: e.target.value })
+                }
+                required
+              />
+            </div>
+              {checkoutError && <p className="checkout-error-message">{checkoutError}</p>}
               <h2>Cart Total: ${totalPrice.toFixed(2)}</h2>
               <button onClick={handleCheckout} className="checkout-button">
                 Continue to Payment

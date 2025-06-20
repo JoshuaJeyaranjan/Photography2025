@@ -100,7 +100,7 @@
   font-size: 1rem;      // Standard font size
   font-weight: 600;     // Make text slightly bolder
   color: #ffffff;       // White text for contrast
-  background-color: #3498db; // A pleasant, modern blue
+  background-color: #949494; // A pleasant, modern blue
   border: none;         // Remove default browser border
   border-radius: 6px;   // Softly rounded corners
   cursor: pointer;
@@ -110,7 +110,7 @@
   transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease; // Smooth transitions for hover effects
 
   &:hover {
-    background-color: #2980b9; // Darker shade of blue on hover
+    background-color: #cecece; // Darker shade of blue on hover
     transform: translateY(-2px); // Subtle lift effect
     box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3); // Soft shadow, tinted with button color for a subtle glow
   }
