@@ -4,7 +4,7 @@ import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 import BackToTop from '../../components/BacktoTop/BacktoTop';
 
-const BUCKET_URL = import.meta.env.VITE_BUCKET_UTL
+const BUCKET_URL = import.meta.env.VITE_BUCKET_URL
 
 function AboutPage() {
   return (
