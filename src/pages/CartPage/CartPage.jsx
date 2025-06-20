@@ -59,7 +59,7 @@ const CartPage = () => {
 
     try {
       const response = await fetch(
-        "https://photography2025server.onrender.com/api/stripe/create-checkout-session",
+        "https://photography-docker.onrender.com/api/stripe/create-checkout-session",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
