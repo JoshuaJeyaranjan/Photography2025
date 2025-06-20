@@ -152,9 +152,9 @@ const handlePurchase = async () => {
 
             <div className="photo-metadata">
               <div className="button-container">
-                <button onClick={handlePurchase} className="purchase-button">
+                {/* <button onClick={handlePurchase} className="purchase-button">
                   Buy Print – ${photo.price || 40.0}
-                </button>
+                </button> */}
 
                 <button
                   onClick={() => {
