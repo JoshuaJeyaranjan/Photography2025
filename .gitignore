@@ -28,16 +28,6 @@ dist-ssr
 .CFUserTextEncoding
 .localized
 
-# macOS folders
-Applications/
-Documents/
-Downloads/
-Library/
-Movies/
-Music/
-Pictures/
-Public/
-Sites/
 
 # Shell & CLI
 .zsh_history
@@ -62,17 +52,3 @@ Sites/
 node_modules/
 package-lock.json
 
-# Project-specific folders you don’t want in this repo
-New-Photo-Portfolio/
-OA Content/
-SEPortfolio-Server/
-SEPortfolio/
-Tuner/
-caf/
-code/
-f/
-loyal-server/
-neetcode150/
-photography2025Server/
-portfolio/
-industry-project-app/

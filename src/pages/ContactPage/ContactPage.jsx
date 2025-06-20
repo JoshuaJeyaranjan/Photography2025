@@ -19,7 +19,7 @@ function ContactPage() {
     }));
   };
 
-  const API_BASE_URL = 'https://photography2025server.onrender.com/api';
+  const API_BASE_URL = 'https://photography-docker.onrender.com/api';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
