@@ -6,7 +6,7 @@ import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
 
 // Use environment variables for flexibility between dev/staging/prod
-const API_BASE_URL = "https://photography2025server.onrender.com";
+const API_BASE_URL = "https://photography-docker.onrender.com";
 const STRIPE_PUBLISHABLE_KEY =
   import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ||
   "pk_test_YOUR_STRIPE_PUBLISHABLE_KEY";

@@ -24,7 +24,7 @@ function CheckoutPage() {
 
     setIsLoading(true);
     try {
-      const response = await fetch('https://photography2025server.onrender.com/api/stripe/create-checkout-session', {
+      const response = await fetch('https://photography-docker.onrender.com/api/stripe/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ customer, items: cartItems })
