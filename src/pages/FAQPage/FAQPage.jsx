@@ -1,5 +1,5 @@
 import React from 'react';
-import './FaqPage.scss';
+import './FAQPage.scss';
 import Nav from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 import BackToTop from '../../components/BacktoTop/BacktoTop';
