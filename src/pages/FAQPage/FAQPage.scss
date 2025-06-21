@@ -1,0 +1,43 @@
+.faq-page {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    color: #333;
+    padding-bottom: 0rem;
+
+    .faq-content {
+        padding-top: 80px; // Adjust based on Nav height
+        padding-bottom: 4rem;
+    }
+
+    .faq-header {
+        text-align: center;
+        margin-bottom: 3rem;
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .faq-item {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1.5rem;
+
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+    }
+}
