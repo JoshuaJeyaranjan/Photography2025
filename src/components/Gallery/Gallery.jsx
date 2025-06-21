@@ -7,7 +7,7 @@ function Gallery({ category }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API_BASE_URL = 'https://photography2025server.onrender.com/api';
+  const API_BASE_URL = 'https://photography-docker.onrender.com/api';
 
   useEffect(() => {
     const fetchImages = async () => {
