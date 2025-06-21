@@ -14,6 +14,10 @@ import PrintsPage from './pages/PrintsPage/PrintsPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 import CartPage from './pages/CartPage/CartPage'
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage'
+import TermsPage from './pages/TermsPage/TermsPage'
+import FAQPage from './pages/FAQPage/FAQPage'
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage'
+import CustomerServicePage from './pages/CustomerServicePage/CustomerServicePage'
 
 function App() {
 
@@ -33,7 +37,12 @@ function App() {
     <Route path='/about' element={ <AboutPage/>} /> 
     <Route path='/prints' element={ <PrintsPage/>} />   
     <Route path='/cart' element={ <CartPage/>} /> 
-    <Route path='/checkout' element={ <CheckoutPage/>} />   
+    <Route path='/checkout' element={ <CheckoutPage/>} />  
+<Route path='/privacy-policy' element={ <PrivacyPolicyPage/>} />
+    <Route path='/terms' element={ <TermsPage/>} /> 
+    <Route path='/faq' element={ <FAQPage/>} /> 
+    <Route path='/privacy-policy' element={ <PrivacyPolicyPage/>} /> 
+    <Route path='/customer-care' element={ <CustomerServicePage/>} /> 
     <Route path='*' element={ <NotFoundPage/>} />   
     </Routes>
     </BrowserRouter>
