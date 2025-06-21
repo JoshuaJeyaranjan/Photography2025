@@ -50,13 +50,19 @@ const CartPage = () => {
 
   const handleCheckout = async () => {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+  
     if (!customer.name || !customer.email) {
+      console.warn("Missing customer details:", customer);
       setCheckoutError("Please enter your name and email before continuing to payment.");
       return;
     }
+  
     setCheckoutError(""); // Clear any previous error
-
+  
+    console.log("🛒 Preparing checkout with:");
+    console.log("Customer:", customer);
+    console.log("Cart items:", cart);
+  
     try {
       const response = await fetch(
         "https://photography2025server.onrender.com/api/stripe/create-checkout-session",
@@ -66,22 +72,19 @@ const CartPage = () => {
           body: JSON.stringify({ customer, items: cart }),
         }
       );
-
+  
       const data = await response.json();
-      console.log("Stripe session response:", data);
-
+      console.log("🎟️ Stripe session response:", data);
+  
       if (!data.sessionId) throw new Error(data.error || "Missing sessionId");
-
-      const stripe = await loadStripe(
-        import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
-      );
+  
+      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+      console.log("🚀 Redirecting to Stripe with session ID:", data.sessionId);
       await stripe.redirectToCheckout({ sessionId: data.sessionId });
     } catch (err) {
-      console.error("Checkout error:", err);
+      console.error("❌ Checkout error:", err);
       setCheckoutError(err.message || "An unexpected error occurred during checkout.");
     }
-
-    console.log("Sending to Stripe:", { customer, items: cart });
   };
 
   return (
