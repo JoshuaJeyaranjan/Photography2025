@@ -243,3 +243,57 @@
     background-color: rgb(203, 203, 203);
     color: white;
   }
+
+// Suggested styles for CartPage.scss
+
+.customer-info {
+  // This ensures the select dropdown has the same base styles as your other inputs.
+  select.input {
+    // Reset browser-specific appearance to allow for custom styling
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    // Add a custom dropdown arrow.
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem; // Make space for the arrow
+    cursor: pointer;
+  }
+}
+
+.cart-summary {
+  .cart-totals {
+    width: 100%;
+    margin: 1.5rem 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+    color: black;
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+
+      span:first-child {
+        color: #555; // A slightly lighter color for the label
+      }
+    }
+
+    .grand-total {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #ccc;
+      font-size: 1.25rem;
+    }
+  }
+
+  .checkout-button {
+    width: 100%; // Make the button full-width within the summary
+    margin-top: 1rem;
+  }
+}
