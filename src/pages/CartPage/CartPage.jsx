@@ -10,6 +10,12 @@ const CartPage = () => {
   const [customer, setCustomer] = useState({ name: "", email: "" });
   const [checkoutError, setCheckoutError] = useState(""); // State for checkout-specific errors
   const [isLoading, setIsLoading] = useState(true);
+  const [shippingRate, setShippingRate] = useState(null);
+  const TAX_RATE = 0.13;
+  const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+const shipping = shippingRate ? shippingRate.amount / 100 : 0;
+const tax = +(subtotal * TAX_RATE).toFixed(2);
+const total = +(subtotal + shipping + tax).toFixed(2);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -69,7 +75,12 @@ const CartPage = () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ customer, items: cart }),
+          body: JSON.stringify({ 
+            customer, 
+            items: cart, 
+            shipping_rate: shippingRate?.id,
+            tax_rate: TAX_RATE,
+          }),
         }
       );
   
@@ -123,7 +134,7 @@ const CartPage = () => {
                   />
 
                   <div className="cart-details">
-                    {/* <h2>{item.name}</h2> */}
+                    <h2>{item.size}</h2>
                     <p>
                       $
                       {typeof item.price === "number"
@@ -175,9 +186,45 @@ const CartPage = () => {
                 }
                 required
               />
+              <select
+                className="input"
+                required
+                value={shippingRate ? `${shippingRate.id},${shippingRate.amount}` : ""}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (!value) {
+                    setShippingRate(null);
+                    return;
+                  }
+                  const [id, amount] = value.split(",");
+                  setShippingRate({ id, amount: parseInt(amount, 10) });
+                }}
+              >
+                <option value="" disabled>Select Shipping</option>
+                <option value="shr_1RdbnaEydtOSnncEaokiE8S8,1900">Standard Shipping - $19.00</option>
+                <option value="shr_1RdboDEydtOSnncE8l44b0Qw,3000">Express Shipping - $30.00</option>
+                <option value="shr_1RdbrtEydtOSnncE4YETfhK8,4000">International Shipping - $40.00</option>
+              </select>
             </div>
               {checkoutError && <p className="checkout-error-message">{checkoutError}</p>}
-              <h2>Cart Total: ${totalPrice.toFixed(2)}</h2>
+              <div className="cart-totals">
+                <div className="summary-row">
+                  <span>Subtotal</span>
+                  <span>${subtotal.toFixed(2)}</span>
+                </div>
+                <div className="summary-row">
+                  <span>Shipping</span>
+                  <span>${shipping.toFixed(2)}</span>
+                </div>
+                <div className="summary-row">
+                  <span>Tax ({(TAX_RATE * 100).toFixed(0)}%)</span>
+                  <span>${tax.toFixed(2)}</span>
+                </div>
+                <div className="summary-row grand-total">
+                  <strong>Total</strong>
+                  <strong>${total.toFixed(2)}</strong>
+                </div>
+              </div>
               <button onClick={handleCheckout} className="checkout-button">
                 Continue to Payment
               </button>

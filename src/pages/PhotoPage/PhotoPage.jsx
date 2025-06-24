@@ -19,11 +19,13 @@ function PhotoPage() {
   const [photo, setPhoto] = useState(null);
   const [cartStatus, setCartStatus] = useState("");
   const [cartMessage, setCartMessage] = useState("");
-
+  const [sizes, setSizes] = useState([]);
+  const [selectedSize, setSelectedSize] = useState(sizes[null]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [purchaseStatus, setPurchaseStatus] = useState("");
 
+  // Fetch photo details
   useEffect(() => {
     const fetchPhoto = async () => {
       setIsLoading(true);
@@ -47,67 +49,91 @@ function PhotoPage() {
     fetchPhoto();
   }, [id]);
 
+  // Fetch sizes
+  useEffect(() => {
+    const fetchSizes = async () => {
+      const res = await fetch(`${API_BASE_URL}/api/print/print-sizes`);
+      const data = await res.json();
+      setSizes(data);
+      setSelectedSize(data[0]); // default
+    };
+    fetchSizes();
+  }, []);
+
   function addToCart(item) {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    // Check if item already exists and update quantity
+  
+    // Match by image ID and print size ID to treat different sizes as unique items
     const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.id === item.id
+      (cartItem) =>
+        cartItem.id === item.id &&
+        cartItem.print_size_id === item.print_size_id
     );
+  
     if (existingItemIndex !== -1) {
       cart[existingItemIndex].quantity += item.quantity;
     } else {
-      cart.push(item);
+      cart.push({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        url: item.url,
+        quantity: item.quantity,
+        print_size_id: item.print_size_id, // ✅ backend requires this
+        size: item.size,                   // ✅ UI display (e.g. "16x24")
+        preview_url: item.preview_url || null, // optional preview image
+      });
     }
-
+  
     localStorage.setItem("cart", JSON.stringify(cart));
   }
 
-const handlePurchase = async () => {
-  if (!photo) return;
-  setPurchaseStatus("Processing...");
+  const handlePurchase = async () => {
+    if (!photo) return;
+    setPurchaseStatus("Processing...");
 
-  try {
-    const response = await fetch(
-      `${API_BASE_URL}/api/stripe/create-checkout-session`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customer: {
-            name: "Guest",
-            email: "guest@example.com", // if you want to prompt for email later, replace this
-          },
-          items: [
-            {
-              id: photo.id,
-              name: photo.title || `Print of ${photo.filename}`,
-              price: photo.price || 40.0,
-              url: photo.url,
-              quantity: 1,
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/api/stripe/create-checkout-session`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            customer: {
+              name: "Guest",
+              email: "guest@example.com", // if you want to prompt for email later, replace this
             },
-          ],
-        }),
+            items: [
+              {
+                id: photo.id,
+                name: photo.title || `Print of ${photo.filename}`,
+                price: photo.price || 40.0,
+                url: photo.url,
+                quantity: 1,
+              },
+            ],
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!data.sessionId) throw new Error(data.error || "Missing sessionId");
+
+      const stripe = await stripePromise;
+      const { error } = await stripe.redirectToCheckout({
+        sessionId: data.sessionId,
+      });
+
+      if (error) {
+        console.error("Stripe error:", error);
+        setPurchaseStatus(`Payment failed: ${error.message}`);
       }
-    );
-
-    const data = await response.json();
-
-    if (!data.sessionId) throw new Error(data.error || "Missing sessionId");
-
-    const stripe = await stripePromise;
-    const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
-
-    if (error) {
-      console.error("Stripe error:", error);
-      setPurchaseStatus(`Payment failed: ${error.message}`);
+    } catch (err) {
+      console.error("Purchase failed:", err);
+      setPurchaseStatus(`Error: ${err.message}`);
     }
-  } catch (err) {
-    console.error("Purchase failed:", err);
-    setPurchaseStatus(`Error: ${err.message}`);
-  }
-};
-
+  };
 
   // Status rendering
   if (isLoading)
@@ -156,14 +182,37 @@ const handlePurchase = async () => {
                   Buy Print – ${photo.price || 40.0}
                 </button> */}
 
+                <div className="print-sizes">
+                  {sizes.map((size) => (
+                    <button
+                      key={size.id}
+                      className={`size-button ${
+                        selectedSize?.id === size.id ? "selected" : ""
+                      }`}
+                      onClick={() => setSelectedSize(size)}
+                    >
+                      <img
+                        src={size.preview_url}
+                        alt={size.label}
+                        className="preview-img"
+                      />
+                      <div>
+                        {size.label} – ${parseFloat(size.price).toFixed(2)}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
                 <button
                   onClick={() => {
                     addToCart({
                       id: photo.id,
                       name: photo.title || `Print of ${photo.filename}`,
-                      price: photo.price !== undefined ? parseFloat(photo.price) : 40.0, // Only fallback if price is truly undefined
+                      price: parseFloat(selectedSize.price),
                       url: photo.url,
                       quantity: 1,
+                      size: selectedSize.label,
+                      print_size_id: selectedSize.id,
                     });
                     setCartMessage("Added to cart!");
                     setTimeout(() => setCartMessage(""), 3000); // Clear message after 3s
@@ -172,11 +221,25 @@ const handlePurchase = async () => {
                 >
                   Add to Cart
                 </button>
+                {selectedSize && (
+                  <div className="selected-info">
+                    <p>
+                      <strong>Selected Size:</strong> {selectedSize.label}
+                    </p>
+                    <p>
+                      <strong>Price:</strong> $
+                      {parseFloat(selectedSize.price).toFixed(2)}
+                    </p>
+                  </div>
+                )}
 
                 <p className="purchase-status">{purchaseStatus}</p>
                 {cartMessage && <p className="cart-message">{cartMessage}</p>}
                 {cartMessage && ( // Conditionally render Checkout button when cartMessage is active
-                  <Link to="/cart" className="purchase-button checkout-now-button">
+                  <Link
+                    to="/cart"
+                    className="purchase-button checkout-now-button"
+                  >
                     Checkout Now
                   </Link>
                 )}

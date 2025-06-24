@@ -37,3 +37,20 @@
 .photo-thumbnail:hover {
   transform: scale(1.02);
 }
+.size-button {
+  border: 1px solid #ccc;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background: white;
+  cursor: pointer;
+  &.selected {
+    border: 2px solid #000;
+    background-color: #f0f0f0;
+  }
+
+  .preview-img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }
+}
