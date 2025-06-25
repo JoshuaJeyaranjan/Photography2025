@@ -107,7 +107,7 @@
   cursor: pointer;
   text-align: center;
   text-decoration: none; // In case it's ever an <a> tag styled as a button
-  min-width: 160px;     // Ensures buttons have a decent minimum width
+  min-width: 2rem;     // Ensures buttons have a decent minimum width
   transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease; // Smooth transitions for hover effects
 
   &:hover {

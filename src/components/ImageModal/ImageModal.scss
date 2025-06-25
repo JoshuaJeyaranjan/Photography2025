@@ -1,56 +1,77 @@
 .image-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  z-index: 1001;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+  cursor: pointer;
+
+  // --- Mobile-first behavior: Center and contain ---
+  align-items: center;
+  padding: 1rem; // Minimal padding for mobile
+  box-sizing: border-box;
+
+  // --- Desktop override: Align top and allow scroll ---
+  @media (min-width: 768px) {
+    align-items: flex-start;
     overflow-y: auto;
-    z-index: 1001; // Ensure it's above other content like the nav
-    opacity: 0;
-    animation: fadeIn 0.3s forwards;
-    cursor: pointer;
+    padding: 3rem;
   }
-  
-  .image-modal-content {
-    position: relative;
-    max-width: 95vw;
-    
-    cursor: default;
-    transform: scale(0.95);
-    animation: zoomIn 0.3s forwards;
+}
+
+.image-modal-content {
+  position: relative;
+  cursor: default;
+  transform: scale(0.95);
+  animation: zoomIn 0.3s forwards;
+  // Let the image inside dictate the size and prevent extra space
+  line-height: 0;
+}
+
+.image-modal-image {
+  display: block;
+  border-radius: 4px;
+
+  // --- Mobile-first behavior: Contain within viewport ---
+  // This is the most robust way to contain an image proportionally.
+  // The browser will scale the image down until BOTH conditions are met.
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 100%;
+  min-width: 100%;
+
+  // width and height are implicitly 'auto', which is what we want.
+
+  // --- Desktop override: Allow full height for scrolling ---
+  @media (min-width: 768px) {
+    max-height: none; // Remove the height constraint
   }
-  
-  .image-modal-image {
-    display: block;
-    width: 100%;
-    height: 90vh;
-    border-radius: 4px;
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  color: #fff;
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1002;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: #ccc;
   }
-  
-  .image-modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    color: #fff;
-    font-size: 3rem;
-    font-weight: 300;
-    line-height: 1;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 1002;
-    transition: color 0.2s ease-in-out;
-  
-    &:hover {
-      color: #ccc;
-    }
-  }
-  
-  @keyframes fadeIn { to { opacity: 1; } }
-  @keyframes zoomIn { to { transform: scale(1); } }
-  
-  
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes zoomIn { to { transform: scale(1); } }
