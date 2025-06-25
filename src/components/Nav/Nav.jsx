@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./Nav.scss";
-import { NavLink, Link } from "react-router-dom";
-import CartIcon from "../CartIcon/CartIcon";
-
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -16,73 +17,89 @@ function Nav() {
     setIsMobileMenuOpen(false);
   };
 
+  const handleLogout = () => {
+    logout();
+    closeMobileMenu();
+    navigate("/"); // Redirect home after logout
+  };
+
   const BUCKET_URL = import.meta.env.VITE_BUCKET_URL
 
 
   return (
-    <div className="nav">
-      <Link className="nav__logo-link" to="/portrait">
-<h1 className="nav__logo italiana-regular">JJ</h1>
-
-      </Link>
-      <Link to="/portrait" className="nav__main-link">
-        <div className="nav__text">
-          <h2 className="nav__text poppins-light">Joshua Jey</h2>
-          <h1 className="italiana-regular">Photography</h1>
-        </div>
-      </Link>
-
-      {/* Hamburger Icon - visible only on mobile via CSS */}
-      <button className="nav__hamburger" onClick={toggleMobileMenu} aria-label="Toggle menu" aria-expanded={isMobileMenuOpen}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-      {/* Navigation Links Container - gets --open class when menu is active */}
-      <div className={`nav__links ${isMobileMenuOpen ? "nav__links--open" : ""}`}>
-        {/* <NavLink to='/'>Home</NavLink> */}
-        <NavLink to="/contact" className="nav__link" onClick={closeMobileMenu}>
-          Contact
-        </NavLink>
-        {/* <NavLink to='/portrait'>Portrait</NavLink> */}
-        {/* <NavLink to='/street'>Street</NavLink> */}
-        <NavLink to="/about" className="nav__link " onClick={closeMobileMenu}>
-          About
-        </NavLink>
-        <NavLink to="/prints" className="nav__link" onClick={closeMobileMenu}>
-          Prints
-        </NavLink>
-        <Link
-          to="/cart"
-          className="nav__link nav__link--ig" // Add nav__link for consistent mobile styling
-          onClick={closeMobileMenu}
-          
-          
-        >
-          <img
-            src={`${BUCKET_URL}/assets/cart.svg`}
-            alt="Cart"
-            className="nav__ig"
-          />
-        </Link>
-        
-        {/* Instagram Link - also part of the mobile menu */}
-        <Link
-          to="https://www.instagram.com/joshuajeyphotography"
-          className="nav__link nav__link--ig" // Add nav__link for consistent mobile styling
-          onClick={closeMobileMenu}
-          target="_blank" // Good practice for external links
-          rel="noopener noreferrer" // Security for target="_blank"
-        >
-          <img
-            src={`${BUCKET_URL}/assets/instagram.svg`}
-            alt="Instagram"
-            className="nav__ig"
-          />
+    <nav className="nav">
+      {/* Left Section */}
+      <div className="nav__section nav__section--left">
+        <Link className="nav__logo-link" to="/portrait" onClick={closeMobileMenu}>
+          <h1 className="nav__logo italiana-regular">JJ</h1>
         </Link>
       </div>
-    </div>
+
+      {/* Center Section */}
+      <div className="nav__section nav__section--center">
+        <Link to="/portrait" className="nav__main-link" onClick={closeMobileMenu}>
+          <div className="nav__text-wrapper">
+            <h2 className="nav__text poppins-light">Joshua Jey</h2>
+            <h1 className="nav__title italiana-regular">Photography</h1>
+          </div>
+        </Link>
+      </div>
+
+      {/* Right Section */}
+      <div className="nav__section nav__section--right">
+        {/* Hamburger Icon - visible only on mobile via CSS */}
+        <button className="nav__hamburger" onClick={toggleMobileMenu} aria-label="Toggle menu" aria-expanded={isMobileMenuOpen}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        {/* Navigation Links Container - gets --open class when menu is active */}
+        <div className={`nav__links ${isMobileMenuOpen ? "nav__links--open" : ""}`}>
+          <NavLink to="/contact" className="nav__link" onClick={closeMobileMenu}>
+            Contact
+          </NavLink>
+          <NavLink to="/about" className="nav__link " onClick={closeMobileMenu}>
+            About
+          </NavLink>
+          <NavLink to="/prints" className="nav__link" onClick={closeMobileMenu}>
+            Prints
+          </NavLink>
+          {user ? (
+            <button onClick={handleLogout} className="nav__link nav__link--button">
+              Logout
+            </button>
+          ) : (
+            // Corrected the invalid nested button and simplified the link
+            <Link to="/login" className="nav__link nav__link--button" onClick={closeMobileMenu}>
+              Login
+            </Link>
+          )}
+
+          <Link to="/cart" className="nav__link nav__link--icon" onClick={closeMobileMenu}>
+            <img
+              src={`${BUCKET_URL}/assets/cart.svg`}
+              alt="Cart"
+              className="nav__icon" // Standardized class name
+            />
+          </Link>
+          
+          <Link
+            to="https://www.instagram.com/joshuajeyphotography"
+            className="nav__link nav__link--icon"
+            onClick={closeMobileMenu}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src={`${BUCKET_URL}/assets/instagram.svg`}
+              alt="Instagram"
+              className="nav__icon" // Standardized class name
+            />
+          </Link>
+        </div>
+      </div>
+    </nav>
   );
 }
 
