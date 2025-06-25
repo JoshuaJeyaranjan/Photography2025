@@ -1,17 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./CartPage.scss";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import { loadStripe } from "@stripe/stripe-js";
+
+const shippingOptions = [
+  { id: "shr_1RdbnaEydtOSnncEaokiE8S8", amount: 1900, label: "Standard Shipping - $19.00" },
+  { id: "shr_1RdboDEydtOSnncE8l44b0Qw", amount: 3000, label: "Express Shipping - $30.00" },
+  { id: "shr_1RdbrtEydtOSnncE4YETfhK8", amount: 4000, label: "International Shipping - $40.00" },
+];
 
 const CartPage = () => {
   const [cart, setCart] = useState([]);
+  const { user } = useAuth(); // Get user from auth context
   const [customer, setCustomer] = useState({ name: "", email: "" });
   const [checkoutError, setCheckoutError] = useState(""); // State for checkout-specific errors
   const [isLoading, setIsLoading] = useState(true);
-  const [shippingRate, setShippingRate] = useState(null);
+  const [shippingRate, setShippingRate] = useState(shippingOptions[0]); // Default to Standard Shipping
+  const [isShippingDropdownOpen, setIsShippingDropdownOpen] = useState(false);
+  const shippingDropdownRef = useRef(null);
+
   const TAX_RATE = 0.13;
+
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 const shipping = shippingRate ? shippingRate.amount / 100 : 0;
 const tax = +(subtotal * TAX_RATE).toFixed(2);
@@ -28,6 +40,26 @@ const total = +(subtotal + shipping + tax).toFixed(2);
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
     setCart(storedCart);
+  }, []);
+
+  // Pre-fill customer info if user is logged in
+  useEffect(() => {
+    if (user) {
+      setCustomer({ name: user.name || "", email: user.email || "" });
+    }
+  }, [user]);
+
+  // Effect to close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (shippingDropdownRef.current && !shippingDropdownRef.current.contains(event.target)) {
+        setIsShippingDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const updateCart = (newCart) => {
@@ -186,25 +218,30 @@ const total = +(subtotal + shipping + tax).toFixed(2);
                 }
                 required
               />
-              <select
-                className="input"
-                required
-                value={shippingRate ? `${shippingRate.id},${shippingRate.amount}` : ""}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (!value) {
-                    setShippingRate(null);
-                    return;
-                  }
-                  const [id, amount] = value.split(",");
-                  setShippingRate({ id, amount: parseInt(amount, 10) });
-                }}
-              >
-                <option value="" disabled>Select Shipping</option>
-                <option value="shr_1RdbnaEydtOSnncEaokiE8S8,1900">Standard Shipping - $19.00</option>
-                <option value="shr_1RdboDEydtOSnncE8l44b0Qw,3000">Express Shipping - $30.00</option>
-                <option value="shr_1RdbrtEydtOSnncE4YETfhK8,4000">International Shipping - $40.00</option>
-              </select>
+              {/* Custom Select Dropdown */}
+              <div className="custom-select" ref={shippingDropdownRef}>
+                <div
+                  className="select-selected"
+                  onClick={() => setIsShippingDropdownOpen(!isShippingDropdownOpen)}
+                  role="button"
+                  aria-haspopup="listbox"
+                  aria-expanded={isShippingDropdownOpen}
+                >
+                  {shippingRate ? shippingRate.label : "Select Shipping"}
+                </div>
+                {isShippingDropdownOpen && (
+                  <div className="select-items" role="listbox">
+                    {shippingOptions.map((option) => (
+                      <div
+                        key={option.id}
+                        className="select-item"
+                        onClick={() => { setShippingRate(option); setIsShippingDropdownOpen(false); }}
+                        role="option"
+                      >{option.label}</div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
               {checkoutError && <p className="checkout-error-message">{checkoutError}</p>}
               <div className="cart-totals">

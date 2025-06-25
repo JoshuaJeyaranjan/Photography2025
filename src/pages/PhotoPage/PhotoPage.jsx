@@ -177,72 +177,64 @@ function PhotoPage() {
             </picture>
 
             <div className="photo-metadata">
-              <div className="button-container">
-                {/* <button onClick={handlePurchase} className="purchase-button">
-                  Buy Print – ${photo.price || 40.0}
-                </button> */}
-
-                <div className="print-sizes">
-                  {sizes.map((size) => (
-                    <button
-                      key={size.id}
-                      className={`size-button ${
-                        selectedSize?.id === size.id ? "selected" : ""
-                      }`}
-                      onClick={() => setSelectedSize(size)}
-                    >
-                      <img
-                        src={size.preview_url}
-                        alt={size.label}
-                        className="preview-img"
-                      />
-                      <div>
-                        {size.label} – ${parseFloat(size.price).toFixed(2)}
-                      </div>
-                    </button>
-                  ))}
+              <div className="purchase-container">
+                <div className="size-selector">
+                  <h3 className="selector-title">Select a Size</h3>
+                  <div className="size-options">
+                    {sizes.map((size) => (
+                      <button
+                        key={size.id}
+                        className={`size-option ${
+                          selectedSize?.id === size.id ? "selected" : ""
+                        }`}
+                        onClick={() => setSelectedSize(size)}
+                        aria-label={`Select size ${size.label}`}
+                      >
+                        <img
+                          src={size.preview_url}
+                          alt={`Preview for ${size.label} print`}
+                          className="size-preview-image"
+                        />
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                <button
-                  onClick={() => {
-                    addToCart({
-                      id: photo.id,
-                      name: photo.title || `Print of ${photo.filename}`,
-                      price: parseFloat(selectedSize.price),
-                      url: photo.url,
-                      quantity: 1,
-                      size: selectedSize.label,
-                      print_size_id: selectedSize.id,
-                    });
-                    setCartMessage("Added to cart!");
-                    setTimeout(() => setCartMessage(""), 3000); // Clear message after 3s
-                  }}
-                  className="purchase-button"
-                >
-                  Add to Cart
-                </button>
                 {selectedSize && (
-                  <div className="selected-info">
-                    <p>
-                      <strong>Selected Size:</strong> {selectedSize.label}
-                    </p>
-                    <p>
-                      <strong>Price:</strong> $
-                      {parseFloat(selectedSize.price).toFixed(2)}
-                    </p>
+                  <div className="selected-size-info">
+                    <span>{selectedSize.label}</span>
+                    <span>${parseFloat(selectedSize.price).toFixed(2)}</span>
                   </div>
                 )}
 
-                <p className="purchase-status">{purchaseStatus}</p>
-                {cartMessage && <p className="cart-message">{cartMessage}</p>}
-                {cartMessage && ( // Conditionally render Checkout button when cartMessage is active
-                  <Link
-                    to="/cart"
-                    className="purchase-button checkout-now-button"
+                <div className="action-area">
+                  <button
+                    onClick={() => {
+                      addToCart({
+                        id: photo.id,
+                        name: photo.title || `Print of ${photo.filename}`,
+                        price: parseFloat(selectedSize.price),
+                        url: photo.url,
+                        quantity: 1,
+                        size: selectedSize.label,
+                        print_size_id: selectedSize.id,
+                      });
+                      setCartMessage("Added to cart!");
+                      setTimeout(() => setCartMessage(""), 10000);
+                    }}
+                    className="add-to-cart-button"
+                    disabled={!selectedSize}
                   >
-                    Checkout Now
-                  </Link>
-                )}
+                    Add to Cart
+                  </button>
+                  {cartMessage && (
+                    <Link to="/cart" className="checkout-now-button">
+                      Checkout Now
+                    </Link>
+                  )}
+                </div>
+                {cartMessage && <p className="cart-message">{cartMessage}</p>}
+                <p className="purchase-status">{purchaseStatus}</p>
               </div>
             </div>
           </div>
