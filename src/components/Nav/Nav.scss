@@ -1,187 +1,223 @@
-@use '../../styles/partials/mixins' as *;
+// --- Configuration ---
+$nav-height: 80px;
+$nav-background: #fff;
+$nav-border-color: #eee;
+$text-primary: #111;
+$text-secondary: #333;
+$text-light: #fff;
+$font-primary: "Italiana", serif;
+$font-secondary: "Poppins", sans-serif;
+$transition-speed: 0.25s;
+// Adjusted breakpoint to target mobile/tablet devices more accurately
+$breakpoint-mobile: 768px;
 
-@keyframes subtleRipple {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+// --- Mixins ---
+@mixin link-underline-effect($color: $text-primary) {
+  position: relative;
+  padding-bottom: 0.25rem;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: $color;
+    transform-origin: bottom right;
+    transition: transform $transition-speed ease-out;
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 }
 
+// --- Main Styles ---
 .nav {
-
-  left: 0;
-  width: 100vw;
-
+  // Structure & Layout
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  height: 80px;
-  padding: 0 2rem;
-  background: linear-gradient(270deg, #fdfdfd, #f5f5f5d5, #cfcfcf);
-  background-size: 600% 600%;
-  animation: subtleRipple 10s ease infinite;
-  z-index: 100;
+  justify-content: space-between;
+  height: $nav-height;
+  padding: 0.5rem 2rem;
+  background-color: $nav-background;
+  border-bottom: 1px solid $nav-border-color;
+  position: relative;
+  z-index: 1000;
 
-  // Left-aligned logo
-  &__logo-link {
+  // BEM Sections for a robust flex layout
+  &__section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+
+    &--left {
+      justify-content: flex-start;
+    }
+    &--center {
+      flex: 0 1 auto;
+      justify-content: center;
+      min-width: 0;
+    }
+    &--right {
+      justify-content: flex-end;
+    }
+  }
+
+  // Logo & Title
+  &__logo-link,
+  &__main-link {
     text-decoration: none;
     color: black;
-
-
-
   }
 
   &__logo {
-    border: none;
-    color: black;
-    transition: color 0.2s ease, text-decoration-color 0.2s ease, transform 0.2s ease; // Added transform to transition
-
-
-    &:hover:not(.active) { // Apply hover only if not already active to avoid conflicting styles
-      color: rgb(189, 189, 189); // Slightly darker or different shade on hover    
-      transform: translateY(-2px);
-      
-    }
+    font-family: $font-primary;
+    font-size: 2.5rem;
+    color: $text-primary;
+    margin: 0;
   }
 
-  // Centered nav text (e.g. Joshua Jey Photography)
-  &__main-link {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+  &__text-wrapper {
     text-align: center;
-    text-decoration: none;
-    color: black;
-    z-index: 999; // Above nav menu
-    transition: color 0.2s ease, text-decoration-color 0.2s ease, transform 0.2s ease; // Added transform to transition
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
+  &__text,
+  &__title {
+    margin: 0;
+    line-height: 1.2;
   }
 
   &__text {
-    h2 {
-      font-size: 1rem;
-      margin: 0;
-      font-weight: 300;
-      letter-spacing: 1px;
-      color: black;
-    }
-
-    h1 {
-      font-size: 1.4rem;
-      margin: 0;
-      font-weight: 700;
-
-      letter-spacing: 1.5px;
-      color: black;
-    }
+    font-family: $font-secondary;
+    font-size: 0.9rem;
+    font-weight: 300;
   }
 
-  // Right-aligned hamburger
-  &__hamburger {
-    margin-left: auto;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    z-index: 1003; // Always above nav links
-    display: none;
-
-    span {
-      display: block;
-      width: 25px;
-      height: 3px;
-      background-color: #333;
-      margin: 5px 0;
-      transition: all 0.3s ease-in-out;
-    }
+  &__title {
+    font-family: $font-primary;
+    font-size: 1.5rem;
   }
 
-  // Slide-in nav menu
+  // Links Container (hidden on mobile by default)
   &__links {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    
-
-    // Mobile menu defaults
-    @include mobile {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      right: 0;
-      height: 100vh;
-      width: 70%;
-      max-width: 200px;
-      background-color: #f0f0f0;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-      transform: translateX(100%);
-      transition: transform 0.3s ease-in-out;
-      padding: 5rem 1rem 2rem;
-      z-index: 1000;
-    }
-
-    &--open {
-      @include mobile {
-        transform: translateX(0); // Slide in
-      }
-    }
+    gap: 2rem;
   }
 
+  // Individual Links
   &__link {
-    color: black;
-    text-decoration: none;
-    font-weight: 100;
+    font-family: $font-secondary;
     font-size: 1rem;
-    transition: color 0.2s ease, text-decoration-color 0.2s ease, transform 0.2s ease; // Added transform to transition
-    
+    color: $text-secondary;
+    text-decoration: none;
+    transition: color $transition-speed ease-in-out;
 
-    &:hover:not(.active) { // Apply hover only if not already active to avoid conflicting styles
-      color: rgb(145, 143, 143); // Slightly darker or different shade on hover    
-      transform: translateY(-2px);
-      
-    }
-    
-    &.active {
-      color: #868686; // Example highlight color - choose one that fits your design
-      font-weight: bold; // Make the text bolder
-      text-decoration: underline;
-      text-underline-offset: 4px; // Optional: Adjust space between text and underline
+    &:hover {
+      color: $text-primary;
     }
 
-    @include mobile {
-      width: 100%;
-      text-align: center;
-      padding: 0.8rem 1rem;
-      border-bottom: 1px solid #e0e0e0;
+    &:not(&--button):not(&--icon) {
+      @include link-underline-effect;
+    }
 
-      &:last-child {
-        border-bottom: none;
+    &--button {
+      padding: 0.5rem 1rem;
+      border: 1px solid $text-secondary;
+      border-radius: 4px;
+      background: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color $transition-speed, color $transition-speed;
+
+      &:hover {
+        background-color: $text-secondary;
+        color: $text-light;
       }
     }
   }
 
-  &__ig {
-    max-width: 1.5rem;
-    margin-top: 3px;
+  // Icons (Cart, Instagram)
+  &__icon {
+    height: 24px;
+    width: 24px;
+    display: block;
+    transition: transform $transition-speed ease-in-out;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
-  // Responsive behavior
-  @include mobile {
-    flex-direction: row; // Keep nav horizontal
-    padding: 0 1rem;
-    height: 80px;
+  // Hamburger Menu (hidden on desktop)
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 2rem;
+    height: 2rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 20;
+
+    &:focus {
+      outline: none;
+    }
+
+    span {
+      width: 2rem;
+      height: 3px;
+      background: $text-secondary;
+      border-radius: 10px;
+      transition: all 0.3s linear;
+      position: relative;
+      transform-origin: 1px;
+    }
+  }
+
+  // --- Responsive Styles ---
+  @media (max-width: $breakpoint-mobile) {
+    padding: 0.5rem 1rem;
+
+    &__links {
+      display: none;
+    }
 
     &__hamburger {
-      display: block;
-      
+      display: flex;
     }
 
-    &__main-link {
+    &__links--open {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem; // Increased spacing for better touch targets
       position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 100%;
+      left: 0;
+      width: 100%;
+      padding: 2.5rem;
+      background-color: $nav-background;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      .nav__link {
+        font-size: 1.2rem;
+      }
+    }
+
+    &__hamburger[aria-expanded="true"] {
+      span:first-child { transform: rotate(45deg); }
+      span:nth-child(2) { opacity: 0; transform: translateX(20px); }
+      span:last-child { transform: rotate(-45deg); }
     }
   }
 }

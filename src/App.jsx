@@ -18,6 +18,9 @@ import TermsPage from './pages/TermsPage/TermsPage'
 import FAQPage from './pages/FAQPage/FAQPage'
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage'
 import CustomerServicePage from './pages/CustomerServicePage/CustomerServicePage'
+import LoginPage from './pages/LoginPage/LoginPage'
+import SignupPage from './pages/SignupPage/SignupPage'
+
 
 function App() {
 
@@ -42,7 +45,9 @@ function App() {
     <Route path='/terms' element={ <TermsPage/>} /> 
     <Route path='/faq' element={ <FAQPage/>} /> 
     <Route path='/privacy-policy' element={ <PrivacyPolicyPage/>} /> 
-    <Route path='/customer-care' element={ <CustomerServicePage/>} /> 
+    <Route path='/customer-care' element={ <CustomerServicePage/>} />
+    <Route path='/login' element={ <LoginPage/>} />
+    <Route path='/signup' element={ <SignupPage/>} /> 
     <Route path='*' element={ <NotFoundPage/>} />   
     </Routes>
     </BrowserRouter>
