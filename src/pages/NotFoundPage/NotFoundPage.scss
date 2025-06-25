@@ -1,0 +1,59 @@
+@use '../../styles/partials/variables' as *; // Assuming you have a variables partial
+@use '../../styles/partials/mixins' as *;    // Assuming you have a mixins partial
+
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+min-height: 90vh;
+  padding: 2rem;
+  text-align: center;
+//   background-color: v.$background-color; // Use your site's background color
+  color: $primary-dark; // Use your site's primary text color
+
+  .not-found-title {
+    // font-family: v.$font-heading; // e.g., Italiana
+    font-size: 8rem;
+    // color: v.$primary-color; // A prominent color
+    margin-bottom: 1rem;
+
+    @include tablet {
+      font-size: 10rem;
+    }
+  }
+
+  .not-found-message {
+    // font-family: v.$font-body; // e.g., Poppins
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+
+    @include tablet {
+      font-size: 1.8rem;
+    }
+  }
+
+  .not-found-suggestion {
+    // font-family: v.$font-body;
+    font-size: 1rem;
+    // color: v.$secondary-text-color; // A slightly muted color
+    margin-bottom: 2rem;
+  }
+
+  .not-found-button {
+    // @include m.button-style; // Assuming you have a button mixin
+    margin-bottom: 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  .not-found-link {
+    // font-family: v.$font-body;
+    // color: v.$link-color; // Your site's link color
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+    &:hover {
+    //   color: darken(v.$link-color, 10%);
+    }
+  }
+}

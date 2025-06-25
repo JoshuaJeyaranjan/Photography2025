@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
 
+import { CartProvider } from './context/CartContext.jsx'
 import './App.css'
 import HomePage from './pages/HomePage/HomePage'
 import ContactPage from './pages/ContactPage/ContactPage'
@@ -27,29 +28,30 @@ function App() {
 
   return (
     <BrowserRouter>
-    <Routes>
-    <Route path='/' element={ <PortraitPage/>} /> 
-    <Route path='/home' element={ <PortraitPage/>} /> 
-    <Route path='/contact' element={ <ContactPage/>} /> 
-    <Route path='/order' element={ <OrderPage/>} /> 
-    <Route path='/portrait' element={ <PortraitPage/>} /> 
-    <Route path='/street' element={ <StreetPage/>} /> 
-    <Route path="/photo/:id" element={<PhotoPage />} />
-    <Route path='/payment-cancelled' element={ <CancelPage/>} /> 
-    <Route path='/payment-success' element={ <SuccessPage/>} />
-    <Route path='/about' element={ <AboutPage/>} /> 
-    <Route path='/prints' element={ <PrintsPage/>} />   
-    <Route path='/cart' element={ <CartPage/>} /> 
-    <Route path='/checkout' element={ <CheckoutPage/>} />  
-<Route path='/privacy-policy' element={ <PrivacyPolicyPage/>} />
-    <Route path='/terms' element={ <TermsPage/>} /> 
-    <Route path='/faq' element={ <FAQPage/>} /> 
-    <Route path='/privacy-policy' element={ <PrivacyPolicyPage/>} /> 
-    <Route path='/customer-care' element={ <CustomerServicePage/>} />
-    <Route path='/login' element={ <LoginPage/>} />
-    <Route path='/signup' element={ <SignupPage/>} /> 
-    <Route path='*' element={ <NotFoundPage/>} />   
-    </Routes>
+      <CartProvider>
+        <Routes>
+          <Route path='/' element={ <PortraitPage/>} /> 
+          <Route path='/home' element={ <PortraitPage/>} /> 
+          <Route path='/contact' element={ <ContactPage/>} /> 
+          <Route path='/order' element={ <OrderPage/>} /> 
+          <Route path='/portrait' element={ <PortraitPage/>} /> 
+          <Route path='/street' element={ <StreetPage/>} /> 
+          <Route path="/photo/:id" element={<PhotoPage />} />
+          <Route path='/payment-cancelled' element={ <CancelPage/>} /> 
+          <Route path='/payment-success' element={ <SuccessPage/>} />
+          <Route path='/about' element={ <AboutPage/>} /> 
+          <Route path='/prints' element={ <PrintsPage/>} />   
+          <Route path='/cart' element={ <CartPage/>} /> 
+          <Route path='/checkout' element={ <CheckoutPage/>} />  
+          <Route path='/privacy-policy' element={ <PrivacyPolicyPage/>} />
+          <Route path='/terms' element={ <TermsPage/>} /> 
+          <Route path='/faq' element={ <FAQPage/>} /> 
+          <Route path='/customer-care' element={ <CustomerServicePage/>} />
+          <Route path='/login' element={ <LoginPage/>} />
+          <Route path='/signup' element={ <SignupPage/>} /> 
+          <Route path='*' element={ <NotFoundPage/>} />   
+        </Routes>
+      </CartProvider>
     </BrowserRouter>
   )
 }

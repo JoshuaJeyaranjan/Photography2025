@@ -35,15 +35,15 @@ function FaqPage() {
   return (
     <>
       <Nav />
-      <main className="faq-page">
-        <div className="faq-content">
-          <div className="faq-header">
+      <main className="content-page-layout">
+        <div className="content-container">
+          <div className="content-header">
             <h1 className='italiana-regular'>Frequently Asked Questions</h1>
           </div>
 
-          <div className="faq-list">
+          <div className="content-container">
             {faqs.map((faq, index) => (
-              <div className="faq-item" key={index}>
+              <div className="content-section" key={index}>
                 <h2 className='poppins-light'>{faq.question}</h2>
                 <p className='poppins-light'>{faq.answer}</p>
               </div>

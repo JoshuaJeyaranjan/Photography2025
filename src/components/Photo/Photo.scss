@@ -1,4 +1,4 @@
-@use '../../styles/partials/mixins' as *;
+@use "../../styles/partials/mixins" as *;
 
 .photo-link {
   display: block;
@@ -16,22 +16,28 @@
       display: block;
       width: 100%;
       height: auto; // Or a fixed height if you prefer uniform gallery items
-      transition: transform 0.3s ease;
-      
-      
+      opacity: 0;
+      transform: translateY(15px);
+
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+
+      &.loaded {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   }
 }
 .photo-thumbnail {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
+  display: block;
   transition: transform 0.2s ease;
   @include mobile {
     padding: 1rem 2rem;
   }
-  
 }
 
 .photo-thumbnail:hover {
@@ -54,3 +60,5 @@
     margin-bottom: 0.5rem;
   }
 }
+
+
