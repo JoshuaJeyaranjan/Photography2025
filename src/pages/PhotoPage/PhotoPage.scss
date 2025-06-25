@@ -149,3 +149,148 @@
     background-color: #218838; // Darker green on hover
   }
 }
+
+// Main container for all purchase-related elements
+.purchase-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+// --- Size Selector ---
+.size-selector {
+  .selector-title {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+    color: #222;
+  }
+
+  .size-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .size-option {
+    background: none;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    padding: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      border-color: #ddd;
+    }
+
+    &.selected {
+      border-color: #333; // A dark, primary color
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .size-preview-image {
+      width: 100px;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+  }
+}
+
+// --- Selected Info & Actions ---
+.selected-size-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #222;
+  margin-bottom: 1rem;
+  color: #222;
+
+  span:first-child {
+    font-weight: 500;
+  }
+}
+
+.action-area {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+// --- Buttons & Messages ---
+.add-to-cart-button,
+.checkout-now-button {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.9rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  flex-grow: 1; // Make buttons take up space
+}
+
+.add-to-cart-button {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #222;
+
+  &:hover:not(:disabled) {
+    background-color: #444;
+    border-color: #444;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    border-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+
+.checkout-now-button {
+  background-color: #fff;
+  color: #222;
+  border: 1px solid #222;
+  text-decoration: none;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.cart-message {
+  font-family: "Poppins", sans-serif;
+  color: #28a745; // A success green
+  font-weight: 500;
+  text-align: center;
+  margin-top: -1rem; // Pull it closer to the buttons
+  margin-bottom: -1rem;
+}
+
+// --- Responsive Design ---
+@media (max-width: 768px) {
+  .photo-metadata {
+    padding: 1rem; // Add some padding on mobile
+  }
+
+  .size-selector .size-preview-image {
+    width: 80px; // Slightly smaller previews on mobile
+  }
+
+  .action-area {
+    flex-direction: column;
+    align-items: stretch; // Make buttons full-width
+  }
+}
+
