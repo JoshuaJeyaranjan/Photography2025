@@ -3,6 +3,7 @@ import "./CartPage.scss";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
 import { Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext"; // Import useCart
 import { useAuth } from "../../context/AuthContext";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -13,7 +14,7 @@ const shippingOptions = [
 ];
 
 const CartPage = () => {
-  const [cart, setCart] = useState([]);
+  const { cart, removeFromCart, changeItemQuantity } = useCart(); // Use cart from context
   const { user } = useAuth(); // Get user from auth context
   const [customer, setCustomer] = useState({ name: "", email: "" });
   const [checkoutError, setCheckoutError] = useState(""); // State for checkout-specific errors
@@ -37,11 +38,6 @@ const total = +(subtotal + shipping + tax).toFixed(2);
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, []);
   // Load cart from localStorage on mount
-  useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCart(storedCart);
-  }, []);
-
   // Pre-fill customer info if user is logged in
   useEffect(() => {
     if (user) {
@@ -61,25 +57,6 @@ const total = +(subtotal + shipping + tax).toFixed(2);
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  const updateCart = (newCart) => {
-    setCart(newCart);
-    localStorage.setItem("cart", JSON.stringify(newCart));
-  };
-
-  const removeItem = (id) => {
-    const newCart = cart.filter((item) => item.id !== id);
-    updateCart(newCart);
-  };
-
-  const changeQuantity = (id, delta) => {
-    const newCart = cart.map((item) =>
-      item.id === id
-        ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-        : item
-    );
-    updateCart(newCart);
-  };
 
   const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -174,18 +151,18 @@ const total = +(subtotal + shipping + tax).toFixed(2);
                         : "N/A"}
                     </p>
                     <div className="quantity-controls">
-                      <button onClick={() => changeQuantity(item.id, -1)}>
+                      <button onClick={() => changeItemQuantity(item.id, item.print_size_id, -1)}>
                         -
                       </button>
                       <span className="quantity">{item.quantity}</span>
-                      <button onClick={() => changeQuantity(item.id, 1)}>
+                      <button onClick={() => changeItemQuantity(item.id, item.print_size_id, 1)}>
                         +
                       </button>
                     </div>
                     <p>Total: ${(item.price * item.quantity).toFixed(2)}</p>
                     <button
                       className="remove-button"
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeFromCart(item.id, item.print_size_id)}
                     >
                       Remove
                     </button>

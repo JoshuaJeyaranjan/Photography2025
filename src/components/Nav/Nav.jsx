@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import "./Nav.scss";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext.jsx";
 
 function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, logout } = useAuth();
+  const { cartItemCount } = useCart();
   const navigate = useNavigate();
 
   const toggleMobileMenu = () => {
@@ -76,12 +78,15 @@ function Nav() {
             </Link>
           )}
 
-          <Link to="/cart" className="nav__link nav__link--icon" onClick={closeMobileMenu}>
+          <Link to="/cart" className="nav__link nav__link--icon nav__cart-link" onClick={closeMobileMenu}>
             <img
               src={`${BUCKET_URL}/assets/cart.svg`}
               alt="Cart"
               className="nav__icon" // Standardized class name
             />
+            {cartItemCount > 0 && (
+              <span className="nav__cart-badge">{cartItemCount}</span>
+            )}
           </Link>
           
           <Link

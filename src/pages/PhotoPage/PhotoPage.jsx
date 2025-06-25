@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom"; // Import Link
 import { loadStripe } from "@stripe/stripe-js";
 import "./PhotoPage.scss";
 import Nav from "../../components/Nav/Nav";
 import Footer from "../../components/Footer/Footer";
+import ImageModal from "../../components/ImageModal/ImageModal";
+import { useCart } from "../../context/CartContext.jsx";
 
 // Use environment variables for flexibility between dev/staging/prod
 const API_BASE_URL = "https://photography-docker.onrender.com";
@@ -15,6 +17,7 @@ const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 function PhotoPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
   const [photo, setPhoto] = useState(null);
   const [cartStatus, setCartStatus] = useState("");
@@ -24,6 +27,9 @@ function PhotoPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [purchaseStatus, setPurchaseStatus] = useState("");
+  const [modalImage, setModalImage] = useState(null); // For fullscreen modal
+  const [modalAlt, setModalAlt] = useState("");
+  const clickTimer = useRef(null); // To manage single vs. double clicks
 
   // Fetch photo details
   useEffect(() => {
@@ -60,33 +66,14 @@ function PhotoPage() {
     fetchSizes();
   }, []);
 
-  function addToCart(item) {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-    // Match by image ID and print size ID to treat different sizes as unique items
-    const existingItemIndex = cart.findIndex(
-      (cartItem) =>
-        cartItem.id === item.id &&
-        cartItem.print_size_id === item.print_size_id
-    );
-  
-    if (existingItemIndex !== -1) {
-      cart[existingItemIndex].quantity += item.quantity;
-    } else {
-      cart.push({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        url: item.url,
-        quantity: item.quantity,
-        print_size_id: item.print_size_id, // ✅ backend requires this
-        size: item.size,                   // ✅ UI display (e.g. "16x24")
-        preview_url: item.preview_url || null, // optional preview image
-      });
-    }
-  
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
+  // Cleanup the click timer if the component unmounts
+  useEffect(() => {
+    return () => {
+      if (clickTimer.current) {
+        clearTimeout(clickTimer.current);
+      }
+    };
+  }, []);
 
   const handlePurchase = async () => {
     if (!photo) return;
@@ -135,6 +122,26 @@ function PhotoPage() {
     }
   };
 
+  // Custom handler to differentiate between single and double clicks
+  const handlePreviewSizeClick = (size) => {
+    // If a timer is already running, it means this is the second click (a double-click)
+    if (clickTimer.current) {
+      clearTimeout(clickTimer.current);
+      clickTimer.current = null;
+
+      // Perform the double-click action: open the modal
+      setModalImage(size.preview_url);
+      setModalAlt(`Preview for ${size.label} print`);
+    } else {
+      // This is the first click, so set a timer
+      clickTimer.current = setTimeout(() => {
+        // If the timer completes, it was a single click: select the size
+        setSelectedSize(size);
+        clickTimer.current = null; // Reset timer
+      }, 250); // A 250ms delay is standard for double-click detection
+    }
+  };
+
   // Status rendering
   if (isLoading)
     return <div className="photo-page-status">Loading photo...</div>;
@@ -173,6 +180,10 @@ function PhotoPage() {
                 alt={photo.title || photo.filename || "Photography image"}
                 className="photo-detail-image"
                 loading="lazy"
+                onClick={() => {
+                  setModalImage(photo.url.replace(".avif", ".jpg"));
+                  setModalAlt(photo.title || photo.filename || "Photography image");
+                }}
               />
             </picture>
 
@@ -180,6 +191,7 @@ function PhotoPage() {
               <div className="purchase-container">
                 <div className="size-selector">
                   <h3 className="selector-title">Select a Size</h3>
+                  
                   <div className="size-options">
                     {sizes.map((size) => (
                       <button
@@ -187,8 +199,8 @@ function PhotoPage() {
                         className={`size-option ${
                           selectedSize?.id === size.id ? "selected" : ""
                         }`}
-                        onClick={() => setSelectedSize(size)}
-                        aria-label={`Select size ${size.label}`}
+                        onClick={() => handlePreviewSizeClick(size)}
+                        aria-label={`Select size ${size.label}. Double-click to enlarge.`}
                       >
                         <img
                           src={size.preview_url}
@@ -236,11 +248,17 @@ function PhotoPage() {
                 {cartMessage && <p className="cart-message">{cartMessage}</p>}
                 <p className="purchase-status">{purchaseStatus}</p>
               </div>
+              <h3 className="selector-disclaimer">*frame not included with purchase</h3>
             </div>
           </div>
         </div>
       </div>
       <Footer />
+      <ImageModal
+        src={modalImage}
+        alt={modalAlt}
+        onClose={() => setModalImage(null)}
+      />
     </>
   );
 }

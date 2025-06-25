@@ -1,57 +1,17 @@
-.customer-service-page {
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    color: #333;
-    padding-bottom: 0rem;
+@use '../../styles/partials/layout';
+@use '../../styles/partials/variables' as *;
 
-    .customer-service-content {
-        padding-top: 80px; // Adjust based on Nav height
-        padding-bottom: 4rem;
-    }
+.service-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: $primary-mid;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
 
-    .customer-service-header {
-        text-align: center;
-        margin-bottom: 3rem;
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        p {
-            font-size: 1.1rem;
-            color: #666;
-        }
-    }
-
-    .customer-service-section {
-        margin-bottom: 2.5rem;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 2rem;
-
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .service-link {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #333;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-
-            &:hover {
-                background-color: #555;
-            }
-        }
+    &:hover {
+        background-color: $primary-light;
     }
 }

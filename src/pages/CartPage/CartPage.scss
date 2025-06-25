@@ -1,12 +1,11 @@
 .cart-page {
   max-width: 1200px;
+  min-height: 90vh;
   margin: 20px auto;
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  // Ensure the page container takes up enough height to push the footer down
-  min-height: calc(100vh - var(--nav-height, 80px) - var(--footer-height, 50px) - 40px); // 40px accounts for this element's top/bottom margin (20px + 20px)
   font-family: 'Arial', sans-serif;
 
   h1 {
@@ -58,11 +57,17 @@
     height: 200px;
     object-fit: cover;
     border-right: 1px solid #ddd;
+
   }
 
   .cart-details {
+    height: 200px;
     padding: 15px;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     h2 {
       font-size: 1.4em;

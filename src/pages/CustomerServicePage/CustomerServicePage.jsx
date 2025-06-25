@@ -9,14 +9,14 @@ function CustomerServicePage() {
   return (
     <>
       <Nav />
-      <main className="customer-service-page">
-        <div className="customer-service-content">
-          <div className="customer-service-header">
+      <main className="content-page-layout">
+        <div className="content-container">
+          <div className="content-header">
             <h1 className='italiana-regular'>Customer Service</h1>
             <p className='poppins-light'>We're here to help with any questions or concerns you may have.</p>
           </div>
 
-          <div className="customer-service-section">
+          <div className="content-section">
             <h2 className='poppins-light'>General Inquiries & Photoshoots</h2>
             <p className='poppins-light'>
               For questions about booking a session, collaborations, or any other general inquiries, the best way to reach us is through our contact form.
@@ -24,7 +24,7 @@ function CustomerServicePage() {
             <Link to="/contact" className="service-link poppins-light">Go to Contact Page</Link>
           </div>
 
-          <div className="customer-service-section">
+          <div className="content-section">
             <h2 className='poppins-light'>Frequently Asked Questions</h2>
             <p className='poppins-light'>
               Have a question about my process, rates, or photo delivery? I may have already answered it on my FAQ page.
@@ -32,7 +32,7 @@ function CustomerServicePage() {
             <Link to="/faq" className="service-link poppins-light">View FAQs</Link>
           </div>
 
-          <div className="customer-service-section">
+          <div className="content-section">
             <h2 className='poppins-light'>Print Order Support</h2>
             <p className='poppins-light'>
               <strong>Order Status & Tracking:</strong> You will receive a confirmation email once your order is placed, and another email with tracking information once your order has shipped.
