@@ -26,8 +26,7 @@ function Nav() {
   };
 
   const BUCKET_URL = import.meta.env.VITE_BUCKET_URL
-
-
+  
   return (
     <nav className="nav">
       {/* Left Section */}

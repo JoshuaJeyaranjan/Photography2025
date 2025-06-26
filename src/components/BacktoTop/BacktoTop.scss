@@ -1,4 +1,5 @@
 @use '../../styles/partials/mixins' as *; // Adjust if needed// /Users/joshuajeyaranjan/Desktop/photography2025/photography2025/src/components/BacktoTop/BackToTop.scss
+@use '../../styles/partials/variables' as *;
 
 .back-to-top {
     position: fixed;
@@ -20,7 +21,7 @@
         display: block; // Good for sizing images
         background-color: rgba(240, 248, 255, 0.444);
         // Add any hover effects, etc.
-        border: white;
+        border: $primary-light;
         
         &:hover {
           opacity: 1;
@@ -51,7 +52,7 @@
       width: 32px;    // Set an explicit size for your SVG
       height: 32px;   // Set an explicit size for your SVG
       // If your SVG is not appearing, try setting a color here:
-      color: black;
+      color: $secondary-dark;
       // color: #333; // This will affect the SVG if it uses 'currentColor' for fill
   
       // Optional: if you want a background or border on the icon itself
@@ -73,8 +74,8 @@
       transform: translateY(0); // Slide into place
       visibility: visible; // Make it visible and interactive
       transition-delay: 0s, 0s, 0s, 0s; // Ensure visibility transition is immediate for appearing
-      color: black;
-      border: red;
+      color: $secondary-dark;
+      border: $form-field-error;
 
     }
   }
@@ -88,8 +89,8 @@
     background-color: transparent;
     
     &__symbol{
-        color: black;
-        border: red;
+        color: $secondary-dark;
+        border: $form-field-error;
     }
     
 }
