@@ -1,111 +1,102 @@
-@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/variables' as v;
+@use '../../styles/partials/mixins' as m;
 
 .contact-page {
-    min-height: 100vh;
-    background-color: $primary-light;
-    padding: 4rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 80vw;
-    align-self: center;
-    margin-left: 10vw;
-    &__content-wrapper {
-      justify-self: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;      // Ensures it takes full width up to max-width
-      margin: 0 auto;   // Centers the block horizontally
-      padding: 0 1rem; 
-    }
-    
   
-    &__title {
-      font-size: 2.5rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: $primary-dark;
-      text-align: center;
-    }
-  
-    &__text {
-      font-size: 1.1rem;
-      color: $primary-dark;
-      text-align: center;
-      margin-bottom: 1rem;
-      max-width: 500px;
-    }
-  }
-  
-  .contact-form {
-    background-color: $primary-light;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-    max-width: 500px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      width: 100%;
-    }
-  
-    label {
-      font-weight: 500;
-      color: $primary-dark;
-    }
-  
-    input,
-    textarea {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 1px solid $secondary-mid;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.2s ease;
-      background-color: $secondary-mid;
-      color: $primary-dark;
-  
-      &:focus {
-        border-color: $secondary-dark;
-        outline: none;
-      }
-    }
-  
-    button {
-      padding: 0.75rem 1.5rem;
-      background-color: $primary-dark;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-  
-      &:hover {
-        background-color: $primary-green;
-      }
-  
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-    }
-  }
-  
-  .form-status {
-    margin-top: 1.5rem;
+  // Using the shared layout classes for consistency
+  .content-container {
+    max-width: 600px; // A bit narrower for a form is nice
     text-align: center;
-    font-size: 1rem;
-    font-weight: 500;
-    color: $primary-green;
   }
 
+  &__title {
+    font-family: v.$font-heading;
+    margin-bottom: v.$spacing-sm;
+    color: var(--color-text-primary);
+  }
+
+  &__text {
+    font-family: v.$font-body;
+    font-weight: v.$font-weight-light;
+    color: var(--color-text-secondary);
+    margin-bottom: v.$spacing-xxxl;
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-lg;
+  text-align: left;
+  margin-bottom: v.$spacing-lg;
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-family: v.$font-body;
+      font-weight: v.$font-weight-light;
+      margin-bottom: v.$spacing-sm;
+      color: var(--color-text-primary);
+    }
+
+    input,
+    textarea {
+      font-family: v.$font-body;
+      font-weight: v.$font-weight-light;
+      padding: v.$spacing-md;
+      border: 1px solid var(--color-border);
+      border-radius: v.$border-radius-sm;
+      font-size: 1rem;
+      background-color: var(--color-surface);
+      color: var(--color-text-primary);
+      transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
+
+      &::placeholder {
+        color: var(--color-text-muted);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.2);
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+  }
+
+  button {
+    background-color: v.$primary-dark;
+    color: var(--color-white);
+    padding: v.$spacing-md v.$spacing-xl;
+    border: none;
+    border-radius: v.$border-radius-sm;
+    cursor: pointer;
+    transition: background-color v.$transition-fast;
+    font-family: v.$font-body;
+    font-weight: v.$font-weight-regular;
+    font-size: 1rem;
+    margin-top: v.$spacing-md;
+
+    &:hover:not(:disabled) {
+      background-color: v.$primary-green;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.form-status {
+  margin-top: v.$spacing-lg;
+  font-family: v.$font-body;
+  font-weight: v.$font-weight-regular;
+  color: var(--color-text-primary);
+}

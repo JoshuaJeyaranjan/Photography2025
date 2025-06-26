@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ContactPage.scss'
 import Nav from '../../components/Nav/Nav'; // Assuming you want Nav here
 import Footer from '../../components/Footer/Footer'; // Assuming you want Footer here
 import BackToTop from '../../components/BacktoTop/BacktoTop';
+import { useAuth } from '../../context/AuthContext';
+
 function ContactPage() {
+  const { user } = useAuth(); // Get user from auth context
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
   const [status, setStatus] = useState(''); // To show submission status
+
+  // Pre-fill form if user is logged in
+  useEffect(() => {
+    if (user) {
+      setFormData(prevState => ({
+        ...prevState, // Keep message if they started typing
+        name: user.name || '',
+        email: user.email || '',
+      }));
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,31 +74,55 @@ function ContactPage() {
   return (
     <>
     <Nav />
-    
-    <div className="contact-page">
-      
-    <div className="contact-page__content-wrapper">
-        <h1 className='contact-page__title italiana-regular'>Contact Me</h1>
-        <p className='contact-page__text poppins-light'>Have a question or want to book a session? Fill out the form below.</p>
-        
-        <form onSubmit={handleSubmit} className="contact-form">
-          <div className="form-group">
-            <label  htmlFor="name" className='contact-page__text poppins-light' >Name:</label>
-            <input className='poppins-light' type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email" className='contact-page__text poppins-light'>Email:</label>
-            <input className='poppins-light' type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
-          </div>
-          <div className="form-group">
-            <label htmlFor="message" className='contact-page__text poppins-light'>Message:</label>
-            <textarea className='poppins-light' id="message" name="message" value={formData.message} onChange={handleChange} rows="5" required></textarea>
-          </div>
-          <button className='poppins-light' type="submit" disabled={status === 'Sending...'}>Send Message</button>
-        </form>
-        {status && <p className="form-status">{status}</p>}
+    <main className="content-page-layout">
+      <div className="contact-page">
+        <div className="content-container">
+          <h1 className='contact-page__title'>Contact Me</h1>
+          <p className='contact-page__text'>Have a question or want to book a session? Fill out the form below.</p>
+          
+          <form onSubmit={handleSubmit} className="contact-form">
+            <div className="form-group">
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                placeholder="Your Name"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="your.email@example.com"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="message">Message:</label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows="5"
+                required
+                placeholder="How can I help you?"
+              ></textarea>
+            </div>
+            <button type="submit" disabled={status === 'Sending...'}>Send Message</button>
+          </form>
+          {status && <p className="form-status">{status}</p>}
+        </div>
       </div>
-    </div>
+    </main>
     <Footer/>
     <BackToTop/>  
     </>
