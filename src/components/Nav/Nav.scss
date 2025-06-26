@@ -12,7 +12,7 @@ $font-primary: "Italiana", serif;
 $font-secondary: "Poppins", sans-serif;
 $transition-speed: 0.25s;
 // Adjusted breakpoint to target mobile/tablet devices more accurately
-$breakpoint-mobile: 768px;
+$breakpoint-mobile: 1250px;
 
 // --- Mixins ---
 @mixin link-underline-effect($color: $text-primary) {
