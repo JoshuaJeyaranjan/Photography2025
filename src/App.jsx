@@ -22,6 +22,8 @@ import CustomerServicePage from './pages/CustomerServicePage/CustomerServicePage
 import LoginPage from './pages/LoginPage/LoginPage'
 import SignupPage from './pages/SignupPage/SignupPage'
 
+import AdminPage from './pages/AdminPage/AdminPage.jsx'
+import AdminOrdersPage from './pages/AdminOrdersPage/AdminOrdersPage.jsx'
 
 function App() {
 
@@ -49,6 +51,9 @@ function App() {
           <Route path='/customer-care' element={ <CustomerServicePage/>} />
           <Route path='/login' element={ <LoginPage/>} />
           <Route path='/signup' element={ <SignupPage/>} /> 
+          <Route path='/admin' element={ <AdminPage/>} />
+          <Route path='/admin/orders' element={ <AdminOrdersPage/>} />
+          
           <Route path='*' element={ <NotFoundPage/>} />   
         </Routes>
       </CartProvider>

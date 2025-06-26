@@ -78,6 +78,12 @@ function Nav() {
             </Link>
           )}
 
+          {user && user.id === 1 && (
+            <NavLink to="/admin" className="nav__link" onClick={closeMobileMenu}>
+              Admin
+            </NavLink>
+          )}
+
           <Link to="/cart" className="nav__link nav__link--icon nav__cart-link" onClick={closeMobileMenu}>
             <img
               src={`${BUCKET_URL}/assets/cart.svg`}
