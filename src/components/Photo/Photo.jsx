@@ -11,7 +11,7 @@ function Photo({ id, src, alt, title }) {
   };
 
   return (
-    <Link to={`/photo/${id}`} className={`photo-item ${isLoaded ? 'loaded' : ''}`} title={title}>
+    <Link to={`/photo/${id}`} className={`photo-item ${isLoaded ? 'loaded' : ''}`}>
       <picture>
         <source srcSet={src} type="image/avif" />
         <source srcSet={jpgFallback} type="image/jpeg" />
