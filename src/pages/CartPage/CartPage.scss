@@ -331,8 +331,9 @@
   left: 0;
   right: 0;
   z-index: 99;
-  border: 1px solid $primary-light;
-
+  
+  border: none;
+  
   border-radius: 0 0 4px 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
@@ -340,9 +341,10 @@
     padding: 0.8rem 1rem;
     cursor: pointer;
     transition: background-color 0.2s;
+    border-bottom: 1px solid $primary-mid;
 
     &:hover {
-      background-color: $primary-mid;
+      background-color: $secondary-dark;
     }
   }
 }
