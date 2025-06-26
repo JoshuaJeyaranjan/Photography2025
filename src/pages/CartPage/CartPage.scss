@@ -100,7 +100,7 @@
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: $secondary-mid;
+        background-color: $secondary-dark;
         
       }
     }
@@ -155,12 +155,20 @@
 
     input[type="text"],
     input[type="email"] {
+      color: $primary-light;
       padding: 10px;
       border: 1px solid $secondary-mid;
       border-radius: 4px;
       font-size: 1em;
       width: 100%; // Make inputs take full width of their container
       box-sizing: border-box; // Include padding and border in the element's total width and height
+    }
+    input::placeholder {
+      color: $primary-light;
+      font-size: $body-footer-size;
+      font-family: $font-body;
+      font-weight: $font-weight-light;
+      opacity: 1; // optional: make it fully opaque
     }
   }
 
