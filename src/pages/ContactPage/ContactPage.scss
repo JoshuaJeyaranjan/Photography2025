@@ -2,7 +2,7 @@
 @use '../../styles/partials/mixins' as m;
 
 .contact-page {
-  
+  min-height: 90vh;
   // Using the shared layout classes for consistency
   .content-container {
     max-width: 600px; // A bit narrower for a form is nice
