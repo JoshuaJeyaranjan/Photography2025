@@ -1,24 +1,72 @@
-// BREAKPOINTS
-$mobile-breakpoint: 767px; // This can be adjusted to your preferred mobile breakpoint
+// -------------------------------------------------------------
+// 1. BREAKPOINTS
+// -------------------------------------------------------------
+$mobile-breakpoint: 767px;
 $tablet-breakpoint: 768px;
-$desktop-breakpoint: 1280px;
+$desktop-breakpoint: 1024px; // Changed from 1280px for consistency
 
-// COLORS
+// -------------------------------------------------------------
+// 2. FONT STACKS & TYPOGRAPHY
+// -------------------------------------------------------------
+$font-heading: 'Italiana', serif;
+$font-body: 'Poppins', sans-serif;
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+
+$page-header-size: 2.0625rem;
+$page-header-size-mobile: 1.5rem;
+
+$section-header-size: 0.75rem;
+$section-header-size-mobile: 0.75rem;
+
+$sub-header-size: 0.875rem;
+$sub-header-size-mobile: 0.8125rem;
+
+$body-footer-size: 0.875rem;
+$body-footer-size-mobile: 0.8125rem;
+
+$label-button-size: 0.75rem;
+$label-button-size-mobile: 0.625rem;
+
+// -------------------------------------------------------------
+// 3. LINE HEIGHTS
+// -------------------------------------------------------------
+$page-header-height: 2.75rem;
+$page-header-height-mobile: 2rem;
+
+$section-header-height: 1.25rem;
+$sub-header-height: 1.375rem;
+$body-copy-height: 1.375rem;
+$footer-label-button-height: 1.25rem;
+
+$section-header-height-mobile: 1.25rem;
+$sub-header-height-mobile: 1.125rem;
+$body-copy-height-mobile: 1.125rem;
+$footer-label-button-height-mobile: 1.125rem;
+
+// -------------------------------------------------------------
+// 4. COLORS
+// -------------------------------------------------------------
 $primary-dark: #323232;
 $primary-mid: #AFAFAF;
 $primary-light: #FFFFFF;
-$primary-orange: #d55e15;
+// $primary-orange: #d55e15;
+$primary-green: #28a745 ;
 
 $secondary-dark: #000000;
 $secondary-mid: #E1E1E1;
 $secondary-light: #FAFAFA;
-$secondary-orange: #f8eac6;
+// $secondary-orange: #f8eac6;
 
 $form-field-error: #D22D2D;
 
-// PADDING/MARGIN INCREMENTS 
-$unit-1: .25rem;
-$unit-2: .5rem;
+// -------------------------------------------------------------
+// 5. SPACING & UNITS
+// -------------------------------------------------------------
+$unit-1: 0.25rem;
+$unit-2: 0.5rem;
 $unit-3: 1rem;
 $unit-4: 1.5rem;
 $unit-5: 2rem;
@@ -28,62 +76,116 @@ $unit-8: 3.5rem;
 $unit-9: 4rem;
 $unit-10: 4.5rem;
 
-$before-headline-tablet: 2.25rem;
-$after-headline-components-tablet: 1.5rem;
+$spacing-xs: $unit-1;
+$spacing-sm: $unit-2;
+$spacing-md: $unit-3;
+$spacing-lg: $unit-4;
+$spacing-xl: $unit-5;
+$spacing-xxl: $unit-7;
 
-$before-headline-mobile: 1.5rem;
-$after-headline-components-mobile: 1rem;
-
-//  FONT WEIGHT 
-$bold-weight: 700;
-$mid-weight: 600;
-$light-weight: 400;
-
-//  FONT SIZE
-$page-header-size: 2.0625rem;
-$section-header-size: 0.75rem;
-$sub-header-size: 0.875rem;
-$body-footer-size: .875rem;
-$label-button-size: .75rem;
-
-$page-header-size-mobile: 1.5rem;
-$section-header-size-mobile: .75rem;
-$sub-header-size-mobile: .8125rem;
-$body-footer-size-mobile: .8125rem;
-$label-button-size-mobile: .625rem;
-
-// FONT LINE HEIGHT 
-$page-header-height: 2.75rem;
-$section-header-height: 1.25rem;
-$sub-header-height: 1.375rem;
-$body-copy-height: 1.375rem;
-$footer-label-button-height: 1.25rem;
-
-$page-header-height-mobile: 2rem;
-$section-header-height-mobile: 1.25rem;
-$sub-header-height-mobile: 1.125rem;
-$body-copy-height-mobile: 1.125rem;
-$footer-label-button-height-mobile: 1.125rem;
- 
-//  BUTTON 
+// -------------------------------------------------------------
+// 6. BUTTONS
+// -------------------------------------------------------------
 $button-height: 2.5rem;
 $button-min-width-tablet: 9.375rem;
 $button-min-padding-tablet: 2rem;
-$button-border-radius: .25rem;
+$button-border-radius: 0.25rem;
 
-// LOGO
+// -------------------------------------------------------------
+// 7. LOGO
+// -------------------------------------------------------------
 $logo-max-height: 1.5625rem;
 $logo-max-width: 7.5rem;
 
-// FORM FIELD
+// -------------------------------------------------------------
+// 8. FORM FIELDS
+// -------------------------------------------------------------
 $min-form-field-height-tablet: 2.5rem;
 $min-form-field-height-mobile: 2.25rem;
 $min-form-field-width: 15rem;
-$form-field-border-radius: .25rem;
+$form-field-border-radius: 0.25rem;
 $form-field-padding-tablet: 1rem;
-$form-field-padding-mobile:  .75rem;
-$form-field-top-margin: .25rem;
+$form-field-padding-mobile: 0.75rem;
+$form-field-top-margin: 0.25rem;
 
-// AVATAR
+// -------------------------------------------------------------
+// 9. AVATAR
+// -------------------------------------------------------------
 $avatar-max-radius-tablet: 2.5rem;
 $avatar-max-radius-mobile: 2.25rem;
+
+// -------------------------------------------------------------
+// 10. LAYOUT
+// -------------------------------------------------------------
+$nav-height: 80px;
+$footer-height: 150px;
+$container-max-width: 800px;
+
+// -------------------------------------------------------------
+// 11. BORDERS & SHADOWS
+// -------------------------------------------------------------
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$box-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.05);
+$box-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+// -------------------------------------------------------------
+// 12. TRANSITIONS
+// -------------------------------------------------------------
+$transition-fast: 0.2s ease-in-out;
+$transition-medium: 0.4s ease-in-out;
+$transition-slow: 0.6s ease-out;
+
+// -------------------------------------------------------------
+// 13. THEMEABLE CSS CUSTOM PROPERTIES
+// -------------------------------------------------------------
+:root {
+  --color-background: #ffffff;
+  --color-background-secondary: #f9f9f9;
+  --color-surface: #ffffff;
+  --color-surface-secondary: #fafafa;
+
+  --color-text-primary: #212529;
+  --color-text-secondary: #6c757d;
+  --color-text-muted: #aaa;
+
+  --color-border: #e0e0e0;
+  --color-border-light: #eeeeee;
+
+  --color-primary: #1abc9c;
+  --color-secondary: #2c3e50;
+  --color-secondary-light: #34495e;
+
+  --color-accent: #e53e3e;
+  --color-link: #3498db;
+  --color-link-hover: #2980b9;
+
+  --color-error: #721c24;
+  --color-error-background: #f8d7da;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-overlay: rgba(0, 0, 0, 0.9);
+}
+
+[data-theme='dark'] {
+  --color-background: #1a1a1a;
+  --color-surface: #252525;
+  --color-surface-secondary: #2e2e2e;
+
+  --color-text-primary: #f8f9fa;
+  --color-text-secondary: #b0b0b0;
+
+  --color-border: #444;
+  --color-border-light: #555;
+
+  --color-primary: #1abc9c;
+  --color-secondary: #1e1e1e;
+
+  --color-accent: #ff6b6b;
+  --color-link: #82cfff;
+  --color-link-hover: #63b3ed;
+
+  --color-error: #f8d7da;
+  --color-error-background: #721c24;
+}

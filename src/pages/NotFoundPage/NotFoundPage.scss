@@ -9,7 +9,7 @@
 min-height: 90vh;
   padding: 2rem;
   text-align: center;
-//   background-color: v.$background-color; // Use your site's background color
+  
   color: $primary-dark; // Use your site's primary text color
 
   .not-found-title {
@@ -36,24 +36,27 @@ min-height: 90vh;
   .not-found-suggestion {
     // font-family: v.$font-body;
     font-size: 1rem;
-    // color: v.$secondary-text-color; // A slightly muted color
+    color: $primary-dark;
     margin-bottom: 2rem;
   }
 
   .not-found-button {
-    // @include m.button-style; // Assuming you have a button mixin
+    color: $secondary-dark;
     margin-bottom: 1rem;
     padding: 0.8rem 1.5rem;
     font-size: 1.1rem;
+    &:hover {
+      color: $primary-dark;
+      }
   }
 
   .not-found-link {
     // font-family: v.$font-body;
-    // color: v.$link-color; // Your site's link color
+    color: $secondary-dark;
     text-decoration: none;
     transition: color 0.2s ease-in-out;
     &:hover {
-    //   color: darken(v.$link-color, 10%);
+      color: $primary-dark;
     }
   }
 }

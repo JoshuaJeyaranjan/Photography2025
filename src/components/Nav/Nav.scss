@@ -1,10 +1,13 @@
+@use '../../styles/partials/variables' as *;
+@use '../../styles/partials/mixins' as *;
+
 // --- Configuration ---
 $nav-height: 80px;
-$nav-background: #fff;
-$nav-border-color: #eee;
-$text-primary: #111;
-$text-secondary: #333;
-$text-light: #fff;
+$nav-background: $primary-light;
+$nav-border-color: $secondary-light ;
+$text-primary: $secondary-dark;
+$text-secondary: $primary-dark;
+$text-light: $secondary-light;
 $font-primary: "Italiana", serif;
 $font-secondary: "Poppins", sans-serif;
 $transition-speed: 0.25s;
@@ -232,8 +235,8 @@ $breakpoint-mobile: 768px;
   position: absolute;
   top: -5px;
   right: -8px;
-  background-color: #e53e3e; /* A nice red color */
-  color: white;
+  background-color: $form-field-error; /* A nice red color */
+  color: $primary-light;
   border-radius: 50%;
   padding: 0.15em 0.45em;
   font-size: 0.75rem;

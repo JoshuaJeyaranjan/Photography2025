@@ -1,16 +1,18 @@
+@use '../../styles/partials/variables' as *;
+
 .cart-page {
   max-width: 1200px;
   min-height: 90vh;
   margin: 20px auto;
   padding: 20px;
-  background-color: #f8f9fa;
+  background-color: $primary-light;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
 
   h1 {
     text-align: center;
-    color: #333;
+    color: $secondary-dark;
     margin-top: 0; // Add this to remove default top margin from the h1
     margin-bottom: 30px;
     font-size: 2.5em;
@@ -19,7 +21,7 @@
   .empty-cart {
     text-align: center;
     font-size: 1.2em;
-    color: #666;
+    color: $primary-mid;
     margin-bottom: 20px;
   }
 
@@ -40,15 +42,15 @@
 
   .cart-item {
     display: flex;
-    background-color: white;
-    border: 1px solid #ddd;
+    background-color: $secondary-light;
+    border: 1px solid $secondary-mid;
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 8px $primary-mid;
     }
   }
 
@@ -56,7 +58,7 @@
     width: 150px;
     height: 200px;
     object-fit: cover;
-    border-right: 1px solid #ddd;
+    border-right: 1px solid $secondary-light;
 
   }
 
@@ -72,12 +74,12 @@
     h2 {
       font-size: 1.4em;
       margin-bottom: 10px;
-      color: #333;
+      color: $primary-dark;
     }
 
     p {
       font-size: 1em;
-      color: #555;
+      color: $primary-dark;
       margin-bottom: 8px;
     }
   }
@@ -88,8 +90,8 @@
     margin-bottom: 10px;
 
     button {
-      background-color: #007bff;
-      color: white;
+      background-color: $primary-mid;
+      color: $primary-light;
       border: none;
       padding: 5px 10px;
       border-radius: 4px;
@@ -98,7 +100,8 @@
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: #0056b3;
+        background-color: $secondary-mid;
+        
       }
     }
 
@@ -110,8 +113,8 @@
   }
 
   .remove-button {
-    background-color: #dc3545;
-    color: white;
+    background-color: $form-field-error;
+    color: $primary-light;
     border: none;
     padding: 8px 12px;
     border-radius: 4px;
@@ -120,15 +123,15 @@
     transition: background-color 0.2s ease;
 
     &:hover {
-      background-color: #c82333;
+      background-color: rgba(255, 0, 0, 0.632);
     }
   }
 
   .cart-summary {
     // text-align: right; // We'll control alignment with flexbox now
     padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
+    background-color: $primary-light;
+    border: 1px solid $secondary-mid;
     border-radius: 8px;
     margin-top: 30px; // Add some space above the summary box
     display: flex;
@@ -138,7 +141,7 @@
     h2 {
       font-size: 1.8em;
       margin-bottom: 20px;
-      color: #333;
+      color: $primary-mid;
       text-align: right; // Keep total text aligned to the right
       margin-top: 20px; // Add space above the total if customer info is present
     }
@@ -153,7 +156,7 @@
     input[type="text"],
     input[type="email"] {
       padding: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid $secondary-mid;
       border-radius: 4px;
       font-size: 1em;
       width: 100%; // Make inputs take full width of their container
@@ -162,9 +165,8 @@
   }
 
   .checkout-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
+    background-color: $primary-mid;
+    color: $primary-light;
     padding: 12px 20px;
     border-radius: 5px;
     cursor: pointer;
@@ -189,7 +191,7 @@
     display: inline-block;
     margin-top: 15px;
     padding: 10px 20px;
-    color: white;
+    color: $primary-light;
     text-decoration: none;
     border-radius: 5px;
     font-weight: 500;
@@ -199,16 +201,16 @@
   }
 
   .back-to-home-button {
-    background-color: #007bff; // Blue for a primary action
+    background-color: $primary-dark; // Blue for a primary action
     &:hover {
-      background-color: #0056b3;
+      background-color: $secondary-dark;
       transform: translateY(-1px);
     }
   }
 }
 
 .checkout-error-message {
-  color: #dc3545; // A standard error red color
+  color: $form-field-error; // A standard error red color
   background-color: #f8d7da; // Light red background for emphasis
   border: 1px solid #f5c6cb; // Red border
   padding: 10px;
@@ -227,7 +229,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #f0f0f0; // A light color, matching your nav's subtle gradient
+    background-color: $secondary-light; // A light color, matching your nav's subtle gradient
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -245,24 +247,21 @@
     }
   }
   .input {
-    background-color: rgb(203, 203, 203);
-    color: white;
+    background-color: $primary-mid;
+    color: $primary-light;
   }
 
 // Suggested styles for CartPage.scss
 
-.customer-info {
-  // This ensures the select dropdown has the same base styles as your other inputs.
- 
-}
+
 
 .cart-summary {
   .cart-totals {
     width: 100%;
     margin: 1.5rem 0;
     padding-top: 1.5rem;
-    border-top: 1px solid #eee;
-    color: black;
+    border-top: 1px solid $primary-light;
+    color: $secondary-dark;
 
     .summary-row {
       display: flex;
@@ -272,14 +271,14 @@
       font-size: 1rem;
 
       span:first-child {
-        color: #555; // A slightly lighter color for the label
+        color: $primary-dark; // A slightly lighter color for the label
       }
     }
 
     .grand-total {
       margin-top: 1rem;
       padding-top: 1rem;
-      border-top: 1px solid #ccc;
+      border-top: 1px solid $secondary-mid;
       font-size: 1.25rem;
     }
   }
@@ -296,9 +295,8 @@
 }
 
 .select-selected {
-  background-color: #878787;
+  background-color: $primary-mid;
   padding: 0.8rem 1rem;
-  border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
@@ -313,20 +311,20 @@
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-top: 6px solid #555;
     transition: transform 0.2s ease-in-out;
   }
 }
 
 .select-items {
+
   position: absolute;
-  background-color: #464646;
+  background-color: $primary-dark;
   top: 100%;
   left: 0;
   right: 0;
   z-index: 99;
-  border: 1px solid #ddd;
-  border-top: none;
+  border: 1px solid $primary-light;
+
   border-radius: 0 0 4px 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
@@ -336,7 +334,7 @@
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #7f7f7f;
+      background-color: $primary-mid;
     }
   }
 }

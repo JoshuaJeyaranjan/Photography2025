@@ -1,6 +1,8 @@
+@use '../../styles/partials/variables' as *;
+
 .contact-page {
     min-height: 100vh;
-    background-color: #fff;
+    background-color: $primary-light;
     padding: 4rem 1rem;
     display: flex;
     flex-direction: column;
@@ -23,13 +25,13 @@
       font-size: 2.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: #111;
+      color: $primary-dark;
       text-align: center;
     }
   
     &__text {
       font-size: 1.1rem;
-      color: #444;
+      color: $primary-dark;
       text-align: center;
       margin-bottom: 1rem;
       max-width: 500px;
@@ -37,7 +39,7 @@
   }
   
   .contact-form {
-    background-color: #f9f9f9;
+    background-color: $primary-light;
     padding: 2.5rem;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
@@ -57,29 +59,29 @@
   
     label {
       font-weight: 500;
-      color: #333;
+      color: $primary-dark;
     }
   
     input,
     textarea {
       width: 100%;
       padding: 0.75rem 1rem;
-      border: 1px solid #ddd;
+      border: 1px solid $secondary-mid;
       border-radius: 8px;
       font-size: 1rem;
       transition: border-color 0.2s ease;
-      background-color: #ddd;
-      color:#111;
+      background-color: $secondary-mid;
+      color: $primary-dark;
   
       &:focus {
-        border-color: #0077ff;
+        border-color: $secondary-dark;
         outline: none;
       }
     }
   
     button {
       padding: 0.75rem 1.5rem;
-      background-color: #c8c8c8;
+      background-color: $primary-dark;
       color: #fff;
       border: none;
       border-radius: 8px;
@@ -89,7 +91,7 @@
       transition: background-color 0.2s ease;
   
       &:hover {
-        background-color: #717171;
+        background-color: $primary-green;
       }
   
       &:disabled {
@@ -104,6 +106,6 @@
     text-align: center;
     font-size: 1rem;
     font-weight: 500;
-    color: #0077ff;
+    color: $primary-green;
   }
 
