@@ -3,19 +3,20 @@ import Photo from '../Photo/Photo';
 import './Gallery.scss';
 
 function Gallery({ category }) {
-  const [sourceImages, setSourceImages] = useState([]); // Holds the full list from the API
-  const [loadedImages, setLoadedImages] = useState([]); // Holds images as they finish loading
+  const [sourceImages, setSourceImages] = useState([]); // Holds full API response
+  const [loadedImages, setLoadedImages] = useState([]); // Tracks images that finish preloading
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const API_BASE_URL = 'https://photography-docker.onrender.com/api';
+  const BUCKET_BASE_URL = 'https://media.joshuajeyphotography.com';
 
   useEffect(() => {
     const fetchImages = async () => {
       setIsLoading(true);
       setError(null);
-      setSourceImages([]); // Reset on category change
-      setLoadedImages([]); // Reset on category change
+      setSourceImages([]);
+      setLoadedImages([]);
 
       const apiUrl = category
         ? `${API_BASE_URL}/gallery?category=${encodeURIComponent(category)}`
@@ -37,33 +38,32 @@ function Gallery({ category }) {
         }
 
         const data = await response.json();
-        setSourceImages(data); // Store the full list of image data
+        setSourceImages(data);
 
         if (data.length === 0) {
-          setIsLoading(false); // No images to load
+          setIsLoading(false);
           return;
         }
 
-        // Progressively load images and add them to the display list
+        // Preload JPEG versions of each image
         data.forEach(imageInfo => {
           const img = new Image();
-          img.src = imageInfo.url.replace('.avif', '.jpg'); // Use a common format for preloading
+          img.src = `${BUCKET_BASE_URL}/${imageInfo.folder}/${imageInfo.filename}.jpg`;
+
           img.onload = () => {
-            // Add the fully loaded image to the state that gets rendered,
-            // but only if it's not already present to prevent duplicates.
             setLoadedImages(prev => {
-              if (!prev.some(loadedImg => loadedImg.id === imageInfo.id)) {
+              if (!prev.some(loaded => loaded.id === imageInfo.id)) {
                 return [...prev, imageInfo];
               }
-              return prev; // Return the current state if the image is already there
+              return prev;
             });
           };
+
           img.onerror = () => {
-            console.error(`Failed to preload image: ${imageInfo.url}`);
+            console.error(`Failed to preload image: ${img.src}`);
           };
         });
 
-        // The main loading is done; visual loading happens as images appear
         setIsLoading(false);
       } catch (err) {
         console.error('Failed to fetch gallery images:', err);
@@ -76,11 +76,20 @@ function Gallery({ category }) {
   }, [category]);
 
   if (isLoading) {
-    return <div className="gallery-loader-container"><p className="gallery-status">Loading images...</p></div>;
+    return (
+      <div className="gallery-loader-container">
+        <p className="gallery-status">Loading images...</p>
+      </div>
+    );
   }
 
-  if (error) return <p className="gallery-status error">{error}</p>;
-  if (sourceImages.length === 0) return <p className="gallery-status">No images found{category ? ` in "${category}"` : ''}.</p>;
+  if (error) {
+    return <p className="gallery-status error">{error}</p>;
+  }
+
+  if (sourceImages.length === 0) {
+    return <p className="gallery-status">No images found{category ? ` in "${category}"` : ''}.</p>;
+  }
 
   return (
     <div className="gallery-grid loaded">
@@ -88,7 +97,8 @@ function Gallery({ category }) {
         <Photo
           key={image.id}
           id={image.id}
-          src={image.url} // Ensure this is the correct property name from your API
+          filename={image.filename}
+          folder={image.folder}
           alt={image.description || image.filename || `Photo ${image.id}`}
           title={image.title || ''}
         />
