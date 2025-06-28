@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Photo.scss';
 
-function Photo({ id, src, alt, title }) {
+const baseUrl = "https://media.joshuajeyphotography.com";
+
+function Photo({ id, filename, folder, alt, title }) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const jpgFallback = src.endsWith('.avif') ? src.replace('.avif', '.jpg') : src;
+
+  const avifSrc = `${baseUrl}/${folder}/${filename}.avif`;
+  const jpgSrc = `${baseUrl}/${folder}/${filename}.jpg`;
 
   const handleImageLoad = () => {
     setIsLoaded(true);
@@ -13,10 +17,11 @@ function Photo({ id, src, alt, title }) {
   return (
     <Link to={`/photo/${id}`} className={`photo-item ${isLoaded ? 'loaded' : ''}`}>
       <picture>
-        <source srcSet={src} type="image/avif" />
-        <source srcSet={jpgFallback} type="image/jpeg" />
+        <source srcSet={avifSrc} type="image/avif" />
+        <source srcSet={jpgSrc} type="image/jpeg" />
+        <source srcSet={`${baseUrl}/${folder}/${filename}.webp`} type="image/webp" />
         <img
-          src={jpgFallback}
+          src={jpgSrc}
           alt={alt}
           className="photo-thumbnail"
           onLoad={handleImageLoad}
