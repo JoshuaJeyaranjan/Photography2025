@@ -1,4 +1,5 @@
 @use "../../styles/partials/mixins" as *;
+@use '../../styles/partials/variables' as *;
 
 .photo-link {
   display: block;
@@ -6,7 +7,7 @@
   color: inherit;
   overflow: hidden;
   border-radius: 4px; // Optional: if you want rounded corners for the container
-
+  
   @include mobile {
     padding: 2rem;
   }
@@ -18,7 +19,7 @@
       height: auto; // Or a fixed height if you prefer uniform gallery items
       opacity: 0;
       transform: translateY(15px);
-
+      
       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 
       &.loaded {
@@ -35,6 +36,7 @@
   border-radius: 8px;
   display: block;
   transition: transform 0.2s ease;
+  
   @include mobile {
     padding: 1rem 2rem;
   }
@@ -42,6 +44,7 @@
 
 .photo-thumbnail:hover {
   transform: scale(1.02);
+  box-shadow: 0 4px 8px var(--color-primary-mid);
 }
 .size-button {
   border: 1px solid #ccc;
