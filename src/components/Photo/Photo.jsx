@@ -25,6 +25,8 @@ function Photo({ id, filename, folder, alt, title }) {
         <source srcSet={avifSrc} type="image/avif" />
         <source srcSet={webpSrc} type="image/webp" />
         <img
+        type='image/jpeg'
+        decoding='async'
           src={jpgSrc}
           alt={alt}
           className="photo-thumbnail"
