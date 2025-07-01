@@ -27,15 +27,14 @@ function AdminOrdersPage() {
     if (user && user.is_admin && token) {
       const fetchOrders = async () => {
         try {
-          console.log('AdminOrdersPage: Attempting to fetch orders...');
+          
           // Assumes an endpoint /api/admin/orders exists and is protected
           const response = await fetch(`${API_URL}/api/stripe/orders`, {
             headers: {
               'Authorization': `Bearer ${token}` // Include the JWT token
             }
           });
-          console.log('AdminOrdersPage: Response status:', response.status);
-          console.log('AdminOrdersPage: Response OK:', response.ok);
+    
           if (!response.ok) {
             const errorBody = await response.text(); // Get the raw response body for debugging
             console.error('AdminOrdersPage: Server responded with error:', errorBody);
@@ -43,7 +42,7 @@ function AdminOrdersPage() {
           }
           const data = await response.json();
           setOrders(data);
-          console.log('Fetched orders:', data);
+          
         } catch (err) {
           setError(err.message);
           console.error('AdminOrdersPage: Error during fetch:', err);

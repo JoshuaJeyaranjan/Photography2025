@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import './AdminDashboard.scss';
-import Nav from '../../components/Nav/Nav';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import "./AdminDashboard.scss";
+import Nav from "../../components/Nav/Nav";
+import axios from "axios";
 
 function AdminDashboard() {
   const [aboutContent, setAboutContent] = useState({
-    expertise: '',
-    creativeVision: '',
-    impact: ''
+    expertise: "",
+    creativeVision: "",
+    impact: "",
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
@@ -24,15 +24,15 @@ function AdminDashboard() {
       try {
         setIsLoading(true);
         const [aboutResponse, portfolioResponse] = await Promise.all([
-          axios.get('/api/admin/about'),
-          axios.get('/api/admin/portfolio')
+          axios.get("/api/admin/about"),
+          axios.get("/api/admin/portfolio"),
         ]);
-        
+
         setAboutContent(aboutResponse.data);
         setPortfolioImages(portfolioResponse.data);
       } catch (err) {
-        setError('Failed to load data. Please try again later.');
-        console.error('Error fetching data:', err);
+        setError("Failed to load data. Please try again later.");
+        console.error("Error fetching data:", err);
       } finally {
         setIsLoading(false);
       }
@@ -42,9 +42,9 @@ function AdminDashboard() {
   }, []);
 
   const handleTextChange = (section, value) => {
-    setAboutContent(prev => ({
+    setAboutContent((prev) => ({
       ...prev,
-      [section]: value
+      [section]: value,
     }));
   };
 
@@ -61,31 +61,36 @@ function AdminDashboard() {
 
         // Prepare form data
         const formData = new FormData();
-        formData.append('profileImage', file);
-
-        console.log('Uploading profile image:', file.name);
+        formData.append("profileImage", file);
 
         // Make API request
-        const response = await axios.post('/api/admin/profile-image', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
+        const response = await axios.post(
+          "/api/admin/profile-image",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
           }
-        });
-
-        console.log('Profile image upload response:', response.data);
+        );
 
         if (response.data.imagePath) {
           // Update the preview with the actual server path
           setImagePreview(response.data.imagePath);
-          setSaveStatus({ type: 'success', message: 'Profile image updated successfully' });
+          setSaveStatus({
+            type: "success",
+            message: "Profile image updated successfully",
+          });
         } else {
-          throw new Error('No image path returned from server');
+          throw new Error("No image path returned from server");
         }
       } catch (err) {
-        console.error('Error uploading profile image:', err);
-        setSaveStatus({ 
-          type: 'error', 
-          message: err.response?.data?.error || 'Failed to update profile image. Please try again.' 
+        console.error("Error uploading profile image:", err);
+        setSaveStatus({
+          type: "error",
+          message:
+            err.response?.data?.error ||
+            "Failed to update profile image. Please try again.",
         });
         // Reset preview on error
         setImagePreview(null);
@@ -95,62 +100,78 @@ function AdminDashboard() {
 
   const handlePortfolioImageUpload = async (event) => {
     const files = Array.from(event.target.files);
-    
+
     for (const file of files) {
       try {
         const formData = new FormData();
-        formData.append('image', file);
-        formData.append('title', file.name.replace(/\.[^/.]+$/, ""));
-        formData.append('description', '');
+        formData.append("image", file);
+        formData.append("title", file.name.replace(/\.[^/.]+$/, ""));
+        formData.append("description", "");
 
-        const response = await axios.post('/api/admin/portfolio', formData, {
+        const response = await axios.post("/api/admin/portfolio", formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+            "Content-Type": "multipart/form-data",
+          },
         });
 
-        setPortfolioImages(prev => [...prev, response.data]);
-        setSaveStatus({ type: 'success', message: 'Portfolio image uploaded successfully' });
+        setPortfolioImages((prev) => [...prev, response.data]);
+        setSaveStatus({
+          type: "success",
+          message: "Portfolio image uploaded successfully",
+        });
       } catch (err) {
-        setSaveStatus({ type: 'error', message: 'Failed to upload portfolio image' });
-        console.error('Error uploading portfolio image:', err);
+        setSaveStatus({
+          type: "error",
+          message: "Failed to upload portfolio image",
+        });
+        console.error("Error uploading portfolio image:", err);
       }
     }
   };
 
   const handleDragStart = (e, image) => {
     setDraggedImage(image);
-    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.effectAllowed = "move";
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
+    e.dataTransfer.dropEffect = "move";
   };
 
   const handleDrop = async (e, targetImage) => {
     e.preventDefault();
     if (draggedImage && targetImage) {
       const newImages = [...portfolioImages];
-      const draggedIndex = newImages.findIndex(img => img.id === draggedImage.id);
-      const targetIndex = newImages.findIndex(img => img.id === targetImage.id);
-      
+      const draggedIndex = newImages.findIndex(
+        (img) => img.id === draggedImage.id
+      );
+      const targetIndex = newImages.findIndex(
+        (img) => img.id === targetImage.id
+      );
+
       newImages.splice(draggedIndex, 1);
       newImages.splice(targetIndex, 0, draggedImage);
-      
+
       setPortfolioImages(newImages);
 
       try {
-        await axios.put('/api/admin/portfolio/reorder', {
+        await axios.put("/api/admin/portfolio/reorder", {
           images: newImages.map((img, index) => ({
             id: img.id,
-            display_order: index + 1
-          }))
+            display_order: index + 1,
+          })),
         });
-        setSaveStatus({ type: 'success', message: 'Portfolio order updated successfully' });
+        setSaveStatus({
+          type: "success",
+          message: "Portfolio order updated successfully",
+        });
       } catch (err) {
-        setSaveStatus({ type: 'error', message: 'Failed to update portfolio order' });
-        console.error('Error updating portfolio order:', err);
+        setSaveStatus({
+          type: "error",
+          message: "Failed to update portfolio order",
+        });
+        console.error("Error updating portfolio order:", err);
       }
     }
   };
@@ -158,41 +179,53 @@ function AdminDashboard() {
   const handleImageDelete = async (imageId) => {
     try {
       await axios.delete(`/api/admin/portfolio/${imageId}`);
-      setPortfolioImages(prev => prev.filter(img => img.id !== imageId));
-      setSaveStatus({ type: 'success', message: 'Portfolio image deleted successfully' });
+      setPortfolioImages((prev) => prev.filter((img) => img.id !== imageId));
+      setSaveStatus({
+        type: "success",
+        message: "Portfolio image deleted successfully",
+      });
     } catch (err) {
-      setSaveStatus({ type: 'error', message: 'Failed to delete portfolio image' });
-      console.error('Error deleting portfolio image:', err);
+      setSaveStatus({
+        type: "error",
+        message: "Failed to delete portfolio image",
+      });
+      console.error("Error deleting portfolio image:", err);
     }
   };
 
   const handleImageEdit = async (imageId, field, value) => {
     try {
-      const image = portfolioImages.find(img => img.id === imageId);
+      const image = portfolioImages.find((img) => img.id === imageId);
       const updatedImage = { ...image, [field]: value };
-      
+
       await axios.put(`/api/admin/portfolio/${imageId}`, {
         title: updatedImage.title,
-        description: updatedImage.description
+        description: updatedImage.description,
       });
 
-      setPortfolioImages(prev => prev.map(img => 
-        img.id === imageId ? updatedImage : img
-      ));
-      setSaveStatus({ type: 'success', message: 'Portfolio image updated successfully' });
+      setPortfolioImages((prev) =>
+        prev.map((img) => (img.id === imageId ? updatedImage : img))
+      );
+      setSaveStatus({
+        type: "success",
+        message: "Portfolio image updated successfully",
+      });
     } catch (err) {
-      setSaveStatus({ type: 'error', message: 'Failed to update portfolio image' });
-      console.error('Error updating portfolio image:', err);
+      setSaveStatus({
+        type: "error",
+        message: "Failed to update portfolio image",
+      });
+      console.error("Error updating portfolio image:", err);
     }
   };
 
   const handleSave = async () => {
     try {
-      await axios.put('/api/admin/about', aboutContent);
-      setSaveStatus({ type: 'success', message: 'Changes saved successfully' });
+      await axios.put("/api/admin/about", aboutContent);
+      setSaveStatus({ type: "success", message: "Changes saved successfully" });
     } catch (err) {
-      setSaveStatus({ type: 'error', message: 'Failed to save changes' });
-      console.error('Error saving changes:', err);
+      setSaveStatus({ type: "error", message: "Failed to save changes" });
+      console.error("Error saving changes:", err);
     }
   };
 
@@ -223,21 +256,21 @@ function AdminDashboard() {
       <Nav />
       <div className="admin-content">
         <h1>Admin Dashboard</h1>
-        
+
         {saveStatus && (
           <div className={`status-message ${saveStatus.type}`}>
             {saveStatus.message}
           </div>
         )}
-        
+
         <section className="admin-section">
           <h2>About Page Content</h2>
-          
+
           <div className="form-group">
             <label>Portrait Photography Expertise</label>
             <textarea
               value={aboutContent.expertise}
-              onChange={(e) => handleTextChange('expertise', e.target.value)}
+              onChange={(e) => handleTextChange("expertise", e.target.value)}
               rows="4"
             />
           </div>
@@ -246,7 +279,9 @@ function AdminDashboard() {
             <label>Creative Vision</label>
             <textarea
               value={aboutContent.creativeVision}
-              onChange={(e) => handleTextChange('creativeVision', e.target.value)}
+              onChange={(e) =>
+                handleTextChange("creativeVision", e.target.value)
+              }
               rows="4"
             />
           </div>
@@ -255,7 +290,7 @@ function AdminDashboard() {
             <label>Making an Impact</label>
             <textarea
               value={aboutContent.impact}
-              onChange={(e) => handleTextChange('impact', e.target.value)}
+              onChange={(e) => handleTextChange("impact", e.target.value)}
               rows="4"
             />
           </div>
@@ -300,7 +335,7 @@ function AdminDashboard() {
               className="image-upload-input"
             />
           </div>
-          
+
           <div className="portfolio-grid">
             {portfolioImages.map((image) => (
               <div
@@ -324,12 +359,16 @@ function AdminDashboard() {
                   <input
                     type="text"
                     value={image.title}
-                    onChange={(e) => handleImageEdit(image.id, 'title', e.target.value)}
+                    onChange={(e) =>
+                      handleImageEdit(image.id, "title", e.target.value)
+                    }
                     placeholder="Image Title"
                   />
                   <textarea
                     value={image.description}
-                    onChange={(e) => handleImageEdit(image.id, 'description', e.target.value)}
+                    onChange={(e) =>
+                      handleImageEdit(image.id, "description", e.target.value)
+                    }
                     placeholder="Image Description"
                     rows="2"
                   />
@@ -347,4 +386,4 @@ function AdminDashboard() {
   );
 }
 
-export default AdminDashboard; 
+export default AdminDashboard;
