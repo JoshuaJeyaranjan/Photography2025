@@ -5,15 +5,15 @@
   min-height: 90vh;
   margin: 20px auto;
   padding: 20px;
-  background-color: $primary-light;
+  background-color: var(--color-background);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
 
   h1 {
     text-align: center;
-    color: $secondary-dark;
-    margin-top: 0; // Add this to remove default top margin from the h1
+    color: var(--color-text-primary);
+    margin-top: 0;
     margin-bottom: 30px;
     font-size: 2.5em;
   }
@@ -21,14 +21,14 @@
   .empty-cart {
     text-align: center;
     font-size: 1.2em;
-    color: $primary-mid;
+    color: var(--color-primary-mid);
     margin-bottom: 20px;
   }
 
   .empty-cart-container {
-    text-align: center; // Center the "empty cart" message and button
-    padding: 40px 0; // Add some padding
-    display: flex; // Use flex to stack and center items
+    text-align: center;
+    padding: 40px 0;
+    display: flex;
     flex-direction: column;
     align-items: center;
   }
@@ -42,15 +42,15 @@
 
   .cart-item {
     display: flex;
-    background-color: $secondary-light;
-    border: 1px solid $secondary-mid;
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-secondary-mid);
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 4px 8px $primary-mid;
+      box-shadow: 0 4px 8px var(--color-primary-mid);
     }
   }
 
@@ -58,8 +58,7 @@
     width: 150px;
     height: 200px;
     object-fit: cover;
-    border-right: 1px solid $secondary-light;
-
+    border-right: 1px solid var(--color-secondary-light);
   }
 
   .cart-details {
@@ -74,12 +73,12 @@
     h2 {
       font-size: 1.4em;
       margin-bottom: 10px;
-      color: $primary-dark;
+      color: var(--color-text-primary);
     }
 
     p {
       font-size: 1em;
-      color: $primary-dark;
+      color: var(--color-text-primary);
       margin-bottom: 8px;
     }
   }
@@ -90,8 +89,9 @@
     margin-bottom: 10px;
 
     button {
-      background-color: $primary-mid;
-      color: $primary-light;
+      background-color: var(--color-background);
+      color: var(--color-secondary-mid-dark);
+      
       border: none;
       padding: 5px 10px;
       border-radius: 4px;
@@ -100,7 +100,8 @@
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: $secondary-dark;
+        background-color: var(--color-secondary-dark);
+        color: var(--color-text-secondary);
         
       }
     }
@@ -109,12 +110,13 @@
       font-size: 1.1em;
       min-width: 20px;
       text-align: center;
+      color: var(--color-text-primary);
     }
   }
 
   .remove-button {
-    background-color: $form-field-error;
-    color: $primary-light;
+    background-color: var(--color-error);
+    color: var(--color-primary-light);
     border: none;
     padding: 8px 12px;
     border-radius: 4px;
@@ -128,59 +130,94 @@
   }
 
   .cart-summary {
-    // text-align: right; // We'll control alignment with flexbox now
     padding: 20px;
-    background-color: $primary-light;
-    border: 1px solid $secondary-mid;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-secondary-mid);
     border-radius: 8px;
-    margin-top: 30px; // Add some space above the summary box
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    align-items: stretch; // Stretch items to fill width, or 'center'/'flex-end' if preferred
+    align-items: stretch;
 
     h2 {
       font-size: 1.8em;
       margin-bottom: 20px;
-      color: $primary-mid;
-      text-align: right; // Keep total text aligned to the right
-      margin-top: 20px; // Add space above the total if customer info is present
+      color: var(--color-text-primary);
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    .cart-totals {
+      width: 100%;
+      margin: 1.5rem 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--color-primary-light);
+      color: var(--color-secondary-dark);
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+        font-size: 1rem;
+        color: var(--color-text-primary);
+
+        span:first-child {
+          color: var(--color-text-primary);
+        }
+      }
+
+      .grand-total {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--color-secondary-mid);
+        font-size: 1.25rem;
+        color: var(--color-text-primary);
+      }
+    }
+
+    .checkout-button {
+      width: 100%;
+      margin-top: 1rem;
     }
   }
 
   .customer-info {
     display: flex;
     flex-direction: column;
-    gap: 15px; // Space between input fields
-    margin-bottom: 20px; // Space below the form
+    gap: 15px;
+    margin-bottom: 20px;
 
     input[type="text"],
     input[type="email"] {
-      color: $primary-light;
+      color: var(--color-text-primary);
+      background-color: var(--color-primary-mid);
       padding: 10px;
-      border: 1px solid $secondary-mid;
+      border: 1px solid var(--color-secondary-mid);
       border-radius: 4px;
       font-size: 1em;
-      width: 100%; // Make inputs take full width of their container
-      box-sizing: border-box; // Include padding and border in the element's total width and height
+      width: 100%;
+      box-sizing: border-box;
     }
+
     input::placeholder {
-      color: $primary-light;
+      color: var(--color-primary-light);
       font-size: $body-footer-size;
       font-family: $font-body;
       font-weight: $font-weight-light;
-      opacity: 1; // optional: make it fully opaque
+      opacity: 1;
     }
   }
 
   .checkout-button {
-    background-color: $primary-mid;
-    color: $primary-light;
+    background-color: var(--color-primary-mid);
+    color: var(--color-primary-light);
     padding: 12px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.1em;
     transition: background-color 0.2s ease, transform 0.1s ease;
-    align-self: flex-end; // Align button to the right if cart-summary align-items is stretch
+    align-self: flex-end;
 
     &:hover {
       background-color: #218838;
@@ -194,12 +231,11 @@
     }
   }
 
-  // General button styling for cart page, can be reused
   .cart-page-button {
     display: inline-block;
     margin-top: 15px;
     padding: 10px 20px;
-    color: $primary-light;
+    color: var(--color-primary-light);
     text-decoration: none;
     border-radius: 5px;
     font-weight: 500;
@@ -209,93 +245,58 @@
   }
 
   .back-to-home-button {
-    background-color: $primary-dark; // Blue for a primary action
+    background-color: var(--color-primary-dark);
+
     &:hover {
-      background-color: $secondary-dark;
+      background-color: var(--color-secondary-dark);
       transform: translateY(-1px);
     }
   }
 }
 
 .checkout-error-message {
-  color: $form-field-error; // A standard error red color
-  background-color: #f8d7da; // Light red background for emphasis
-  border: 1px solid #f5c6cb; // Red border
+  color: var(--color-error);
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
   padding: 10px;
   border-radius: 4px;
-  margin-bottom: 15px; // Space below the error message
+  margin-bottom: 15px;
   text-align: center;
 }
 
 .quantity {
-    color: black ;
+  color: black; // Consider theme-coloring this too if needed
 }
 
 .page-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: $secondary-light; // A light color, matching your nav's subtle gradient
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-secondary-light);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.portrait-page-content {
+  opacity: 0;
+  transition: opacity 0.3s ease-in 0.1s;
+
+  &.loaded {
     opacity: 1;
-    transition: opacity 0.3s ease-out; // Smooth fade-out
-  }
-  
-  .portrait-page-content {
-    opacity: 0; // Start hidden
-    transition: opacity 0.3s ease-in 0.1s; // Fade in after loader starts fading out
-  
-    &.loaded {
-      opacity: 1;
-    }
-  }
-  .input {
-    background-color: $primary-mid;
-    color: $primary-light;
-  }
-
-// Suggested styles for CartPage.scss
-
-
-
-.cart-summary {
-  .cart-totals {
-    width: 100%;
-    margin: 1.5rem 0;
-    padding-top: 1.5rem;
-    border-top: 1px solid $primary-light;
-    color: $secondary-dark;
-
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-      font-size: 1rem;
-
-      span:first-child {
-        color: $primary-dark; // A slightly lighter color for the label
-      }
-    }
-
-    .grand-total {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid $secondary-mid;
-      font-size: 1.25rem;
-    }
-  }
-
-  .checkout-button {
-    width: 100%; // Make the button full-width within the summary
-    margin-top: 1rem;
   }
 }
+
+.input {
+  background-color: var(--color-background);
+  color: var(--color-primary-light);
+}
+
 // --- Custom Select Dropdown ---
 .custom-select {
   position: relative;
@@ -303,7 +304,7 @@
 }
 
 .select-selected {
-  background-color: $primary-mid;
+  background-color: var(--color-primary-mid);
   padding: 0.8rem 1rem;
   border-radius: 4px;
   font-size: 1rem;
@@ -311,8 +312,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: var (--color-text-primary);
 
-  // Custom arrow
   &::after {
     content: "";
     width: 0;
@@ -324,16 +325,12 @@
 }
 
 .select-items {
-
   position: absolute;
-  background-color: $primary-dark;
+  background-color: var(--color-background-secondary);
   top: 100%;
   left: 0;
   right: 0;
   z-index: 99;
-  
-  border: none;
-  
   border-radius: 0 0 4px 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
@@ -341,10 +338,11 @@
     padding: 0.8rem 1rem;
     cursor: pointer;
     transition: background-color 0.2s;
-    border-bottom: 1px solid $primary-mid;
+    border-bottom: 1px solid var(--color-primary-mid);
 
     &:hover {
-      background-color: $secondary-dark;
+      background-color: var(--color-text-secondary);
     }
   }
 }
+

@@ -1,157 +1,161 @@
 @use '../../styles/partials/mixins' as *;
 @use '../../styles/partials/variables' as *;
+
 .photo-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 0; // Remove padding if it's not intentional
-    margin: 0;
-    text-align: center;
-
-    @include tablet {
-        padding: 2rem;
-    }
-  }
-  
-  .photo-page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    max-width: 1200px;
-    width: 100%;
-    padding: 1rem 1rem;
-    box-sizing: border-box;
-  }
-  
-  .photo-detail {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    margin: 0;
-  
-    .photo-detail-image {
-      display: block; // prevent inline image spacing
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      cursor: zoom-in;
-    }
-  
-    .photo-info {
-      max-width: 800px;
-  
-      h1 {
-        margin: 0;
-        font-size: 2em;
-      }
-  
-      .photo-description {
-        font-size: 1rem;
-        line-height: 1.6;
-        margin: 1rem 0;
-      }
-  
-      .purchase-button {
-        margin-top: 1rem;
-        padding: 0.75rem 1.5rem;
-        font-size: 1.1rem;
-      }
-  
-      .purchase-status {
-        margin-top: 0.75rem;
-        font-style: italic;
-      }
-    }
-  }
-  
-  .photo-page-status {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.2rem;
-  
-    &.error {
-      color: $form-field-error;
-    }
-  }
-  .cart-message {
-    margin-top: 0.5rem;
-    color: rgba(0, 128, 0, 0.591);
-    font-weight: 500;
-    font-size: 1rem;
-    animation: fadeIn 0.3s ease;
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-  }
-  
-  // You can add these styles to your existing PhotoPage.scss file.
-// If .photo-page or .photo-metadata selectors already exist,
-// integrate these button styles within that existing structure.
-
-.purchase-button {
-  display: inline-block; // Allows buttons to sit side-by-side if space allows, or stack naturally
-  padding: 12px 24px;   // Comfortable padding inside the button
-  margin: 10px;         // Spacing around each button
-  font-size: 1rem;      // Standard font size
-  font-weight: 600;     // Make text slightly bolder
-  color: $primary-light;       // White text for contrast
-  background-color: $primary-mid; // A pleasant, modern blue
-  border: none;         // Remove default browser border
-  border-radius: 6px;   // Softly rounded corners
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
   text-align: center;
-  text-decoration: none; // In case it's ever an <a> tag styled as a button
-  min-width: 2rem;     // Ensures buttons have a decent minimum width
-  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease; // Smooth transitions for hover effects
 
-  &:hover {
-    background-color: #cecece; // Darker shade of blue on hover
-    transform: translateY(-2px); // Subtle lift effect
-    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3); // Soft shadow, tinted with button color for a subtle glow
-  }
-
-  &:active {
-    background-color: #2471a3; // Even darker blue when button is pressed
-    transform: translateY(0px);  // Reset lift, giving a "pressed down" feel
-    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2); // Smaller shadow when active
-  }
-
-  // Modern accessibility-friendly focus state for keyboard navigation
-  &:focus-visible {
-    outline: 2px solid #2980b9; // Clear focus outline
-    outline-offset: 2px;       // Offset outline slightly from button edge
-    box-shadow: none;          // Optionally remove other shadows when focused with outline
+  @include tablet {
+    padding: 2rem;
   }
 }
 
-// Optional: Consistent styling for status messages
+.photo-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.photo-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0;
+
+  .photo-detail-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    cursor: zoom-in;
+  }
+
+  .photo-info {
+    max-width: 800px;
+
+    h1 {
+      margin: 0;
+      font-size: 2em;
+      color: var(--color-text-primary);
+    }
+
+    .photo-description {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 1rem 0;
+      color: var(--color-text-secondary);
+    }
+
+    .purchase-button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .purchase-status {
+      margin-top: 0.75rem;
+      font-style: italic;
+    }
+  }
+}
+
+.photo-page-status {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+
+  &.error {
+    color: var(--color-error);
+  }
+}
+
+.cart-message {
+  margin-top: 0.5rem;
+  color: var(--color-success);
+  font-weight: 500;
+  font-size: 1rem;
+  animation: fadeIn 0.3s ease;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+// --- Buttons ---
+.purchase-button {
+  display: inline-block;
+  padding: 12px 24px;
+  margin: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary-light);
+  background-color: var(--color-primary-mid);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 2rem;
+  transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-text-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+  }
+
+  &:active {
+    background-color: var(--color-primary-dark);
+    transform: translateY(0px);
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary-dark);
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+}
+
 .purchase-status,
 .cart-message {
   margin-top: 15px;
   font-size: 0.9em;
-  text-align: center; // Center status messages if buttons are centered
-  color: #555;       // Default color for status
+  text-align: center;
+  color: var(--color-text-secondary);
 }
 
 .cart-message {
-  color: #28a745;     // Green for success messages (e.g., "Added to cart!")
+  color: var(--color-success);
   font-weight: 500;
 }
 
 .checkout-now-button {
-  background-color: #28a745; // Green to indicate a positive next step
+  background-color: var(--color-success);
+
   &:hover {
-    background-color: #218838; // Darker green on hover
+    background-color: #218838;
   }
 }
 
-// Main container for all purchase-related elements
 .purchase-container {
   display: flex;
   flex-direction: column;
@@ -168,10 +172,8 @@
     font-size: 1.2rem;
     margin-bottom: 0.75rem;
     text-align: center;
-    color: $secondary-dark;
+    color: var(--color-text-primary);
   }
-
- 
 
   .size-options {
     display: flex;
@@ -189,11 +191,11 @@
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      border-color: $primary-mid;
+      border-color: var(--color-primary-mid);
     }
 
     &.selected {
-      border-color: $primary-dark; // A dark, primary color
+      border-color: var(--color-primary-dark);
       transform: scale(1.05);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
@@ -208,7 +210,7 @@
   }
 }
 
-// --- Selected Info & Actions ---
+// --- Selected Size Info ---
 .selected-size-info {
   display: flex;
   justify-content: space-between;
@@ -216,9 +218,9 @@
   font-family: "Poppins", sans-serif;
   font-size: 1.1rem;
   padding: 0.75rem 0;
-  border-bottom: 1px solid $primary-dark;
+  border-bottom: 1px solid var(--color-primary-dark);
   margin-bottom: 1rem;
-  color: $primary-dark;
+  color: var(--color-text-primary);
 
   span:first-child {
     font-weight: 500;
@@ -231,7 +233,7 @@
   align-items: center;
 }
 
-// --- Buttons & Messages ---
+// --- Buttons Consistency ---
 .add-to-cart-button,
 .checkout-now-button {
   font-family: "Poppins", sans-serif;
@@ -242,30 +244,30 @@
   cursor: pointer;
   text-align: center;
   transition: all 0.2s ease-in-out;
-  flex-grow: 1; // Make buttons take up space
+  flex-grow: 1;
 }
 
 .add-to-cart-button {
-  background-color: $primary-dark;
-  color: $primary-light;
-  border: 1px solid $secondary-mid;
+  background-color: var(--color-primary-dark);
+  color: var(--color-primary-light);
+  border: 1px solid var(--color-secondary-mid);
 
   &:hover:not(:disabled) {
-    background-color: $secondary-dark;
-    border-color: $secondary-mid;
+    background-color: var(--color-secondary-dark);
+    border-color: var(--color-secondary-mid);
   }
 
   &:disabled {
-    background-color: $primary-mid;
-    border-color: $primary-mid;
+    background-color: var(--color-primary-mid);
+    border-color: var(--color-primary-mid);
     cursor: not-allowed;
   }
 }
 
 .checkout-now-button {
-  background-color: $primary-light;
-  color: $primary-dark;
-  border: 1px solid $primary-mid;
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary-mid);
   text-decoration: none;
 
   &:hover {
@@ -275,30 +277,30 @@
 
 .cart-message {
   font-family: "Poppins", sans-serif;
-  color: $primary-green; // A success green
+  color: var(--color-success);
   font-weight: 500;
   text-align: center;
-  margin-top: -1rem; // Pull it closer to the buttons
+  margin-top: -1rem;
   margin-bottom: -1rem;
 }
 
-// --- Responsive Design ---
+.selector-disclaimer {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+// --- Responsive ---
 @media (max-width: 768px) {
   .photo-metadata {
-    padding: 1rem; // Add some padding on mobile
+    padding: 1rem;
   }
 
   .size-selector .size-preview-image {
-    width: 80px; // Slightly smaller previews on mobile
+    width: 80px;
   }
 
   .action-area {
     flex-direction: column;
-    align-items: stretch; // Make buttons full-width
+    align-items: stretch;
   }
-}
-
-.selector-disclaimer {
-  font-size: .75rem;
-  color: $primary-dark;
 }

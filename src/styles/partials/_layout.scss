@@ -2,44 +2,35 @@
 
 // This is the main wrapper for content pages (the <main> element)
 .content-page-layout {
-  // Use 100% width and ensure no horizontal overflow is caused by this container.
   width: 100%;
-  padding: 4rem 0;
-  padding-bottom: 0rem;
+  padding: 4rem 0 0 0;
   box-sizing: border-box;
-
-  // This creates a new block formatting context, which prevents children
-  // from causing overflow issues outside of this container. It's a robust
-  // way to contain content.
   display: flow-root;
 }
 
-// This is the inner container that holds the text, images, etc.
+// Inner container holding text, images, etc.
 .content-container {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-  // Crucial for mobile: creates gutters so content doesn't touch screen edges.
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   box-sizing: border-box;
 
-  // --- Semantic Typography ---
-  // Define font styles based on the element, not utility classes.
   h1 {
-    // font-family: v.$font-heading; // e.g., 'Italiana'
+    font-family: $font-heading;
     margin-bottom: 0.5rem;
-    color: $primary-dark;
+    color: var(--color-texy-primary);  // Dynamic color based on theme
   }
 
   h2,
   p,
   li,
   a {
-    // font-family: v.$font-body; // e.g., 'Poppins'
-    font-weight: 300; // for 'light'
+    font-family: $font-body;
+    font-weight: 300;
     line-height: 1.7;
-    color: $primary-dark;
+    color: var(--color-text-primary);  // Dynamic text color
   }
 
   .content-header {
@@ -57,5 +48,5 @@
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }

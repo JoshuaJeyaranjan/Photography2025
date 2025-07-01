@@ -5,20 +5,15 @@ const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
-
-  // On initial load, read the cart from localStorage
-  useEffect(() => {
+  const [cart, setCart] = useState(() => {
     try {
       const savedCart = localStorage.getItem('cart');
-      if (savedCart) {
-        setCart(JSON.parse(savedCart));
-      }
+      return savedCart ? JSON.parse(savedCart) : [];
     } catch (error) {
       console.error("Failed to parse cart from localStorage", error);
-      setCart([]);
+      return [];
     }
-  }, []);
+  });
 
   // Whenever the cart state changes, save it back to localStorage
   useEffect(() => {
@@ -55,6 +50,7 @@ export const CartProvider = ({ children }) => {
         : item
     ));
   };
+  console.log("CartProvider render, current cart:", cart);
 
   const clearCart = () => {
     setCart([]);
