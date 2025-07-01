@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Photo.scss';
+import useAvifSupport from '../../utils/useAvifSupport';
 
 const baseUrl = "https://media.joshuajeyphotography.com";
 
 function Photo({ id, filename, folder, alt, title }) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const avifSupported = useAvifSupport();
 
   const avifSrc = `${baseUrl}/${folder}/${filename}.avif`;
+  const webpSrc = `${baseUrl}/${folder}/${filename}.webp`;
   const jpgSrc = `${baseUrl}/${folder}/${filename}.jpg`;
 
   const handleImageLoad = () => {
@@ -16,18 +19,28 @@ function Photo({ id, filename, folder, alt, title }) {
 
   return (
     <Link to={`/photo/${id}`} className={`photo-item ${isLoaded ? 'loaded' : ''}`}>
-      <picture>
-        <source srcSet={avifSrc} type="image/avif" />
-        <source srcSet={jpgSrc} type="image/jpeg" />
-        <source srcSet={`${baseUrl}/${folder}/${filename}.webp`} type="image/webp" />
+      {avifSupported ? (
+        <picture>
+          <source srcSet={avifSrc} type="image/avif" />
+          <source srcSet={webpSrc} type="image/webp" />
+          <source srcSet={jpgSrc} type="image/jpeg" />
+          <img
+            src={jpgSrc}
+            alt={alt}
+            className="photo-thumbnail"
+            loading="lazy"
+            onLoad={handleImageLoad}
+          />
+        </picture>
+      ) : (
         <img
-        loading='lazy'
           src={jpgSrc}
           alt={alt}
           className="photo-thumbnail"
+          loading="lazy"
           onLoad={handleImageLoad}
         />
-      </picture>
+      )}
     </Link>
   );
 }
