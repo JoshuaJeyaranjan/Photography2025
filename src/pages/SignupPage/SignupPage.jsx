@@ -32,7 +32,7 @@ export default function SignupPage() {
       <div className="nav-buffer"></div>
       <div className="auth-page">
         <h1>Create Account</h1>
-        <form onSubmit={handleSubmit}>
+        <form className='form' onSubmit={handleSubmit}>
           <input
             className="input"
             type="text"
