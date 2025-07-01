@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Photo.scss';
 
@@ -14,6 +14,10 @@ function Photo({ id, filename, folder, alt, title }) {
   const handleImageLoad = () => {
     setIsLoaded(true);
   };
+
+  useEffect(() => {
+    console.log(`Rendering: ${jpgSrc}`);
+  }, []);
 
   return (
     <Link to={`/photo/${id}`} className={`photo-item ${isLoaded ? 'loaded' : ''}`}>
