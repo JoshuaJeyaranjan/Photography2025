@@ -4,78 +4,44 @@ import './Gallery.scss';
 
 function Gallery({ category }) {
   const [sourceImages, setSourceImages] = useState([]); // Holds full API response
-  const [loadedImages, setLoadedImages] = useState([]); // Tracks images that finish preloading
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const API_BASE_URL = 'https://photography-docker.onrender.com/api';
-  const BUCKET_BASE_URL = 'https://media.joshuajeyphotography.com';
-
-  function isAvifSupported() {
-    return new Promise(resolve => {
-      const avif = new Image();
-      avif.src =
-        "data:image/avif;base64,AAAAIGZ0eXBhdmlmAAAAAG1pZjFhdmlmAAACAG1ldGEAAACUaWxpc3QAAABodGlwMAAAAANhdmlmAAACAG1pZjFhdmlmAAACAG1ldGEAAACUaWxpc3QAAA==";
-      avif.onload = () => resolve(true);
-      avif.onerror = () => resolve(false);
-    });
-  }
 
   useEffect(() => {
     const fetchImages = async () => {
       setIsLoading(true);
       setError(null);
-      setSourceImages([]);
-      setLoadedImages([]);
-  
+
       const apiUrl = category
         ? `${API_BASE_URL}/gallery?category=${encodeURIComponent(category)}`
         : `${API_BASE_URL}/gallery`;
-  
+
       try {
         const response = await fetch(apiUrl);
-  
+
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(`HTTP ${response.status}: ${errorText}`);
         }
-  
+
         const contentType = response.headers.get('content-type') || '';
         if (!contentType.includes('application/json')) {
           const text = await response.text();
           throw new Error(`Expected JSON, got ${contentType}: ${text}`);
         }
-  
+
         const data = await response.json();
         setSourceImages(data);
-  
-        const supportsAvif = await isAvifSupported(); // ✅ Detect support
-        const ext = supportsAvif ? 'avif' : 'jpg';    // ✅ Decide which format to preload
-  
-        data.forEach(imageInfo => {
-          const img = new Image();
-          img.src = `${BUCKET_BASE_URL}/${imageInfo.folder}/${imageInfo.filename}.${ext}`;
-          img.onload = () => {
-            setLoadedImages(prev => {
-              if (!prev.some(loaded => loaded.id === imageInfo.id)) {
-                return [...prev, imageInfo];
-              }
-              return prev;
-            });
-          };
-          img.onerror = () => {
-            console.error(`Failed to preload image: ${img.src}`);
-          };
-        });
-  
-        setIsLoading(false);
       } catch (err) {
         console.error('Failed to fetch gallery images:', err);
         setError(`Could not load images${category ? ` for "${category}"` : ''}.`);
+      } finally {
         setIsLoading(false);
       }
     };
-  
+
     fetchImages();
   }, [category]);
 
@@ -97,7 +63,7 @@ function Gallery({ category }) {
 
   return (
     <div className="gallery-grid loaded">
-      {loadedImages.map(image => (
+      {sourceImages.map(image => (
         <Photo
           key={image.id}
           id={image.id}
