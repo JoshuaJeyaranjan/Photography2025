@@ -229,6 +229,10 @@ $transition-speed: 0.25s;
 
 .nav__cart-link {
   position: relative;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .nav__icon[alt="Cart"] {
