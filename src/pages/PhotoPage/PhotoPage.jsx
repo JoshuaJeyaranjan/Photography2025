@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom"; // Import Link
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import "./PhotoPage.scss";
 import Nav from "../../components/Nav/Nav";
@@ -7,7 +7,6 @@ import Footer from "../../components/Footer/Footer";
 import ImageModal from "../../components/ImageModal/ImageModal";
 import { useCart } from "../../context/CartContext.jsx";
 
-// Use environment variables for flexibility between dev/staging/prod
 const API_BASE_URL = "https://photography-docker.onrender.com";
 const STRIPE_PUBLISHABLE_KEY =
   import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ||
@@ -23,27 +22,23 @@ function PhotoPage() {
   const [cartStatus, setCartStatus] = useState("");
   const [cartMessage, setCartMessage] = useState("");
   const [sizes, setSizes] = useState([]);
-  const [selectedSize, setSelectedSize] = useState(sizes[null]);
+  const [selectedSize, setSelectedSize] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [purchaseStatus, setPurchaseStatus] = useState("");
-  const [modalImage, setModalImage] = useState(null); // For fullscreen modal
+  const [modalImage, setModalImage] = useState(null);
   const [modalAlt, setModalAlt] = useState("");
-  const clickTimer = useRef(null); // To manage single vs. double clicks
+  const clickTimer = useRef(null);
 
-  // Fetch photo details
   useEffect(() => {
     const fetchPhoto = async () => {
       setIsLoading(true);
       setError(null);
-
       try {
-        const response = await fetch(`${API_BASE_URL}/api/gallery/${id}`);
-
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-        const data = await response.json();
-        setPhoto(data); // ✅ Use the single object directly
+        const res = await fetch(`${API_BASE_URL}/api/gallery/${id}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        setPhoto(data);
       } catch (err) {
         console.error("Failed to fetch photo:", err);
         setError("Could not load photo details.");
@@ -51,22 +46,19 @@ function PhotoPage() {
         setIsLoading(false);
       }
     };
-
     fetchPhoto();
   }, [id]);
 
-  // Fetch sizes
   useEffect(() => {
     const fetchSizes = async () => {
       const res = await fetch(`${API_BASE_URL}/api/print/print-sizes`);
       const data = await res.json();
       setSizes(data);
-      setSelectedSize(data[0]); // default
+      setSelectedSize(data[0] || null);
     };
     fetchSizes();
   }, []);
 
-  // Cleanup the click timer if the component unmounts
   useEffect(() => {
     return () => {
       if (clickTimer.current) {
@@ -80,38 +72,31 @@ function PhotoPage() {
     setPurchaseStatus("Processing...");
 
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/stripe/create-checkout-session`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            customer: {
-              name: "Guest",
-              email: "guest@example.com", // if you want to prompt for email later, replace this
+      const res = await fetch(`${API_BASE_URL}/api/stripe/create-checkout-session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: {
+            name: "Guest",
+            email: "guest@example.com",
+          },
+          items: [
+            {
+              id: photo.id,
+              name: photo.title || `Print of ${photo.filename}`,
+              price: photo.price || 40.0,
+              url: photo.url,
+              quantity: 1,
             },
-            items: [
-              {
-                id: photo.id,
-                name: photo.title || `Print of ${photo.filename}`,
-                price: photo.price || 40.0,
-                url: photo.url,
-                quantity: 1,
-              },
-            ],
-          }),
-        }
-      );
+          ],
+        }),
+      });
 
-      const data = await response.json();
-
+      const data = await res.json();
       if (!data.sessionId) throw new Error(data.error || "Missing sessionId");
 
       const stripe = await stripePromise;
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: data.sessionId,
-      });
-
+      const { error } = await stripe.redirectToCheckout({ sessionId: data.sessionId });
       if (error) {
         console.error("Stripe error:", error);
         setPurchaseStatus(`Payment failed: ${error.message}`);
@@ -122,29 +107,21 @@ function PhotoPage() {
     }
   };
 
-  // Custom handler to differentiate between single and double clicks
   const handlePreviewSizeClick = (size) => {
-    // If a timer is already running, it means this is the second click (a double-click)
     if (clickTimer.current) {
       clearTimeout(clickTimer.current);
       clickTimer.current = null;
-
-      // Perform the double-click action: open the modal
       setModalImage(size.preview_url);
       setModalAlt(`Preview for ${size.label} print`);
     } else {
-      // This is the first click, so set a timer
       clickTimer.current = setTimeout(() => {
-        // If the timer completes, it was a single click: select the size
         setSelectedSize(size);
-        clickTimer.current = null; // Reset timer
-      }, 250); // A 250ms delay is standard for double-click detection
+        clickTimer.current = null;
+      }, 250);
     }
   };
 
-  // Status rendering
-  if (isLoading)
-    return <div className="photo-page-status">Loading photo...</div>;
+  if (isLoading) return <div className="photo-page-status">Loading photo...</div>;
   if (error)
     return (
       <div className="photo-page-status error">
@@ -162,26 +139,27 @@ function PhotoPage() {
       </div>
     );
 
+  // Strip known extensions and rebuild the base URL
+  const baseImageUrl = photo.url.replace(/\.(avif|webp|jpeg|jpg)$/, "");
+
   return (
     <>
       <Nav />
-      <div className="nav-buffer"></div>
+      <div className="nav-buffer" />
       <div className="photo-page">
         <div className="photo-page-container">
           <div className="photo-detail">
             <picture>
-              <source srcSet={photo.url} type="image/avif" />
-              <source
-                srcSet={photo.url.replace(".avif", ".jpg")}
-                type="image/jpeg"
-              />
+              <source srcSet={`${baseImageUrl}.avif`} type="image/avif" />
+              <source srcSet={`${baseImageUrl}.webp`} type="image/webp" />
+              <source srcSet={`${baseImageUrl}.jpg`} type="image/jpeg" />
               <img
-                src={photo.url.replace(".avif", ".jpg")}
+                src={`${baseImageUrl}.jpg`}
                 alt={photo.title || photo.filename || "Photography image"}
                 className="photo-detail-image"
                 loading="lazy"
                 onClick={() => {
-                  setModalImage(photo.url.replace(".avif", ".jpg"));
+                  setModalImage(`${baseImageUrl}.jpg`);
                   setModalAlt(photo.title || photo.filename || "Photography image");
                 }}
               />
@@ -191,7 +169,6 @@ function PhotoPage() {
               <div className="purchase-container">
                 <div className="size-selector">
                   <h3 className="selector-title">Select a Size</h3>
-                  
                   <div className="size-options">
                     {sizes.map((size) => (
                       <button
@@ -226,7 +203,7 @@ function PhotoPage() {
                         id: photo.id,
                         name: photo.title || `Print of ${photo.filename}`,
                         price: parseFloat(selectedSize.price),
-                        url: photo.url,
+                        url: `${baseImageUrl}.jpg`,
                         quantity: 1,
                         size: selectedSize.label,
                         print_size_id: selectedSize.id,

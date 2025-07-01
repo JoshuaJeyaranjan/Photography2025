@@ -21,6 +21,7 @@ function Photo({ id, filename, folder, alt, title }) {
         <source srcSet={jpgSrc} type="image/jpeg" />
         <source srcSet={`${baseUrl}/${folder}/${filename}.webp`} type="image/webp" />
         <img
+        loading='lazy'
           src={jpgSrc}
           alt={alt}
           className="photo-thumbnail"
