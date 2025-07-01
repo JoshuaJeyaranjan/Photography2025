@@ -15,10 +15,6 @@ function Photo({ id, filename, folder, alt, title }) {
     setIsLoaded(true);
   };
 
-  useEffect(() => {
-    console.log(`Rendering: ${jpgSrc}`);
-  }, []);
-
   return (
     <Link to={`/photo/${id}`} className={`photo-item ${isLoaded ? 'loaded' : ''}`}>
       <picture>

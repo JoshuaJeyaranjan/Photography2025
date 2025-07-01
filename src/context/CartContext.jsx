@@ -50,7 +50,7 @@ export const CartProvider = ({ children }) => {
         : item
     ));
   };
-  console.log("CartProvider render, current cart:", cart);
+  
 
   const clearCart = () => {
     setCart([]);
