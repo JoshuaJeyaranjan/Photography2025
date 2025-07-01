@@ -45,6 +45,9 @@
 .photo-thumbnail:hover {
   transform: scale(1.02);
   box-shadow: 0 4px 8px var(--color-primary-mid);
+  @include mobile {
+   box-shadow: none;
+  }
 }
 .size-button {
   border: 1px solid #ccc;
