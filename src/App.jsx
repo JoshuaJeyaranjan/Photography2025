@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom'
-
+import { ThemeProvider } from './context/ThemeContext.jsx'
 import { CartProvider } from './context/CartContext.jsx'
+
 import './App.css'
 import HomePage from './pages/HomePage/HomePage'
 import ContactPage from './pages/ContactPage/ContactPage'
@@ -21,7 +22,6 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage'
 import CustomerServicePage from './pages/CustomerServicePage/CustomerServicePage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import SignupPage from './pages/SignupPage/SignupPage'
-
 import AdminPage from './pages/AdminPage/AdminPage.jsx'
 import AdminOrdersPage from './pages/AdminOrdersPage/AdminOrdersPage.jsx'
 
@@ -30,6 +30,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ThemeProvider>
       <CartProvider>
         <Routes>
           <Route path='/' element={ <PortraitPage/>} /> 
@@ -57,6 +58,7 @@ function App() {
           <Route path='*' element={ <NotFoundPage/>} />   
         </Routes>
       </CartProvider>
+      </ThemeProvider>
     </BrowserRouter>
   )
 }

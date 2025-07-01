@@ -3,19 +3,11 @@
 
 // --- Configuration ---
 $nav-height: 80px;
-$nav-background: $primary-light;
-$nav-border-color: $secondary-light ;
-$text-primary: $secondary-dark;
-$text-secondary: $primary-dark;
-$text-light: $secondary-light;
-$font-primary: "Italiana", serif;
-$font-secondary: "Poppins", sans-serif;
-$transition-speed: 0.25s;
-// Adjusted breakpoint to target mobile/tablet devices more accurately
 $breakpoint-mobile: 1250px;
+$transition-speed: 0.25s;
 
 // --- Mixins ---
-@mixin link-underline-effect($color: $text-primary) {
+@mixin link-underline-effect($color: var(--color-text-primary)) {
   position: relative;
   padding-bottom: 0.25rem;
 
@@ -40,18 +32,21 @@ $breakpoint-mobile: 1250px;
 
 // --- Main Styles ---
 .nav {
-  // Structure & Layout
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: $nav-height;
   padding: 0.5rem 2rem;
-  background-color: $nav-background;
-  border-bottom: 1px solid $nav-border-color;
+
+  // 🌗 Animated Background Based on Theme
+  background: var(--nav-gradient);
+  background-size: 400% 400%;
+  animation: subtleGlobalBackgroundRipple 10s ease infinite;
+
+  // border-bottom: 1px solid var(--color-secondary-light);
   position: relative;
   z-index: 1000;
 
-  // BEM Sections for a robust flex layout
   &__section {
     display: flex;
     align-items: center;
@@ -70,17 +65,15 @@ $breakpoint-mobile: 1250px;
     }
   }
 
-  // Logo & Title
   &__logo-link,
   &__main-link {
     text-decoration: none;
-    color: black;
+    color: var(--color-text-primary);
   }
 
   &__logo {
-    font-family: $font-primary;
     font-size: 2.5rem;
-    color: $text-primary;
+    color: var(--color-text-primary);
     margin: 0;
   }
 
@@ -98,42 +91,39 @@ $breakpoint-mobile: 1250px;
   }
 
   &__text {
-    font-family: $font-secondary;
     font-size: 0.9rem;
     font-weight: 300;
+    color: var(--color-text-secondary);
   }
 
   &__title {
-    font-family: $font-primary;
     font-size: 1.5rem;
+    color: var(--color-text-primary);
   }
 
-  // Links Container (hidden on mobile by default)
   &__links {
     display: flex;
     align-items: center;
     gap: 2rem;
   }
 
-  // Individual Links
   &__link {
-    font-family: $font-secondary;
     font-size: 1rem;
-    color: $text-secondary;
+    color: var(--color-text-secondary);
     text-decoration: none;
     transition: color $transition-speed ease-in-out;
 
     &:hover {
-      color: $text-primary;
+      color: var(--color-text-primary);
     }
 
     &:not(&--button):not(&--icon) {
-      @include link-underline-effect;
+      @include link-underline-effect(var(--color-text-primary));
     }
 
     &--button {
       padding: 0.5rem 1rem;
-      border: 1px solid $text-secondary;
+      border: 1px solid var(--color-text-secondary);
       border-radius: 4px;
       background: none;
       cursor: pointer;
@@ -141,25 +131,24 @@ $breakpoint-mobile: 1250px;
       transition: background-color $transition-speed, color $transition-speed;
 
       &:hover {
-        background-color: $text-secondary;
-        color: $text-light;
+        background-color: var(--color-text-secondary);
+        color: var(--color-primary-light);
       }
     }
   }
 
-  // Icons (Cart, Instagram)
   &__icon {
     height: 24px;
     width: 24px;
     display: block;
     transition: transform $transition-speed ease-in-out;
+    
 
     &:hover {
       transform: scale(1.1);
     }
   }
 
-  // Hamburger Menu (hidden on desktop)
   &__hamburger {
     display: none;
     flex-direction: column;
@@ -171,6 +160,7 @@ $breakpoint-mobile: 1250px;
     cursor: pointer;
     padding: 0;
     z-index: 20;
+    color: var(--color-text-primary);
 
     &:focus {
       outline: none;
@@ -179,7 +169,7 @@ $breakpoint-mobile: 1250px;
     span {
       width: 2rem;
       height: 3px;
-      background: $text-secondary;
+      background: var(--color-text-primary);
       border-radius: 10px;
       transition: all 0.3s linear;
       position: relative;
@@ -187,7 +177,6 @@ $breakpoint-mobile: 1250px;
     }
   }
 
-  // --- Responsive Styles ---
   @media (max-width: $breakpoint-mobile) {
     padding: 0.5rem 1rem;
 
@@ -203,40 +192,55 @@ $breakpoint-mobile: 1250px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2.5rem; // Increased spacing for better touch targets
+      gap: 2.5rem;
       position: absolute;
       top: 100%;
       left: 0;
       width: 100%;
       padding: 2.5rem;
-      background-color: $nav-background;
+
+      // 🔁 Keep this synced with main nav background
+      background: var(--nav-gradient);
+      background-size: 400% 400%;
+      animation: subtleGlobalBackgroundRipple 10s ease infinite;
+
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
       .nav__link {
         font-size: 1.2rem;
+        color: var(--color-text-primary);
       }
     }
 
     &__hamburger[aria-expanded="true"] {
-      span:first-child { transform: rotate(45deg); }
-      span:nth-child(2) { opacity: 0; transform: translateX(20px); }
-      span:last-child { transform: rotate(-45deg); }
+      span:first-child {
+        transform: rotate(45deg);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      span:last-child {
+        transform: rotate(-45deg);
+      }
     }
   }
 }
+
 .nav__cart-link {
-  position: relative; /* This is crucial for positioning the badge */
+  position: relative;
 }
 
 .nav__icon[alt="Cart"] {
-  transform: scaleX(-1); /* Flips the cart icon horizontally */
+  transform: scaleX(-1);
 }
+
 .nav__cart-badge {
   position: absolute;
   top: -5px;
   right: -8px;
-  background-color: $form-field-error; /* A nice red color */
-  color: $primary-light;
+  background-color: var(--color-error);
+  color: var(--color-primary-light);
   border-radius: 50%;
   padding: 0.15em 0.45em;
   font-size: 0.75rem;
@@ -248,7 +252,19 @@ $breakpoint-mobile: 1250px;
   min-width: 1.25em;
   min-height: 1.25em;
   box-sizing: border-box;
-  /* Add a subtle animation */
   transform: scale(1);
   transition: transform 0.2s ease-in-out;
+}
+
+// --- Global animation ---
+@keyframes subtleGlobalBackgroundRipple {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

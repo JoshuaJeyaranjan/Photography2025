@@ -3,6 +3,9 @@ import "./Nav.scss";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext.jsx";
+import { useTheme } from "../../context/ThemeContext.jsx";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
+
 
 function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -34,6 +37,7 @@ function Nav() {
         <Link className="nav__logo-link" to="/portrait" onClick={closeMobileMenu}>
           <h1 className="nav__logo italiana-regular">JJ</h1>
         </Link>
+        <ThemeToggle />
       </div>
 
       {/* Center Section */}
@@ -44,6 +48,7 @@ function Nav() {
             <h1 className="nav__title italiana-regular">Photography</h1>
           </div>
         </Link>
+        
       </div>
 
       {/* Right Section */}
