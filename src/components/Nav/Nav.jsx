@@ -75,19 +75,25 @@ function Nav() {
             <button onClick={handleLogout} className="nav__link nav__link--button">
               Logout
             </button>
-          ) : (
-            // Corrected the invalid nested button and simplified the link
+          ) : (            
             <Link to="/login" className="nav__link nav__link--button" onClick={closeMobileMenu}>
               Login
             </Link>
           )}
+          {user ? 
+            <NavLink to="/my-orders" className="nav__link" onClick={closeMobileMenu}>
+              My Orders
+            </NavLink>
+           :null}
+
+
 
           {user && user.id === 1 && (
             <NavLink to="/admin" className="nav__link" onClick={closeMobileMenu}>
               Admin
             </NavLink>
           )}
-
+          
           <Link to="/cart" className="nav__link nav__link--icon nav__cart-link" onClick={closeMobileMenu}>
             <img
               src={`${BUCKET_URL}/assets/cart.svg`}
