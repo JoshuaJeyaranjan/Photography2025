@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Nav.scss";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext.jsx";
-import { useTheme } from "../../context/ThemeContext.jsx";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 
 function Nav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navRef = useRef(null);
   const { user, logout } = useAuth();
   const { cartItemCount } = useCart();
   const navigate = useNavigate();
@@ -30,6 +30,26 @@ function Nav() {
 
   const BUCKET_URL = import.meta.env.VITE_BUCKET_URL
   
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        navRef.current &&
+        !navRef.current.contains(event.target) &&
+        isMobileMenuOpen
+      ) {
+        console.log("click registered");
+        closeMobileMenu();
+      }
+    }
+  
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () => {
+      document.removeEventListener("pointerdown", handleClickOutside);
+      
+    };
+  }, [isMobileMenuOpen])
+
   return (
     <nav className="nav">
       {/* Left Section */}
@@ -61,7 +81,7 @@ function Nav() {
         </button>
 
         {/* Navigation Links Container - gets --open class when menu is active */}
-        <div className={`nav__links ${isMobileMenuOpen ? "nav__links--open" : ""}`}>
+        <div className={`nav__links ${isMobileMenuOpen ? "nav__links--open" : ""}`} ref={navRef}>
           <NavLink to="/contact" className="nav__link" onClick={closeMobileMenu}>
             Contact
           </NavLink>
