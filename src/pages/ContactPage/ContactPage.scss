@@ -82,7 +82,7 @@
     font-weight: v.$font-weight-regular;
     font-size: 1rem;
     margin-top: v.$spacing-md;
-    box-shadow: 0 4px 8px var(--color-primary-mid);
+    
     
     &:hover:not(:disabled) {
       background-color: v.$primary-green;

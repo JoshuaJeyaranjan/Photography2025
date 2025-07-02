@@ -4,8 +4,8 @@
 .service-link {
     display: inline-block;
     padding: 10px 20px;
-    background-color: $primary-mid;
-    color: #fff;
+    background-color: var(--color-primary-mid-light);
+    color: var(--color-black);
     text-decoration: none;
     border-radius: 4px;
     transition: background-color 0.3s ease;
@@ -13,5 +13,6 @@
 
     &:hover {
         background-color: $primary-light;
+        box-shadow: 0 4px 8px var(--color-primary-mid);
     }
 }
