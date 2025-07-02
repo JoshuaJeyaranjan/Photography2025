@@ -42,6 +42,8 @@ $transition-speed: 0.25s;
   background: var(--nav-gradient);
   background-size: 400% 400%;
   animation: subtleGlobalBackgroundRipple 10s ease infinite;
+  animation-delay: -3s;
+  animation-play-state: running;
 
   // border-bottom: 1px solid var(--color-secondary-light);
   position: relative;
@@ -195,15 +197,16 @@ $transition-speed: 0.25s;
       gap: 2.5rem;
       position: absolute;
       top: 100%;
-      left: 0;
-      width: 100%;
+      right: 0;
+      width: 30%;
       padding: 2.5rem;
 
       // 🔁 Keep this synced with main nav background
       background: var(--nav-gradient);
       background-size: 400% 400%;
-      animation: subtleGlobalBackgroundRipple 10s ease infinite;
-
+      animation: subtleGlobalBackgroundRipple 10s ease infinite ;
+      animation-delay: -3s;
+      animation-play-state: running;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
       .nav__link {
