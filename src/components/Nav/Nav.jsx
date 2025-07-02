@@ -72,7 +72,7 @@ function Nav() {
       </div>
 
       {/* Right Section */}
-      <div className="nav__section nav__section--right">
+      <div className="nav__section nav__section--right" ref={navRef}>
         {/* Hamburger Icon - visible only on mobile via CSS */}
         <button className="nav__hamburger" onClick={toggleMobileMenu} aria-label="Toggle menu" aria-expanded={isMobileMenuOpen}>
           <span></span>
@@ -81,7 +81,7 @@ function Nav() {
         </button>
 
         {/* Navigation Links Container - gets --open class when menu is active */}
-        <div className={`nav__links ${isMobileMenuOpen ? "nav__links--open" : ""}`} ref={navRef}>
+        <div className={`nav__links ${isMobileMenuOpen ? "nav__links--open" : ""}`} >
           <NavLink to="/contact" className="nav__link" onClick={closeMobileMenu}>
             Contact
           </NavLink>
