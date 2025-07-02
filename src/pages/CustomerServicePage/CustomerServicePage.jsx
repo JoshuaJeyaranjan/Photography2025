@@ -12,7 +12,7 @@ function CustomerServicePage() {
       <main className="content-page-layout">
         <div className="content-container">
           <div className="content-header">
-            <h1 className='italiana-regular'>Customer Service</h1>
+            <h1 className='italiana-regular'>Customer Care</h1>
             <p className='poppins-light'>We're here to help with any questions or concerns you may have.</p>
           </div>
 
@@ -37,12 +37,15 @@ function CustomerServicePage() {
             <p className='poppins-light'>
               <strong>Order Status & Tracking:</strong> You will receive a confirmation email once your order is placed, and another email with tracking information once your order has shipped.
             </p>
+            <br />
             <p className='poppins-light'>
-              <strong>Shipping & Delivery:</strong> Please allow 5-7 business days for printing and processing, and an additional 5-10 business days for shipping, depending on your location.
+              <strong>Shipping & Delivery:</strong> Please allow 5-7 business days for printing and processing, and an additional 5-10 business days for shipping, depending on your location. Express shipping will allow for a faster delivery time.
             </p>
+            <br />
             <p className='poppins-light'>
               <strong>Returns & Exchanges:</strong> All print sales are final. We do not accept returns or exchanges. However, if your order arrives damaged or is incorrect, please see below.
             </p>
+            <br />
             <p className='poppins-light'>
               <strong>Damaged or Incorrect Orders:</strong> If your order arrives damaged or you received the wrong item, please contact me within 7 days of delivery with your order number and a photo of the issue. I will arrange for a replacement to be sent to you as soon as possible.
             </p>

@@ -11,9 +11,10 @@ function Footer() {
         <div className="footer-links">
           <Link className="poppins-light" to="/">Home</Link>
           <Link className="poppins-light" to="/contact">Contact</Link>
-          <Link className="poppins-light" to="/faq">FAQ</Link>
           
-          <Link className="poppins-light" to="/customer-care">Customer Care</Link>
+          <Link className="poppins-light" to="/faq">FAQ</Link>
+          <Link className="poppins-light" to="/customer-care">Care</Link>
+          
           <br className="break" />
       <Link className="poppins-light" to="/privacy-policy">Privacy Policy</Link>
           <Link className="poppins-light" to="/terms">Terms & Conditions</Link>
