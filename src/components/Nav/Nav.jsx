@@ -52,7 +52,7 @@ function Nav() {
 
   return (
     <nav className="nav">
-      {/* Left Section */}
+      
       <div className="nav__section nav__section--left">
         <Link className="nav__logo-link" to="/portrait" onClick={closeMobileMenu}>
           <h1 className="nav__logo italiana-regular">JJ</h1>
@@ -60,7 +60,7 @@ function Nav() {
         
       </div>
 
-      {/* Center Section */}
+      
       <div className="nav__section nav__section--center">
         <Link to="/portrait" className="nav__main-link" onClick={closeMobileMenu}>
           <div className="nav__text-wrapper">
@@ -71,16 +71,16 @@ function Nav() {
         
       </div>
 
-      {/* Right Section */}
+      
       <div className="nav__section nav__section--right" ref={navRef}>
-        {/* Hamburger Icon - visible only on mobile via CSS */}
+      
         <button className="nav__hamburger" onClick={toggleMobileMenu} aria-label="Toggle menu" aria-expanded={isMobileMenuOpen}>
           <span></span>
           <span></span>
           <span></span>
         </button>
 
-        {/* Navigation Links Container - gets --open class when menu is active */}
+        
         <div className={`nav__links ${isMobileMenuOpen ? "nav__links--open" : ""}`} >
           <NavLink to="/contact" className="nav__link" onClick={closeMobileMenu}>
             Contact
