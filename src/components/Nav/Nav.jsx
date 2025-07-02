@@ -125,7 +125,7 @@ function Nav() {
             )}
           </Link>
           
-          <Link
+          {/* <Link
             to="https://www.instagram.com/joshuajeyphotography"
             className="nav__link nav__link--icon"
             onClick={closeMobileMenu}
@@ -137,7 +137,7 @@ function Nav() {
               alt="Instagram"
               className="nav__icon" // Standardized class name
             />
-          </Link>
+          </Link> */}
           <ThemeToggle />
         </div>
       </div>

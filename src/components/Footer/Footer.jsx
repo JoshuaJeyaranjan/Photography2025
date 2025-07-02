@@ -14,7 +14,7 @@ function Footer() {
           <Link className="poppins-light" to="/faq">FAQ</Link>
           
           <Link className="poppins-light" to="/customer-care">Customer Care</Link>
-          <br />
+          <br className="break" />
       <Link className="poppins-light" to="/privacy-policy">Privacy Policy</Link>
           <Link className="poppins-light" to="/terms">Terms & Conditions</Link>
         </div>
