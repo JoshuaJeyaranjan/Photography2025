@@ -9,9 +9,9 @@ import { loadStripe } from "@stripe/stripe-js";
 
 const shippingOptions = [
   {
-    id: "shr_1RdbnaEydtOSnncEaokiE8S8",
-    amount: 1900,
-    label: "Standard Shipping - $19.00",
+    id: "shr_1RgXBgEydtOSnncEyjMd6iVx",
+    amount: 900,
+    label: "Standard Shipping - $9.00",
   },
   {
     id: "shr_1RdboDEydtOSnncE8l44b0Qw",
