@@ -200,6 +200,7 @@ $transition-speed: 0.25s;
       right: 0;
       width: 30%;
       padding: 2.5rem;
+      min-height: 75vh;
 
       // 🔁 Keep this synced with main nav background
       background: var(--nav-gradient);
