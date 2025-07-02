@@ -1,0 +1,190 @@
+
+@use '../../styles/partials/variables' as *;
+
+.order-history-page {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--color-text-primary);
+
+  h1 {
+    font-family: "Italiana", serif;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--color-text-primary);
+  }
+
+  .empty-message {
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+    opacity: 0.8;
+  }
+
+  .order-card {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid $secondary-mid;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .order-header {
+      border-bottom: 1px solid $secondary-mid;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+
+      h2 {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.4rem;
+        margin-bottom: 0.3rem;
+        color: var(--color-text-primary);
+      }
+
+      p {
+        margin: 0.25rem 0;
+        font-size: 0.95rem;
+        color: var(--color-text-primary);
+        opacity: 0.85;
+
+        strong {
+          color: var(--color-text-primary);
+        }
+      }
+
+      .order-date {
+        font-style: italic;
+        font-size: 0.85rem;
+        opacity: 0.7;
+      }
+    }
+
+    .order-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      justify-content: center;
+      align-items: center;
+
+      .order-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-self: center;
+        align-self: center;
+        gap: 1.25rem;
+        padding: 0.75rem 0;
+        border-top: 1px solid $secondary-mid;
+
+        &:first-child {
+          border-top: none;
+        }
+
+        .item-image {
+          flex: 0 0 120px;
+
+          img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid $secondary-mid;
+          }
+        }
+
+        .item-details {
+          flex: 1;
+          font-family: "Poppins", sans-serif;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          h3.item-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: var(--color-text-primary);
+          }
+
+          p {
+            margin: 0.2rem 0;
+            font-size: 0.95rem;
+            color: var(--color-text-primary);
+            opacity: 0.9;
+
+            strong {
+              color: var(--color-text-primary);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive tweaks
+@media (max-width: 768px) {
+  .order-history-page {
+    padding: 1rem;
+  }
+
+  .order-card {
+    padding: 1rem;
+  }
+
+  .order-items .order-item {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+
+    .item-image {
+      flex: 0 0 auto;
+    }
+
+    .item-details {
+      padding-top: 0.5rem;
+    }
+  }
+}
+
+.item-details {
+    flex: 1;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;      // Horizontally centers children
+    justify-content: center;  // Vertically centers children
+  
+    h3.item-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+      color: var(--color-text-primary);
+    }
+  
+    p {
+      margin: 0.2rem 0;
+      font-size: 0.95rem;
+      color: var(--color-text-primary);
+      opacity: 0.9;
+  
+      strong {
+        color: var(--color-text-primary);
+      }
+    }
+  }
+
+//   .container {
+//     background-color: red;
+//     justify-self: center;
+//     align-self: center;
+//   }
