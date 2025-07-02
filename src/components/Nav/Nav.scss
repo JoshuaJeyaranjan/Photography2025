@@ -1,5 +1,5 @@
-@use '../../styles/partials/variables' as *;
-@use '../../styles/partials/mixins' as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
 
 // --- Configuration ---
 $nav-height: 80px;
@@ -144,7 +144,6 @@ $transition-speed: 0.25s;
     width: 24px;
     display: block;
     transition: transform $transition-speed ease-in-out;
-    
 
     &:hover {
       transform: scale(1.1);
@@ -188,6 +187,8 @@ $transition-speed: 0.25s;
 
     &__hamburger {
       display: flex;
+      transition: opacity 200ms ease-out, transform 200ms ease-out,
+        visibility 0s linear 200ms;
     }
 
     &__links--open {
@@ -200,16 +201,16 @@ $transition-speed: 0.25s;
       right: 0;
       width: 30%;
       padding: 2.5rem;
-      min-height: 75vh;
+      min-height: 95vh;
 
       // 🔁 Keep this synced with main nav background
       background: var(--nav-gradient);
       background-size: 400% 400%;
-      animation: subtleGlobalBackgroundRipple 10s ease infinite ;
+      animation: subtleGlobalBackgroundRipple 10s ease infinite;
       animation-delay: -3s;
       animation-play-state: running;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
+      transition: opacity 200ms ease-out, transform 200ms ease-out;
       .nav__link {
         font-size: 1.2rem;
         color: var(--color-text-primary);
