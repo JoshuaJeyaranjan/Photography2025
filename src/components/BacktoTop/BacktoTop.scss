@@ -3,7 +3,7 @@
 
 .back-to-top {
     position: fixed;
-    bottom: 25px;
+    bottom: 65px;
     right: 15px;
     z-index: 1000;
     cursor: pointer; // Make the whole area clickable if needed, or just the icon
@@ -22,7 +22,8 @@
         background-color: rgba(240, 248, 255, 0.444);
         // Add any hover effects, etc.
         border: $primary-light;
-        
+        border-radius: 20px;
+        padding: 5px;
         &:hover {
           opacity: 1;
           transform: scale(1.2);
