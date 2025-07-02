@@ -37,7 +37,7 @@ function Nav() {
         <Link className="nav__logo-link" to="/portrait" onClick={closeMobileMenu}>
           <h1 className="nav__logo italiana-regular">JJ</h1>
         </Link>
-        <ThemeToggle />
+        
       </div>
 
       {/* Center Section */}
@@ -118,6 +118,7 @@ function Nav() {
               className="nav__icon" // Standardized class name
             />
           </Link>
+          <ThemeToggle />
         </div>
       </div>
     </nav>
