@@ -77,3 +77,11 @@
     text-align: left;
   }
 }
+
+.break {
+  display: none;
+
+  @include mobile {
+    display: block;
+  }
+}
