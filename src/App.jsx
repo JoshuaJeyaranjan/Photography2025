@@ -20,6 +20,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import AdminPage from "./pages/AdminPage/AdminPage.jsx";
 import AdminOrdersPage from "./pages/AdminOrdersPage/AdminOrdersPage.jsx";
+import PreviousOrdersPage from "./pages/PreviousOrdersPage/PreviousOrdersPage.jsx";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/admin/orders" element={<AdminOrdersPage />} />
+            <Route path="/my-orders" element={<PreviousOrdersPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </CartProvider>
