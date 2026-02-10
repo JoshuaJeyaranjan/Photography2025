@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Photo from '../Photo/Photo';
 import './Gallery.scss';
 
 function Gallery({ category }) {
-  const [sourceImages, setSourceImages] = useState([]); // Holds full API response
+  const [sourceImages, setSourceImages] = useState([]); 
+  const [loadedImages, setLoadedImages] = useState([]); 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -45,6 +46,14 @@ function Gallery({ category }) {
     fetchImages();
   }, [category]);
 
+  
+const handleImageLoaded = (imageData) => {
+  setLoadedImages(prev => {
+    if (prev.find(img => img.id === imageData.id)) return prev; // avoid duplicates
+    return [...prev, imageData];
+  });
+};
+
   if (isLoading) {
     return (
       <div className="gallery-loader-container">
@@ -53,26 +62,25 @@ function Gallery({ category }) {
     );
   }
 
-  if (error) {
-    return <p className="gallery-status error">{error}</p>;
-  }
-
-  if (sourceImages.length === 0) {
-    return <p className="gallery-status">No images found{category ? ` in "${category}"` : ''}.</p>;
-  }
+  if (error) return <p className="gallery-status error">{error}</p>;
+  if (sourceImages.length === 0) return <p className="gallery-status">No images found{category ? ` in "${category}"` : ''}.</p>;
 
   return (
     <div className="gallery-grid loaded">
-      {sourceImages.map(image => (
+      {loadedImages.map(image => (
         <Photo
           key={image.id}
-          id={image.id}
-          filename={image.filename}
-          folder={image.folder}
-          alt={image.description || image.filename || `Photo ${image.id}`}
-          title={image.title || ''}
+          {...image}
+          onLoaded={() => handleImageLoaded(image)}
         />
       ))}
+
+      {/* Render placeholders for remaining images */}
+      {sourceImages
+        .filter(img => !loadedImages.includes(img))
+        .map(img => (
+          <Photo key={img.id} {...img} onLoaded={() => handleImageLoaded(img)} />
+        ))}
     </div>
   );
 }
