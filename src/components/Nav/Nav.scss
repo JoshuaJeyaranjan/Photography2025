@@ -131,6 +131,7 @@ $transition-speed: 0.25s;
       cursor: pointer;
       font-size: 0.9rem;
       transition: background-color $transition-speed, color $transition-speed;
+      font-family: inherit;
 
       &:hover {
         background-color: var(--color-text-secondary);

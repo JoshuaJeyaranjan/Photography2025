@@ -17,32 +17,58 @@ function CheckoutPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckout = async () => {
-    if (!cartItems.length) {
-      setError('Your cart is empty.');
-      return;
-    }
+  if (!cartItems.length) {
+    setError('Your cart is empty.');
+    return;
+  }
 
-    setIsLoading(true);
-    try {
-      const response = await fetch('https://photography-docker.onrender.com/api/stripe/create-checkout-session', {
+  console.group('🛒 Checkout Debug');
+  console.log('Customer:', customer);
+  console.log('Cart items:', cartItems);
+  console.log('Stripe key present:', !!import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+  console.groupEnd();
+
+  setIsLoading(true);
+
+  try {
+    const response = await fetch(
+      'https://photography-docker.onrender.com/api/stripe/create-checkout-session',
+      {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customer, items: cartItems })
-      });
+        body: JSON.stringify({
+          customer,
+          items: cartItems,
+        }),
+      }
+    );
 
-      const data = await response.json();
+    console.log('Response status:', response.status);
 
-      if (!data.sessionId) throw new Error(data.error || 'Missing sessionId');
+    const data = await response.json();
+    console.log('Response body:', data);
 
-      const stripe = await window.Stripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-      await stripe.redirectToCheckout({ sessionId: data.sessionId });
-    } catch (err) {
-      setError(err.message);
-      console.error('Checkout error:', err);
-    } finally {
-      setIsLoading(false);
+    if (!response.ok) {
+      throw new Error(data.error || 'Server returned error');
     }
-  };
+
+    if (!data.sessionId) {
+      throw new Error('Missing sessionId from server');
+    }
+
+    const stripe = await window.Stripe(
+      import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+    );
+
+    await stripe.redirectToCheckout({ sessionId: data.sessionId });
+  } catch (err) {
+    console.error('❌ Checkout error:', err);
+    setError(err.message);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   return (
     <>
